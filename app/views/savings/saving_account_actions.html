@@ -23,6 +23,16 @@
                 </div>
             </div>
 
+            <div class="form-group" ng-show="showNextWithdraw">
+                <label class="control-label col-sm-2" for="nextWithdrawalDate">{{ 'label.savingsproduct.next.free.withdraw' | translate }}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="nextWithdrawalDate" type="text" sort datepicker-pop="dd MMMM yyyy"
+                           ng-model="formData.nextWithdrawalDate" is-open="opened" min="minDate"  class="form-control"/>
+                </div>
+            </div>
+
             <div class="form-group" data-ng-show="withdrawBalance">
                 <label class="control-label col-sm-2" for="withdrawBalance">{{ 'label.input.withdrawBalance' |
                     translate}}<span class="required">*</span></label>

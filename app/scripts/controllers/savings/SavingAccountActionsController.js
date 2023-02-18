@@ -81,6 +81,12 @@
                         function (data) {
                             scope.productId = data.savingsProductId;
                             rootScope.RequestEntities(entity,status,scope.productId);
+                             resourceFactory.savingsNextWithdrawalDate.get({productId: scope.productId},
+                               function (data) {
+                                 var nextWithdrawalDate = dateFilter(data.nextWithdrawalDate, scope.df);
+                                  scope.formData.nextWithdrawalDate = new Date(nextWithdrawalDate);
+
+                                });
                         });
                 }
                 else{
@@ -145,6 +151,7 @@
                     scope.modelName = 'approvedOnDate';
                     scope.showDateField = true;
                     scope.showNoteField = true;
+                    scope.showNextWithdraw = false;
                     scope.taskPermissionName = 'APPROVE_SAVINGSACCOUNT';
                     scope.fetchEntities('m_savings_account','APPROVE');
                     break;
@@ -154,6 +161,7 @@
                     scope.modelName = 'rejectedOnDate';
                     scope.showDateField = true;
                     scope.showNoteField = true;
+                    scope.showNextWithdraw = false;
                     scope.taskPermissionName = 'REJECT_SAVINGSACCOUNT';
                     scope.fetchEntities('m_savings_account','REJECT');
                     break;
@@ -162,6 +170,7 @@
                     scope.labelName = 'label.input.withdrawnon';
                     scope.modelName = 'withdrawnOnDate';
                     scope.showDateField = true;
+                    scope.showNextWithdraw = false;
                     scope.showNoteField = true;
                     scope.taskPermissionName = 'WITHDRAW_SAVINGSACCOUNT';
                     break;
@@ -169,6 +178,7 @@
                     scope.title = 'label.heading.undoapprovesavingaccount';
                     scope.showDateField = false;
                     scope.showNoteField = true;
+                    scope.showNextWithdraw = false;
                     scope.taskPermissionName = 'APPROVALUNDO_SAVINGSACCOUNT';
                     break;
                 case "activate":
@@ -177,6 +187,7 @@
                     scope.modelName = 'activatedOnDate';
                     scope.showDateField = true;
                     scope.showNoteField = false;
+                    scope.showNextWithdraw = true;
                     scope.taskPermissionName = 'ACTIVATE_SAVINGSACCOUNT';
                     scope.fetchEntities('m_savings_account','ACTIVATE');
                     break;
@@ -184,6 +195,7 @@
                     resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
                         scope.paymentTypes = data.paymentTypeOptions;
                         scope.membersOfGroup = data.membersOfGroup;
+                        scope.showNextWithdraw = false;
                         //This implementation supports on deposit only. Don't include it on withdraw
                         if(data.groupId != null && data.groupId > 0){
                         scope.isGroupLoan = true;
@@ -209,6 +221,7 @@
                     scope.labelName = 'label.input.transactiondate';
                     scope.modelName = 'transactionDate';
                     scope.showDateField = true;
+                    scope.showNextWithdraw = false;
                     scope.showAccountNumber=true;
                     scope.taskPermissionName = 'POSTINTEREST_SAVINGSACCOUNT';
                     break;
@@ -231,6 +244,7 @@
                     scope.showDateField = true;
                     scope.showNoteField = true;
                     scope.isTransaction = true;
+                    scope.showNextWithdraw = false;
                     scope.transactionAmountField = true;
                     scope.showPaymentDetails = false;
                     scope.taskPermissionName = 'WITHDRAWAL_SAVINGSACCOUNT';
@@ -251,6 +265,7 @@
                     scope.showDateField = true;
                     scope.showAnnualAmountField = true;
                     scope.showAmountField = false;
+                    scope.showNextWithdraw = false;
                     scope.showNoteField = false;
                     scope.taskPermissionName = 'APPLYANNUALFEE_SAVINGSACCOUNT';
                     break;
@@ -267,6 +282,7 @@
                     scope.showDateField = true;
                     scope.showNoteField = true;
                     scope.withdrawBalance = true;
+                    scope.showNextWithdraw = false;
                     scope.postInterestValidationOnClosure = true;
                     scope.formData.postInterestValidationOnClosure = true;
                     scope.taskPermissionName = 'CLOSE_SAVINGSACCOUNT';
@@ -275,6 +291,7 @@
                 case "freeze":
                 scope.showBlock = true;
                 scope.showReasonForBlockDebitCredit = true;
+                scope.showNextWithdraw = false;
                 resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'
                                        }, function (data) {
                  scope.savingsDetails = data;
@@ -333,6 +350,7 @@
                             scope.modelName = 'transactionDate';
                             scope.formData[scope.modelName] = new Date(data.date) || new Date();
                             scope.paymentTypes = data.paymentTypeOptions;
+                            scope.showNextWithdraw = false;
                             scope.formData.transactionAmount = data.amount;
                             if (data.paymentDetailData) {
                                 if (data.paymentDetailData.paymentType) {
@@ -367,6 +385,7 @@
                                 scope.labelName = 'label.heading.savingaccounttransactionDate';
                                 scope.modelName = 'feeOnMonthDayFullDate';
                                 scope.showDateField = true;
+                                scope.showNextWithdraw = false;
                                 scope.showAnnualAmountField = true;
                                 scope.showAmountField = false;
                             } else {
@@ -414,6 +433,7 @@
                        scope.showDateField = true;
                        scope.showNoteField = false;
                        scope.showReasonForBlock = true;
+                       scope.showNextWithdraw = false;
                        scope.isTransaction = true;
                        scope.transactionAmountField = true;
                        scope.showPaymentDetails = false;
@@ -439,6 +459,9 @@
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
                 }
+                this.formData.nextWithdrawalDate=null;
+                Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
+
                 if (scope.action == "deposit" || scope.action == "withdrawal" || scope.action == "holdAmount" || scope.action == "modifytransaction" || scope.action=="postInterestAsOn" || scope.action=="postAccrualInterestAsOn" || scope.action == "unlock") {
                     if (scope.action == "withdrawal") {
                         if (this.formData.transactionDate) {
@@ -525,6 +548,9 @@
                             this.formData.rejectedOnDate = dateFilter(this.formData.rejectedOnDate, scope.df);
                         }
                     } else if (scope.action == "activate") {
+                         if (this.formData.nextWithdrawalDate) {
+                            this.formData.nextWithdrawalDate = dateFilter(this.formData.nextWithdrawalDate, scope.df);
+                         }
                         if (this.formData.activatedOnDate) {
                             this.formData.activatedOnDate = dateFilter(this.formData.activatedOnDate, scope.df);
                         }

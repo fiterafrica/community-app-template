@@ -76,6 +76,17 @@
 	            	<input id="nominalAnnualInterestRate" name="nominalAnnualInterestRate" type="text" class="form-control" 
 	                	ng-model="formData.nominalAnnualInterestRate" required late-validate/>
 	            </div>
+
+				<label class="control-label col-sm-2 col-sm-offset-2">{{ 'label.savingsproduct.withdraw.frequency' | translate }}
+					<i class="fa fa-question-circle" uib-tooltip="{{'label.savingsproduct.withdraw.frequency' | translate}}" tooltip-append-to-body="true"></i>
+				</label>
+				<div class="col-sm-2">
+					<select id="withdrawFrequencyOptions" class="form-control"
+							ng-model="formData.withdrawalFrequency"
+							ng-options="type.id as type.value for type in product.withdrawalFrequencyOptions"
+							ng-change="savingproduct.withdrawFrequency.value = formValue(product.withdrawalFrequencyOptions,formData.withdrawalFrequency)"
+							value="{{type.id}}"></select>
+				</div>
 	            <div class="col-sm-2">
 	                <form-validate valattributeform="createsavingproductform" valattribute="nominalAnnualInterestRate"/>
                 </div>

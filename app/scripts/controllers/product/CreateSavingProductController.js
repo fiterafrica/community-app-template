@@ -34,8 +34,6 @@
                if(accountMappingForPaymentVar.indexOf("income") > -1){
                 scope.paymentOptions = scope.paymentOptions.concat(scope.incomeAccountOptions);
                 }
-                
-
 
                 scope.formData.currencyCode = data.currencyOptions[0].code;
                 scope.formData.digitsAfterDecimal = data.currencyOptions[0].decimalPlaces;

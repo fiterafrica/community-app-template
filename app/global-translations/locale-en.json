@@ -3884,6 +3884,8 @@
   "label.input.allproducts": "All Products",
   "label.heading.overduepenalitycharge": "Overdue Charges",
   "label.selectoverduecharge": "Select Overdue Charge",
+  "label.savingsproduct.withdraw.frequency": "Withdraw Frequency",
+  "label.savingsproduct.next.free.withdraw": "Next free Withdraw",
   "error.msg.charge.frequency.cannot.be.updated.it.is.used.in.loan": "Charge frequency can't be updated as it is used in Loan Products",
   "error.msg.charge.must.be.penalty": "Overdue Charge must be a penalty ",
   "grace-on-penalty-posting": "Grace On Penalty Posting",

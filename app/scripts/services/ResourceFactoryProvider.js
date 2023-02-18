@@ -394,6 +394,10 @@
                     savingsTrxnsTemplateResource: defineResource(apiVer + "/savingsaccounts/:savingsId/transactions/template", {savingsId: '@savingsId'}, {
                         get: {method: 'GET', params: {savingsId: '@savingsId'}}
                     }),
+
+                     savingsNextWithdrawalDate: defineResource(apiVer + "/savingsproducts/:productId/nextwithdrawaldate", {productId: '@productId'}, {
+                                            get: {method: 'GET', params: {productId: '@productId'}}
+                                        }),
                     savingsTrxnsResource: defineResource(apiVer + "/savingsaccounts/:savingsId/transactions/:transactionId", {savingsId: '@savingsId', transactionId: '@transactionId'}, {
                         get: {method: 'GET', params: {savingsId: '@savingsId', transactionId: '@transactionId'}}
                     }),
