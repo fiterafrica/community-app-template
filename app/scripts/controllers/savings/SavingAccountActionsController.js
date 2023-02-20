@@ -459,8 +459,6 @@
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
                 }
-                this.formData.nextWithdrawalDate=null;
-                Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
 
                 if (scope.action == "deposit" || scope.action == "withdrawal" || scope.action == "holdAmount" || scope.action == "modifytransaction" || scope.action=="postInterestAsOn" || scope.action=="postAccrualInterestAsOn" || scope.action == "unlock") {
                     if (scope.action == "withdrawal") {
@@ -504,9 +502,12 @@
                     }
                     params.savingsId = scope.accountId;
 
+                    this.formData.nextWithdrawalDate=null;
+                    Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
                     resourceFactory.savingsTrxnsResource.save(params, this.formData, function (data) {
                         location.path('/viewsavingaccount/' + data.savingsId);
                     });
+
                 } else if (scope.action == "editsavingcharge") {
                     if (this.formData.feeOnMonthDayFullDate) {
                         this.formData.feeOnMonthDay = dateFilter(this.formData.feeOnMonthDayFullDate, scope.df);
@@ -514,11 +515,15 @@
                         this.formData.feeOnMonthDay = this.formData.feeOnMonthDay.substring(0, this.formData.feeOnMonthDay.length - 5);
                         delete this.formData.feeOnMonthDayFullDate;
                     }
+                    this.formData.nextWithdrawalDate=null;
+                    Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
                     resourceFactory.savingsResource.update({accountId: routeParams.id, resourceType: 'charges', chargeId: routeParams.chargeId}, this.formData,
                         function (data) {
                             location.path('/viewsavingaccount/' + data.savingsId);
                         });
                 } else if (scope.action == "deletesavingcharge") {
+                this.formData.nextWithdrawalDate=null;
+                Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
                     resourceFactory.savingsResource.delete({accountId: routeParams.id, resourceType: 'charges', chargeId: routeParams.chargeId}, this.formData,
                         function (data) {
                             location.path('/viewsavingaccount/' + data.savingsId);
@@ -530,6 +535,8 @@
                     } else if(this.formData.inactivationOnDate){
                         this.formData.inactivationOnDate = dateFilter(this.formData.inactivationOnDate, scope.df);
                     }
+                    this.formData.nextWithdrawalDate=null;
+                    Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
                     resourceFactory.savingsResource.save(params, this.formData, function (data) {
                         location.path('/viewsavingaccount/' + data.savingsId);
                     });
@@ -538,18 +545,22 @@
                     if (scope.action == "approve") {
                         if (this.formData.approvedOnDate) {
                             this.formData.approvedOnDate = dateFilter(this.formData.approvedOnDate, scope.df);
+                            this.formData.nextWithdrawalDate=null;
                         }
                     } else if (scope.action == "withdrawnByApplicant") {
                         if (this.formData.withdrawnOnDate) {
                             this.formData.withdrawnOnDate = dateFilter(this.formData.withdrawnOnDate, scope.df);
+                            this.formData.nextWithdrawalDate=null;
                         }
                     } else if (scope.action == "reject") {
                         if (this.formData.rejectedOnDate) {
                             this.formData.rejectedOnDate = dateFilter(this.formData.rejectedOnDate, scope.df);
+                            this.formData.nextWithdrawalDate=null;
                         }
                     } else if (scope.action == "activate") {
                          if (this.formData.nextWithdrawalDate) {
                             this.formData.nextWithdrawalDate = dateFilter(this.formData.nextWithdrawalDate, scope.df);
+
                          }
                         if (this.formData.activatedOnDate) {
                             this.formData.activatedOnDate = dateFilter(this.formData.activatedOnDate, scope.df);
@@ -558,14 +569,17 @@
                         params = {accountId: routeParams.id, resourceType: 'charges', chargeId: routeParams.chargeId, command: 'paycharge'};
                         if (this.formData.dueDate) {
                             this.formData.dueDate = dateFilter(this.formData.dueDate, scope.df);
+                            this.formData.nextWithdrawalDate=null;
                         }
                     } else if (scope.action == "close") {
                         if (this.formData.closedOnDate) {
                             this.formData.closedOnDate = dateFilter(this.formData.closedOnDate, scope.df);
+                            this.formData.nextWithdrawalDate=null;
 
                         }
                     }
 
+                    Object.keys( this.formData).forEach((k) =>  this.formData[k] == null && delete  this.formData[k]);
                     resourceFactory.savingsResource.save(params, this.formData, function (data) {
                         location.path('/viewsavingaccount/' + data.savingsId);
                     });
