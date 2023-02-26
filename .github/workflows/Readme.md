@@ -1,4 +1,4 @@
-# Purpose of Automation
+# Purpose of Automation...
 In this automation workflow the whenever there is a new commit on the develop branch it is going to
  - build it 
  - deploy to the AWS S3 which is a file storage system
