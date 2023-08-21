@@ -86,9 +86,9 @@
             };
 
             
-            scope.clientOptions = function(value){
+           scope.clientOptions = function(value){
                 var deferred = $q.defer();
-                resourceFactory.clientResource.getAllClientsWithoutLimit({displayName: value, orderBy : 'displayName', officeId : scope.formData.officeId,
+                resourceFactory.clientResource.getAllClientsWithoutLimit({displayName: value, accountNo: value, orderBy : 'displayName', officeId : scope.formData.officeId,
                 sortOrder : 'ASC', orphansOnly : true}, function (data) {
                     deferred.resolve(data.pageItems);
                 });
