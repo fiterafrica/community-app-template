@@ -259,8 +259,21 @@
                 ];
             };
 
+            scope.savingsAccountKeys = function () {
+                scope.templateKeys = ["{{savingsAccount.client.id}}",
+                                    "{{savingsAccount.accountNumber}}",
+                                    "{{savingsAccount.externalId}}",
+                                    "{{savingsAccount.product.name}}",
+                                    "{{savingsAccount.product.id}}"];
+                scope.templateEntity = [
+                    {"entityName": "SavingsAccount",
+                        "templateKeys": scope.templateKeys}
+                ];
+                CKEDITOR.instances.templateeditor.setData('');
+            };
+
             scope.entityChange = function (entityId) {
-                if (entityId !== 0) {
+                if (entityId === 1) {
                     scope.mappers.splice(0, 1, {
                         mappersorder: 0,
                         mapperskey: "loan",
@@ -269,7 +282,7 @@
                     });
                     scope.loanKeys();
                     scope.templateKeyEntity = "Loan";
-                } else {
+                } else if (entityId === 0){
                     scope.templateKeyEntity = "Client";
                     scope.mappers.splice(0, 1, {
                         mappersorder: 0,
@@ -278,6 +291,15 @@
                         defaultAddIcon: 'true'
                     });
                     scope.clientKeys();
+                } else if (entityId === 2){
+                    scope.templateKeyEntity = "SavingsAccount";
+                    scope.mappers.splice(0, 1, {
+                        mappersorder: 0,
+                        mapperskey: "savingsaccount",
+                        mappersvalue: "savingsaccounts/{{savingsAccountId}}?tenantIdentifier=" + $rootScope.tenantIdentifier,
+                        defaultAddIcon: 'true'
+                    });
+                    scope.savingsAccountKeys();
                 }
             };
 
