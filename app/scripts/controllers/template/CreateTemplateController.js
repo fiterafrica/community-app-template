@@ -21,7 +21,8 @@
             });
 
             scope.clientKeys = function () {
-                scope.templateKeys = ["{{client.accountNumber}}",
+                scope.templateKeys = ["{{client.id}}",
+                                        "{{client.accountNumber}}",
                                         "{{client.transferToOffice}}",
                                         "{{client.status}}",
                                         "{{client.subStatus}}",
