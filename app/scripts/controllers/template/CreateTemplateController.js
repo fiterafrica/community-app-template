@@ -63,10 +63,28 @@
                                         "{{client.reopenedBy}}",
                                         "{{client.proposedTransferDate}}",
                                         "{{client.clientCollateralManagements}}"];
-                                        scope.additionalInfo = ["{{activity}}","{{time}}","{{clientId}}","{{loanId}}"];
+                                        scope.additionalInfo = ["{{activity}}","{{time}}","{{clientId}}","{{loanId}}", "{{bvn}}"];
                 scope.templateEntity = [
                     {"entityName": "Client",
                         "templateKeys": scope.templateKeys
+                    },                    {
+                        "entityName": "SavingsAccount",
+                        "templateKeys": scope.templateKeys},
+                    {
+                        "entityName": "Loan",
+                        "templateKeys": scope.loanTemplateKeys
+                    },
+                    {
+                        "entityName": "Repayment Schedule",
+                        "templateKeys": scope.repaymentTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan Product",
+                        "templateKeys": scope.loanProductTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan Summary",
+                        "templateKeys": scope.loanSummaryTemplateKeys
                     },
                     {"entityName": "Additional Info",
                         "templateKeys": scope.additionalInfo
@@ -267,12 +285,31 @@
                                     "{{savingsAccount.externalId}}",
                                     "{{savingsAccount.product.name}}",
                                     "{{savingsAccount.product.id}}"];
-                scope.additionalInfo = ["{{activity}}","{{time}}","{{clientId}}","{{loanId}}"];
 
                 scope.templateEntity = [
                     {
                         "entityName": "SavingsAccount",
                         "templateKeys": scope.templateKeys},
+                    {
+                        "entityName": "Loan",
+                        "templateKeys": scope.loanTemplateKeys
+                    },
+                    {
+                        "entityName": "Repayment Schedule",
+                        "templateKeys": scope.repaymentTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan Product",
+                        "templateKeys": scope.loanProductTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan Summary",
+                        "templateKeys": scope.loanSummaryTemplateKeys
+                    },
+                    {
+                        "entityName": "Client",
+                        "templateKeys": scope.templateKeys
+                    },
                     {
                         "entityName": "Additional Info",
                         "templateKeys": scope.additionalInfo
