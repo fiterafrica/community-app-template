@@ -260,14 +260,22 @@
             };
 
             scope.savingsAccountKeys = function () {
-                scope.templateKeys = ["{{savingsAccount.client.id}}",
+                scope.templateKeys = ["{{savingsAccount.id}}",
+                                    "{{savingsAccount.client.id}}",
                                     "{{savingsAccount.accountNumber}}",
                                     "{{savingsAccount.externalId}}",
                                     "{{savingsAccount.product.name}}",
                                     "{{savingsAccount.product.id}}"];
+                scope.additionalInfo = ["{{activity}}","{{time}}","{{clientId}}","{{loanId}}"];
+
                 scope.templateEntity = [
-                    {"entityName": "SavingsAccount",
-                        "templateKeys": scope.templateKeys}
+                    {
+                        "entityName": "SavingsAccount",
+                        "templateKeys": scope.templateKeys},
+                    {
+                        "entityName": "Additional Info",
+                        "templateKeys": scope.additionalInfo
+                    }
                 ];
                 CKEDITOR.instances.templateeditor.setData('');
             };
