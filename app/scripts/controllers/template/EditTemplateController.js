@@ -49,6 +49,7 @@
                     scope.loanKeys();
                     scope.savingsAccountKeys();
                     scope.groupKeys();
+                    console.log(data.template.text);
                 CKEDITOR.instances.templateeditor.insertHtml(data.template.text);
             });
 
@@ -127,11 +128,9 @@
                         "templateKeys": scope.additionalInfo
                     }
                 ];
-                CKEDITOR.instances.templateeditor.setData('');
             };
 
             scope.loanKeys = function () {
-                //CKEDITOR.instances.templateeditor.setData('');
                 scope.loanProductTemplateKeys = ["{{loan.loanProduct.fund}}",
                                                 "{{loan.loanProduct.transactionProcessingStrategy}}",
                                                 "{{loan.loanProduct.productName}}",
@@ -321,7 +320,6 @@
                         "templateKeys": scope.additionalInfo
                     }
                 ];
-                CKEDITOR.instances.templateeditor.setData('');
             };
 
             scope.savingsAccountKeys = function () {
@@ -403,7 +401,6 @@
                         "templateKeys": scope.additionalInfo
                     }
                 ];
-                CKEDITOR.instances.templateeditor.setData('');
             };
 
             scope.groupKeys = function () {
@@ -459,7 +456,6 @@
                         "templateKeys": scope.additionalInfo
                     }
                 ];
-                CKEDITOR.instances.templateeditor.setData('');
             };
 
             scope.entityChange = function (entityId) {
@@ -481,6 +477,7 @@
                         defaultAddIcon: 'true'
                     });
                     scope.clientKeys();
+                    scope.templateKeyEntity = "Client";
                 } else if (entityId === 2){
                     scope.templateKeyEntity = "SavingsAccount";
                     scope.mappers.splice(0, 1, {
@@ -490,6 +487,7 @@
                         defaultAddIcon: 'true'
                     });
                     scope.savingsAccountKeys();
+                    scope.templateKeyEntity = "Client";
                 }
                 else if (entityId === 3){
                     scope.templateKeyEntity = "Group";
@@ -500,6 +498,7 @@
                         defaultAddIcon: 'true'
                     });
                     scope.groupKeys();
+                    scope.templateKeyEntity = "Group";
                 }
             }
 
