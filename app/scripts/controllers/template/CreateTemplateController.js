@@ -12,6 +12,9 @@
                 scope.formData.type = data.types[0].id;
                 scope.templateKeyEntity = "Client";
                 scope.clientKeys();
+                scope.loanKeys();
+                scope.savingsAccountKeys();
+                scope.groupKeys();
                 scope.mappers.push({
                     mappersorder: 0,
                     mapperskey: "client",
@@ -21,7 +24,7 @@
             });
 
             scope.clientKeys = function () {
-                scope.templateKeys = ["{{client.id}}",
+                scope.clientTemplateKeys = ["{{client.id}}",
                                         "{{client.accountNumber}}",
                                         "{{client.transferToOffice}}",
                                         "{{client.status}}",
@@ -66,10 +69,11 @@
                                         scope.additionalInfo = ["{{activity}}","{{time}}","{{clientId}}","{{loanId}}", "{{bvn}}","{{resourceId}}"];
                 scope.templateEntity = [
                     {"entityName": "Client",
-                        "templateKeys": scope.templateKeys
+                        "templateKeys": scope.clientTemplateKeys
                     },                    {
                         "entityName": "SavingsAccount",
-                        "templateKeys": scope.templateKeys},
+                        "templateKeys": scope.savingsAccountTemplateKeys
+                    },
                     {
                         "entityName": "Loan",
                         "templateKeys": scope.loanTemplateKeys
@@ -86,6 +90,10 @@
                         "entityName": "Loan Summary",
                         "templateKeys": scope.loanSummaryTemplateKeys
                     },
+                    {
+                        "entityName": "Group",
+                        "templateKeys": scope.groupTemplateKeys
+                    },
                     {"entityName": "Additional Info",
                         "templateKeys": scope.additionalInfo
                     }
@@ -94,7 +102,7 @@
             };
 
             scope.loanKeys = function () {
-                CKEDITOR.instances.templateeditor.setData('');
+                //CKEDITOR.instances.templateeditor.setData('');
                 scope.loanProductTemplateKeys = ["{{loan.loanProduct.fund}}",
                                                 "{{loan.loanProduct.transactionProcessingStrategy}}",
                                                 "{{loan.loanProduct.productName}}",
@@ -269,17 +277,26 @@
                     {"entityName": "Loan Summary",
                         "templateKeys": scope.loanSummaryTemplateKeys
                     },
+                    {
+                        "entityName": "Savings Account",
+                        "templateKeys": scope.savingsAccountTemplateKeys
+                    },
                     {"entityName": "Client",
-                    "templateKeys": scope.templateKeys
+                    "templateKeys": scope.clientTemplateKeys
+                    },
+                    {
+                        "entityName": "Group",
+                        "templateKeys": scope.groupTemplateKeys
                     },
                     {"entityName": "Additional Info",
                         "templateKeys": scope.additionalInfo
                     }
                 ];
+                CKEDITOR.instances.templateeditor.setData('');
             };
 
             scope.savingsAccountKeys = function () {
-                scope.templateKeys = ["{{savingsAccount.id}}",
+                scope.savingsAccountTemplateKeys = ["{{savingsAccount.id}}",
                 "{{savingsAccount.client.id}}",
                 "{{savingsAccount.accountNumber}}",
                 "{{savingsAccount.externalId}}",
@@ -326,8 +343,8 @@
 
                 scope.templateEntity = [
                     {
-                        "entityName": "SavingsAccount",
-                        "templateKeys": scope.templateKeys},
+                        "entityName": "Savings Account",
+                        "templateKeys": scope.savingsAccountTemplateKeys},
                     {
                         "entityName": "Loan",
                         "templateKeys": scope.loanTemplateKeys
@@ -346,7 +363,67 @@
                     },
                     {
                         "entityName": "Client",
-                        "templateKeys": scope.templateKeys
+                        "templateKeys": scope.clientTemplateKeys
+                    },
+                    {
+                        "entityName": "Group",
+                        "templateKeys": scope.groupTemplateKeys
+                    },
+                    {
+                        "entityName": "Additional Info",
+                        "templateKeys": scope.additionalInfo
+                    }
+                ];
+                CKEDITOR.instances.templateeditor.setData('');
+            };
+
+            scope.groupKeys = function () {
+                scope.groupTemplateKeys = ["{{group.id}}",
+                "{{group.name}}",
+                "{{group.accountNumber}}",
+                "{{group.externalId}}",
+                "{{group.status}}",
+                "{{group.activationDate}}",
+                "{{group.office}}",
+                "{{group.office.id}}",
+                "{{group.staff}}",
+                "{{group.staff.id}}",
+                "{{group.parent}}",
+                "{{group.parent.id}}",
+                "{{group.groupLevel}}",
+                "{{group.groupLevel.id}}",
+                "{{group.hierarchy}}",
+                "{{group.submittedOnDate}}"
+                ];
+
+                scope.templateEntity = [
+                    {
+                        "entityName": "Group",
+                        "templateKeys": scope.groupTemplateKeys
+                    },
+                    {
+                        "entityName": "SavingsAccount",
+                        "templateKeys": scope.savingsAccountTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan",
+                        "templateKeys": scope.loanTemplateKeys
+                    },
+                    {
+                        "entityName": "Repayment Schedule",
+                        "templateKeys": scope.repaymentTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan Product",
+                        "templateKeys": scope.loanProductTemplateKeys
+                    },
+                    {
+                        "entityName": "Loan Summary",
+                        "templateKeys": scope.loanSummaryTemplateKeys
+                    },
+                    {
+                        "entityName": "Client",
+                        "templateKeys": scope.clientTemplateKeys
                     },
                     {
                         "entityName": "Additional Info",
@@ -375,8 +452,11 @@
                         defaultAddIcon: 'true'
                     });
                     scope.clientKeys();
+                    scope.loanKeys();
+                    scope.savingsAccountKeys();
+                    scope.groupKeys();
                 } else if (entityId === 2){
-                    scope.templateKeyEntity = "SavingsAccount";
+                    scope.templateKeyEntity = "Savings Account";
                     scope.mappers.splice(0, 1, {
                         mappersorder: 0,
                         mapperskey: "savingsaccount",
@@ -384,6 +464,16 @@
                         defaultAddIcon: 'true'
                     });
                     scope.savingsAccountKeys();
+                }
+                else if (entityId === 3){
+                    scope.templateKeyEntity = "Group";
+                    scope.mappers.splice(0, 1, {
+                        mappersorder: 0,
+                        mapperskey: "group",
+                        mappersvalue: "group/{{groupId}}?tenantIdentifier=" + $rootScope.tenantIdentifier,
+                        defaultAddIcon: 'true'
+                    });
+                    scope.groupKeys();
                 }
             };
 
