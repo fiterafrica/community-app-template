@@ -128,6 +128,13 @@
                 return collapsed;
             };
 
+            scope.exportexcel =  function () {
+                const aboutData = 'Test_Excel' + scope.reportName+'.xlsx';
+                let htmltable = angular.element(document).find('#report-table');
+                const html = htmltable[0].outerHTML;
+                window.open('data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(html), aboutData);  
+            }
+
             function invalidDate(checkDate) {
                 // validates for yyyy-mm-dd returns true if invalid, false is valid
                 var dateformat = /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/;
