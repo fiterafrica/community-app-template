@@ -67,6 +67,42 @@
                     </div>
                     <form-validate valattributeform="clientotherinfoform" valattribute="yearArrivedInHostCountryId"/>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="nationalIdentificationNumber">{{ 'label.input.nationalIdentificationNumber' | translate }}
+                    </label>
+
+                    <div class="col-sm-3">
+                        <input id="nationalIdentificationNumber" name="nationalIdentificationNumber" type="text" class="form-control" ng-model="formData.nationalIdentificationNumber" late-validate>
+                    </div>
+                    <form-validate valattributeform="clientotherinfoform" valattribute="nationalIdentificationNumber"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="passportNumber">{{ 'label.input.passportNumber' | translate }}
+                    </label>
+
+                    <div class="col-sm-3">
+                        <input id="passportNumber" name="passportNumber" type="text" class="form-control" ng-model="formData.passportNumber" late-validate>
+                    </div>
+                    <form-validate valattributeform="clientotherinfoform" valattribute="passportNumber"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="bankAccountNumber">{{ 'label.input.bankAccountNumber' | translate }}
+                    </label>
+
+                    <div class="col-sm-3">
+                        <input id="bankAccountNumber" name="bankAccountNumber" type="text" class="form-control" ng-model="formData.bankAccountNumber" late-validate>
+                    </div>
+                    <form-validate valattributeform="clientotherinfoform" valattribute="bankAccountNumber"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="bankName">{{ 'label.input.bankName' | translate }}
+                    </label>
+
+                    <div class="col-sm-3">
+                        <input id="bankName" name="bankName" type="text" class="form-control" ng-model="formData.bankName" late-validate>
+                    </div>
+                    <form-validate valattributeform="clientotherinfoform" valattribute="bankName"/>
+                </div>
                 <div class="col-md-offset-3">
                     <button id="cancel" type="reset" class="btn btn-default" ng-click="cancel()">{{ 'label.button.cancel' | translate
                         }}
