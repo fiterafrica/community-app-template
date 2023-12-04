@@ -2453,7 +2453,7 @@
   "validation.msg.fixeddepositaccount.submittedOnDate.cannot.be.blank": "Submitted on date is mandatory.",
   "error.msg.officeToAccountMapping.not.found": "Mapping for office with Id `{{params[0].value}}` does not exist for an account of type `{{params[1].value}}`",
   "validation.msg.savingsproduct.taxGroupId.cannot.be.blank": "Tax group is required for with hold tax",
-  "error.msg.savingsaccount.withdrawal.charge.payment.type.cannot.be.blank": "Payment Type cannot be blank for Charge ({{params[0].value}})",
+  "error.msg.savingsaccount.withdrawl.charge.payment.type.cannot.be.blank": "Payment Type cannot be blank for Charge ({{params[0].value}})",
   "#-------": "------------",
   "#Admin-Users": "....",
   "#Headings": "..",
