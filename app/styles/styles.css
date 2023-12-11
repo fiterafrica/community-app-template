@@ -4519,8 +4519,8 @@ a.btn.disabled, fieldset[disabled] a.btn {
 /* line 71, ../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_buttons.scss */
 .btn-primary {
   color: #fff;
-  background-color: #4f99ed;
-  border-color: #388ceb;
+  background-color: #312C60;
+  border-color: #312C60;
 }
 /* line 11, ../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:focus, .btn-primary.focus {
@@ -13308,8 +13308,8 @@ a.btn.disabled, fieldset[disabled] a.btn {
 /* line 71, ../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_buttons.scss */
 .btn-primary {
   color: #fff;
-  background-color: #4f99ed;
-  border-color: #388ceb;
+  background-color: #312C60;
+  border-color: #312C60;
 }
 /* line 11, ../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:focus, .btn-primary.focus {
