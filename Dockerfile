@@ -1,4 +1,4 @@
-FROM timbru31/ruby-node:2.7 as builder
+FROM timbru31/ruby-node:3.1 as builder
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
@@ -10,7 +10,6 @@ RUN npm install -g grunt-cli
 COPY . /usr/src/app
 RUN bower --allow-root install
 RUN npm install --legacy-peer-deps
-RUN gem update --system
 RUN bundle install
 RUN grunt prod
 
