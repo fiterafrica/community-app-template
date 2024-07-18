@@ -10,6 +10,7 @@ RUN npm install -g grunt-cli
 COPY . /usr/src/app
 RUN bower --allow-root install
 RUN npm install --legacy-peer-deps
+RUN gem update --system 3.3.22
 RUN bundle install
 RUN grunt prod
 
