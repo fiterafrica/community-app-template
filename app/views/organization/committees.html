@@ -1,0 +1,34 @@
+<div class="content-container" ng-controller="CommitteesController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.anchor.managecommittees' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <div class="pull-right">
+                    <a href="#/createcommittee" class="btn btn-primary" has-permission='CREATE_COMMITTEE'><i class="fa fa-plus "></i>&nbsp;&nbsp;{{'label.button.createcommittee' | translate}}</a>&nbsp;&nbsp;
+                </div>
+            </div>
+            <br>
+            <div class="clear"></div>
+            <div>
+                 <table class="table">
+                    <thead>
+                    <tr class="graybg">
+                        <th>{{'label.heading.committee' | translate}}</th>
+                        <th>{{'label.heading.committeeeUsers' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="pointer-main" dir-paginate="committee in committees | orderBy:'name':reverse  | filter:filterText |  itemsPerPage: CommitteesPerPage">
+                        <td class="pointer" data-ng-click="routeTo(committee.id)">{{committee.name}}</td>
+                        <td class="pointer" data-ng-click="routeTo(committee.id)">{{committee.selectedUsers.length}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls boundary-links="true" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

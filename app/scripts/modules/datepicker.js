@@ -311,8 +311,8 @@ angular.module('modified.datepicker', ['strap.position'])
                 function refill(updateSelected) {
                     var date = null, valid = true;
 
+                    date = new Date(ngModel.$modelValue);
                     if (ngModel.$modelValue) {
-                        date = new Date(ngModel.$modelValue);
 
                         if (isNaN(date)) {
                             valid = false;

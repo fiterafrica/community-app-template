@@ -1,0 +1,46 @@
+<div ng-controller="ViewBankAccountController">
+    <div class="card">
+        <api-validate></api-validate>
+
+        <div class="content">
+            <div class="toolbar">
+                <ul class="breadcrumb">
+                    <li><a href="#/bankaccounts">{{'label.anchor.bankaccounts' | translate}}</a></li>
+                    <li class="active">{{'label.anchor.bankaccount.details' | translate}}</li>
+                </ul>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="alert alert-info">
+                        <span>{{'label.input.accountnumber'|translate}}: <span class="pull-right">{{bankAccountData.accountNumber}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.agency'|translate}}: <span class="pull-right">{{bankAccountData.agency.name}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.bank'|translate}}: <span class="pull-right">{{bankAccountData.bank.name}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.glaccount.name'|translate}}: <span class="pull-right">{{bankAccountData.glAccount.name}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.description'|translate}}: <span class="pull-right">{{bankAccountData.description}}</span></span>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-offset-3">
+                    <a id="cancel" href="#/bankaccounts">
+                        <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}
+                        </button>
+                    </a>
+                    <button id="delete" has-permission='DELETE_BANKACCOUNT' ng-click="deleteBankAccount(bankAccountData.id)"
+                            class="btn btn-danger">{{'label.button.delete' | translate}}
+                    </button>
+                </div>
+
+            </div>
+            <hr/>
+        </div>
+    </div>
+</div>

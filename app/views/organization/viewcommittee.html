@@ -1,0 +1,53 @@
+<div class="content-container" ng-controller="ViewCommitteeController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/committees">{{'label.anchor.managecommittees' | translate}}</a></li>
+        <li class="active">{{committee.name}}</li>
+    </ul>
+    <script type="text/ng-template" id="deletecommittee.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'label.heading.delete' | translate}}</h3>
+        </div>
+        <div class="modal-body ">
+            <api-validate></api-validate>
+            <br>
+            <button class="btn btn-default" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="delete()">{{'label.button.confirm' | translate}}</button>
+        </div>
+    </script>
+    <div class="card">
+        <div class="content">
+            <uib-tabset class="overflowhidden marginbottom0 scrollable" tabset-name="agencyTabset" scrollable>
+                <uib-tab heading="{{'label.heading.general' | translate}}">
+                    <div class="container-fluid">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row primarydiv">
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <a href="#/editcommittee/{{committee.id}}" class="btn btn-primary" has-permission='UPDATE_COMMITTEE'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+                                            'label.button.edit' | translate }}</a>
+                                        <button type="button" ng-click="deletecommittee()" class="btn btn-danger" has-permission='DELETE_COMMITTEE'>
+                                            <i class="fa fa-trash-o"></i> {{'label.button.delete' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3><strong>{{committee.name}}</strong></h3>
+                            <table class="table-bordered table view-table" style="width: 350px">
+                                <tr>
+                                    <td>{{ 'label.heading.committee' | translate }}</td>
+                                    <td>{{committee.name | DotRemove}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'label.heading.committeeeUsers' | translate }}</td>
+                                    <td>{{committee.selectedUsers.length}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

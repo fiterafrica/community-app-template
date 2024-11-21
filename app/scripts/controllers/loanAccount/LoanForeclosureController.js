@@ -46,8 +46,8 @@
                 transactionAmount += parseFloat(scope.foreclosuredata.interestPortion);
                 transactionAmount += parseFloat(scope.foreclosuredata.feeChargesPortion);
                 transactionAmount += parseFloat(scope.foreclosuredata.penaltyChargesPortion);
-                scope.formData.transactionAmount = $filter('number')(transactionAmount, 2);
-                scope.formData.transactionAmount =  scope.formData.transactionAmount.replace(/,/g,"");
+                scope.formData.transactionAmount = transactionAmount;
+                //scope.formData.transactionAmount =  scope.formData.transactionAmount.replace(/,/g,"");
             };
 
             scope.reCalculateTransactionAmount = function(){
@@ -55,8 +55,8 @@
                 var transactionAmount = 0;
                 transactionAmount += parseFloat(scope.formData.transactionAmount);
                 transactionAmount -= parseFloat(scope.formData.totalWaivedAmount);
-                scope.formData.transactionAmount = $filter('number')(transactionAmount, 2);
-                scope.formData.transactionAmount =  scope.formData.transactionAmount.replace(/,/g,"");
+                scope.formData.transactionAmount = transactionAmount;
+                //scope.formData.transactionAmount =  scope.formData.transactionAmount.replace(/,/g,"");
             };
 
             scope.submit = function () {

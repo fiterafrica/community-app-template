@@ -51,12 +51,19 @@
                 scope.formData = {
                     name: scope.product.name,
                     shortName: scope.product.shortName,
+                    ageLimitWarning: data.ageLimitWarning,
+                    ageLimitBlock: data.ageLimitBlock,
+                    daysLimitAddOn: data.daysLimitAddOn,
+                    guaranteePercentage: data.guaranteePercentage,
+                    paymentToleranceLimit: data.paymentToleranceLimit,
                     description: scope.product.description,
                     fundId: scope.product.fundId,
                     description: scope.product.description,
                     includeInBorrowerCycle: scope.product.includeInBorrowerCycle,
                     useBorrowerCycle: scope.product.useBorrowerCycle,
                     currencyCode: scope.product.currency.code,
+                    ownerType: scope.product.ownerTypeOption.id,
+                    addNewCyclesEnabled: scope.product.addNewCyclesEnabled,
                     digitsAfterDecimal: scope.product.currency.decimalPlaces,
                     inMultiplesOf: scope.product.currency.inMultiplesOf,
                     principal: scope.product.principal,
@@ -100,6 +107,7 @@
                     installmentAmountInMultiplesOf: scope.product.installmentAmountInMultiplesOf,
                     canDefineInstallmentAmount : scope.product.canDefineInstallmentAmount,
                     isEqualAmortization : scope.product.isEqualAmortization,
+                    requireCommitteeApproval : data.requireCommitteeApproval,
                 };
 
                 if (scope.product.isInterestRecalculationEnabled) {

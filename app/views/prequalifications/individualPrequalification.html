@@ -1,0 +1,66 @@
+<div ng-controller="IndividualPrequalificatoinFormController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/prequalificationsmenu">{{'label.anchor.prequalifications' | translate}}</a></li>
+            <li class="active">{{'label.heading.newgroup.prequalification' | translate}}</li>
+        </ul>
+    </div>
+    <div class="card">
+        <api-validate></api-validate>
+
+        <div class="content">
+            <legend>{{ 'label.heading.indidualcredit.prequalification' | translate }}</legend>
+
+            <form name="memberDetailsForm" novalidate="" rc-submit="prequalify()">
+
+                <table class="width100" style="table-layout: fixed">
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" name="name"
+                                   placeholder="{{'label.heading.clientname'|translate}}"
+                                   data-ng-model="membersForm.name" id="clientname" required>
+                            <form-validate valattributeform="memberDetailsForm" valattribute="name"/>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="dpi"
+                                   placeholder="{{'label.input.dpi' | translate}}" data-ng-model="membersForm.dpi"
+                                   id="dpi" required>
+                            <form-validate valattributeform="memberDetailsForm" valattribute="dpi"/>
+                        </td>
+                        <td>
+                            <input id="dob" type="text" placeholder="{{'label.input.dob'|translate}}" name="dob"
+                                   datepicker-pop="dd MMMM yyyy"
+                                   ng-model="membersForm.dob" is-open="opened1" min="minDate" max="restrictDate"
+                                   class="form-control" required/>
+                            <form-validate valattributeform="memberDetailsForm" valattribute="dob"/>
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="amount"
+                                   placeholder="{{'label.input.amount.requested' |translate}}"
+                                   data-ng-model="membersForm.amount" id="amount" required>
+                            <form-validate valattributeform="memberDetailsForm" valattribute="amount"/>
+                        </td>
+
+                        <td>
+                            <select id="puente" ng-model="membersForm.puente"
+                                    ng-options="item.value as item.name for item in yesNo" value="{{group.value}}"
+                                    class="form-control" required="required" required>
+                                <option style="display:none" value="">{{'label.input.work.with.puente' | translate}}
+                                </option>
+                            </select>
+                            <form-validate valattributeform="memberDetailsForm" valattribute="puente"/>
+                        </td>
+
+                        <td class="text-center">
+                            <button id="save" class="btn btn-primary" type="submit"><i class="fa fa-plus">
+                                {{'label.button.prequalify' | translate}}</i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>

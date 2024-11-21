@@ -1,0 +1,149 @@
+<div class="content-container" ng-controller="AddToBlacklistController">
+    <ul class="breadcrumb">
+        <li><a href="#/blacklist">{{'label.anchor.blacklist' | translate}}</a></li>
+    </ul>
+    <form name="blacklistForm" novalidate="" class="card form-horizontal well" rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.anchor.blacklistClient' | translate}}</legend>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="clientName">{{'label.input.clientName' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="clientName" type="text" name="clientName" ng-model="formData.clientName"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="clientidentifierform" valattribute="dpi"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dpiNum">{{'label.input.dpi' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="dpiNum" type="text" name="dpi" ng-model="formData.dpiNumber"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="dpi"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dpiNum">{{'label.input.nit' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <input id="nit" type="text" name="nit" ng-model="formData.nit"
+                           class="form-control" />
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="typfcn">{{'label.input.typification' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select id="typfcn" ng-model="formData.typification"
+                            ng-options="typification.id as typification.name  |translate for typification in typificationOptions"
+                            value="{{typification.id}}" required="required" class="form-control">
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="typfcn"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="loanProd">{{'label.input.loanproduct' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select id="loanProd" ng-model="formData.loanProduct"
+                            ng-options="product.id as product.name  |translate for product in loanProductOptions"
+                            value="{{product.id}}" required="required" class="form-control">
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="loanProd"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="agency">{{'label.input.agencyid' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select id="agency" ng-model="formData.agencyId"
+                            ng-options="agency.id as agency.name for agency in agenciesList" value="{{agency.id}}"
+                            class="form-control width170px" required late-validate>
+                        <!--                            <option style="display:none" value="">{{'label.input.agency' | translate}}</option>-->
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="agency"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="balance">{{'label.input.balance' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="balance" type="number" name="balance" ng-model="formData.balance"
+                           required="required" class="form-control" late-Validate/>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="balance"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="disbursement">{{'label.input.disbursementAmount' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="disbursement" type="number" name="disbursement" ng-model="formData.disbursementAmount"
+                           required="required" class="form-control" late-Validate/>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="disbursement"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="year">{{'label.input.year' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="year" type="number" name="year" ng-model="formData.year"
+                           required="required" class="form-control" late-Validate/>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="blacklistForm" valattribute="year"/>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="description">{{'label.input.description' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <textarea id="description" rows="2" ng-model="formData.description" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-offset-3">
+                <a id="cancel" href="#/blacklist">
+                    <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+                </a>
+                <button id="save" type="submit" has-permission='ADD_BLACKLIST' class="btn btn-primary">{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

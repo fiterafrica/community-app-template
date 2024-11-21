@@ -1,0 +1,72 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/bankaccounts">{{'label.anchor.bankaccounts' | translate}}</a></li>
+        <li class="active">{{'label.anchor.createbankaccount' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.heading.editbankaccount' | translate}}</h4>
+    		</div>
+    		<br/>
+    		<form name="editbankaccountform" novalidate="" class="form-horizontal" ng-controller="EditBankAccountController"
+    		      rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+					<!--account number-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.accountnumber' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input id="accountNumber" ng-autofocus="true" type="text" name="accountNumber" ng-model="formData.accountNumber" class="form-control" required late-Validate/>
+								</div>
+								<div class="col-sm-3">
+									<form-validate valattributeform="editbankaccountform" valattribute="accountNumber"/>
+								</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agency' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="agencyId" ng-model="formData.agencyId" class="form-control" name="agencyId"
+									ng-options="agency.id as agency.name for agency in agencyOptions"
+									value="{{agency.id}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.bank' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="bankId" ng-model="formData.bankId" class="form-control" name="bankId"
+									ng-options="bank.id as bank.name for bank in bankOptions"
+									value="{{bank.id}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.glaccount.name' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="glAccountId" ng-model="formData.glAccountId" class="form-control" name="glAccountId"
+									ng-options="glAccount.id as glAccount.name for glAccount in glAccountOptions"
+									value="{{glAccount.id}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+                        <label class="control-label col-sm-2">{{ 'label.input.description' | translate }}</label>
+
+                        <div class="col-sm-3">
+                            <textarea id="description" rows="2" ng-model="formData.description" class="form-control"></textarea>
+                        </div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editbankaccountform" valattribute="description"/>
+						</div>
+                    </div>
+					<!--cancel / submit buttons-->
+    		        <div class="col-md-offset-3">
+    		            <a id="cancel" href="#/chequebankaccounts">
+    		                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    		            </a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_BANKACCOUNT'>{{'label.button.save' | translate}}</button>
+    		        </div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

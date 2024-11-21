@@ -1,0 +1,75 @@
+<div class="content-container" ng-controller="BankController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.heading.totalrecords' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+
+    <div class="card">
+        <div class="toolbar">
+            <h4 class="pull-left">{{'label.heading.banklist'|translate}}</h4>
+        </div>
+        <div class="content">
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form ng-submit="getResultsPage(1)" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input data-ng-model="searchText" type="text"
+                                           placeholder="{{'label.input.searchByNameOrCode' | translate}}"
+                                           class="form-control unstyled"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary form-control" ng-disabled="!searchText">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-3">
+                <a href="#/banks/createbank" class="btn btn-primary pull-right" has-permission='CREATE_BANK'><i
+                            class="fa fa-plus"></i> {{'label.addBank' | translate}}</a> &nbsp;&nbsp;
+                </div>
+            </div>
+            <hr/>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{'label.heading.name' | translate}}</th>
+                    <th>{{'label.heading.code' | translate}}</th>
+                    <th>{{'label.heading.action' | translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr dir-paginate="bank in banklist | itemsPerPage: banksPerPage" class="pointer-main"
+                    total-items="totalBanks"  pagination-id="banklist" >
+                    <td class="pointer" data-ng-click="routeTo('/banks/'+bank.id+'/viewdetails')">{{bank.name}}</td>
+                    <td class="pointer">{{bank.code}}</td>
+                    <td class="pointer">
+                       <!--  <a href="#/banks/{{bank.id}}/removebank" has-permission='DELETE_BANK'>
+                        <i class="fa fa-minus-square-o fa fa-2x" title="Remove Bank"></i></a> -->
+                        <a href="#/banks/{{bank.id}}/viewdetails" has-permission='VIEW_BANK'>
+                        <i class="fa fa-search fa fa-2x" title="View Bank"></i></a>
+                        <a href="#/banks/{{bank.id}}/editbank" has-permission='EDIT_BANK'>
+                            <i class="fa fa-edit fa fa-2x" title="Edit Bank"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+                                     template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                     on-page-change="getResultsPage(newPageNumber)" pagination-id="banklist">
+            </dir-pagination-controls>
+
+        </div>
+    </div>
+
+
+</div>

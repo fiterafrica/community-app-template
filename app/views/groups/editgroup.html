@@ -61,11 +61,151 @@
                                     </div>
                                 </div>
                             </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>{{'label.input.company.fieldset.custom' | translate}}</legend>
+                            <!--portfolio center name-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.portfolioCenter' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <select id="portfolioCenterId" ng-model="formData.centerId" class="form-control" name="centerId" disabled
+                                            ng-options="centerOption.id as centerOption.name for centerOption in centerOptions"
+                                            value="{{centerOption.id}}"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editgroupform" valattribute="portfolioCenterId"/>
+                                </div>
+                            </div>
+                            <!--group location -->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.grouplocation' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <select id="grpLocation" ng-model="formData.groupLocation" class="form-control" name="grpLocation"
+                                            ng-options="location.id as location.code |translate for location in centerGroupLocations"
+                                            value="{{location.id}}"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editcentergroupform" valattribute="grpLocation"/>
+                                </div>
+                            </div>
+                            <!--legacy center group number-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.legacyGroupNumber' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="groupLegacyNumber" type="text" name="legacyNumber" ng-model="formData.legacyNumber" class="form-control"/>
+                                </div>
+                            </div>
+                            <!--latitude-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.groupLatitude' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="latitude" type="text" name="latitude" ng-model="formData.latitude" class="form-control"/>
+                                </div>
+                                <!--longitude-->
+                                <label class="control-label col-sm-2">{{ 'label.input.groupLongitude' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="longitude" type="text" name="longitude" ng-model="formData.longitude" class="form-control"/>
+                                </div>
+                            </div>
+                            <!--formation date-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.groupformationdate' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="formationDate" name="formationDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.formationDate"
+                                           class="form-control" is-open="opened" min="minDate" max="restrictDate" required late-Validate/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editgroupform" valattribute="formationDate"/>
+                                </div>
+                            </div>
+                            <!--size-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.groupSize' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="size" type="text" name="size" ng-model="formData.size" class="form-control" required late-Validate/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editgroupform" valattribute="size"/>
+                                </div>
+                            </div>
+                            <!--meeting start / end-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.meetingStartTime' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="meetingStartTime" type="time" placeholder="HH:MM:SS" name="meetingStartTime" ng-model="formData.meetingStartTime"
+                                           class="form-control" ng-change="startTimeChanged()" required late-Validate/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editgroupform" valattribute="meetingStartTime"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.meetingEndTime' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="meetingEndTime" type="time" placeholder="HH:MM:SS" name="meetingEndTime" ng-model="formData.meetingEndTime"
+                                           class="form-control" required late-Validate/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editgroupform" valattribute="meetingEndTime"/>
+                                </div>
+                            </div>
+                            <!--responsible user-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.groupResponsibleUser' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <select id="responsibleUserId" ng-model="formData.responsibleUserId" class="form-control" required late-Validate name="responsibleUserId"
+                                            ng-options="responsibleUser.id as responsibleUser.firstname + ' ' + responsibleUser.lastname + ' (' + responsibleUser.username + ')'
+									for responsibleUser in responsibleUserOptions"
+                                            value="{{responsibleUser.id}}" required late-Validate></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editgroupform" valattribute="responsibleUserId"/>
+                                </div>
+                            </div>
+                            <fieldset>
+                                <legend>{{'label.input.linkprequalification' | translate}}</legend>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="staffId">{{'label.anchor.prequalification.groups' | translate}}</label>
+                                        <div class="col-sm-9 col-md-9">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4">
+                                                    <input id="prequlificationgroup" type="text" ng-model="prequlificationdata.available" class="col-md-4 form-control"
+                                                           typeahead-min-length="2"
+                                                           typeahead-editable="false"
+                                                           uib-typeahead="group as group.groupName for group in prequalificationOption($viewValue)"
+                                                           typeahead-on-select="viewPrequal(prequlificationdata.available)"/>
+                                                    <div data-ng-show="available" class="paddedtop10">
+                                                        <p>{{'label.heading.groupdetails' | translate}}</p>
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td width="35%">{{'label.heading.name' | translate}}</td>
+                                                                <td width="65%">{{prequalification.groupName}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>{{ 'label.heading.prequalificationnumber' | translate }}</td>
+                                                                <td valign="top">{{prequalification.prequalificationNumber}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>{{ 'label.input.center' | translate }}</td>
+                                                                <td>{{prequalification.centerName}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+
                             <div class="col-md-offset-3">
                                 <a href="#/viewgroup/{{editGroup.id}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                                 <button type="submit" class="btn btn-primary" has-permission='UPDATE_GROUP'>{{'label.button.save' | translate}}</button>
                             </div>
                         </fieldset>
+
                     </form>
                 </div>
                 <div ng-show="managecode == 2">

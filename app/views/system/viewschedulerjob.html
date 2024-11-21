@@ -2,7 +2,7 @@
         <ul class="breadcrumb">
             <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
             <li><a href="#/jobs">{{'label.anchor.manageschedulerjobs' | translate}}</a></li>
-            <li class="active">{{job.displayName}}</li>
+            <li class="active">{{job.displayNameCode | translate}}</li>
         </ul>
     <div class="card">
         <div class="content">
@@ -22,7 +22,7 @@
                 <table width="100%">
                     <tr>
                         <td width="20%">{{ 'label.heading.jobname' | translate }}</td>
-                        <td width="80%">{{job.displayName}}</td>
+                        <td width="80%">{{job.displayNameCode | translate}}</td>
                     </tr>
                     <tr>
                         <td>{{ 'label.heading.cronexpression' | translate }}</td>

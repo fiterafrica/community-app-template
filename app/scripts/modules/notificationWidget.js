@@ -162,7 +162,10 @@ angular.module('notificationWidget', [])
                         for(var i = 0; i < data.length; i++) {
                             //console.log(data[i]);
                             var jsonErrors = JSON.parse(data[i].body);
-                            var valErrors = jsonErrors.errors;
+                            var valErrors = [];
+                            if(jsonErrors){
+                               var valErrors = jsonErrors.errors;
+                            }
                             var errorArray = new Array();
                             var arrayIndex = 0;
                             if (valErrors) {
@@ -200,7 +203,6 @@ angular.module('notificationWidget', [])
                                 }
                             }
                             $rootScope.errorDetails.push(errorArray);
-                            console.log(errorArray);
                         }
                     }
                     return $q.reject(rejection);

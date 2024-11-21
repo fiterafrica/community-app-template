@@ -1,0 +1,50 @@
+<div class="content-container" ng-controller="PortfoliosPlanningController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.anchor.portfoliosplanning' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <br>
+            <div class="clear"></div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form ng-submit="searchByName()" class="form-horizontal">
+                        <div class="pull-left">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <div class="input-group" style="width: 400px">
+                                        <input data-ng-model="searchText" type="text"
+                                               placeholder="{{'label.input.searchByName' | translate}}"
+                                               class="form-control unstyled"/>
+                                        <span class="input-group-btn">
+                                            <button type="submit"  class="btn btn-primary form-control" ng-disabled="!searchText">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <div>
+                 <table class="table">
+                    <thead>
+                    <tr class="graybg">
+                        <th>{{'label.heading.officeName' | translate}}</th>
+                        <th>{{'label.heading.parentoffice' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="pointer-main" dir-paginate="portfolio in portfolios | orderBy:'name':reverse  | filter:filterText |  itemsPerPage: PortfoliosPerPage">
+                        <td class="pointer" data-ng-click="routeTo(portfolio.id)">{{portfolio.name}}</td>
+                        <td class="pointer" data-ng-click="routeTo(portfolio.id)">{{portfolio.parentName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls boundary-links="true" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

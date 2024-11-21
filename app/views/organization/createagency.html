@@ -1,0 +1,217 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/agencies">{{'label.anchor.manageagencies' | translate}}</a></li>
+        <li class="active">{{'label.anchor.createagency' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.heading.createagency' | translate}}</h4>
+    		</div>
+    		<br/>
+    		<form name="createagencyform" novalidate="" class="form-horizontal" ng-controller="CreateAgencyController"
+    		      rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+					<!--parent office-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.parentoffice' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="parentId" ng-model="formData.parentId" class="form-control" name="parentId"
+									ng-options="office.id as office.name for office in parentOfficesOptions"
+									value="{{office.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createagencyform" valattribute="parentId"/>
+						</div>
+					</div>
+					<!--agency name-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agency' | translate }}<span
+								class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="name" ng-autofocus="true" type="text" name="name" ng-model="formData.name" class="form-control"
+								   required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createagencyform" valattribute="name"/>
+						</div>
+					</div>
+					<!--address-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyAddress' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="address" type="text" name="address" ng-model="formData.address" class="form-control" required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createagencyform" valattribute="address"/>
+						</div>
+					</div>
+					<!--city-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyCity' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="cityId" ng-model="formData.cityId" class="form-control" name="cityId"
+									ng-options="city.id as city.name for city in cityOptions"
+									value="{{city.id}}"></select>
+						</div>
+					</div>
+					<!--department-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyDepartment' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="stateId" ng-model="formData.stateId" class="form-control" name="stateId"
+									ng-options="state.id as state.name for state in stateOptions"
+									value="{{state.id}}"></select>
+						</div>
+					</div>
+					<!--country-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyCountry' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="countryId" ng-model="formData.countryId" class="form-control" name="countryId"
+									ng-options="country.id as country.name for country in countryOptions"
+									value="{{country.id}}"></select>
+						</div>
+					</div>
+					<!--entity code-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyEntityCode' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="entityCode" ng-model="formData.entityCode" class="form-control" name="entityCode"
+									ng-options="entityCode.id as entityCode.name for entityCode in agencyEntityCodesOptions"
+									value="{{entityCode.id}}"></select>
+						</div>
+					</div>
+					<!--currency-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyCurrency' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="currencyCode" ng-model="formData.currencyCode" class="form-control" required late-Validate name="currencyCode"
+									ng-options="currency.code as currency.name for currency in currencyOptions"
+									value="{{currency.code}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createagencyform" valattribute="currencyCode"/>
+						</div>
+					</div>
+					<!--agency type-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyType' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="agencyType" ng-model="formData.agencyType" class="form-control" name="agencyType"
+									ng-options="agencyType.id as agencyType.name for agencyType in agencyTypeOptions"
+									value="{{agencyType.id}}"></select>
+						</div>
+					</div>
+					<!--phone-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyPhone' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="phone" type="text" name="phone" ng-model="formData.phone" class="form-control"/>
+						</div>
+					</div>
+					<!--telex-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyTelex' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="telex" type="text" name="telex" ng-model="formData.telex" class="form-control"/>
+						</div>
+					</div>
+					<!--labour day from/to-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyLabourDayFrom' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="labourDayFrom" ng-model="formData.labourDayFrom" class="form-control" name="labourDayFrom"
+									ng-options="labourDayFrom.id as labourDayFrom.name for labourDayFrom in labourDayOptions"
+									value="{{labourDayFrom.id}}"></select>
+						</div>
+						<label class="control-label col-sm-2">{{ 'label.input.agencyLabourDayTo' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="labourDayTo" ng-model="formData.labourDayTo" class="form-control" name="labourDayTo"
+									ng-options="labourDayTo.id as labourDayTo.name for labourDayTo in labourDayOptions"
+									value="{{labourDayTo.id}}"></select>
+						</div>
+					</div>
+					<!--opening hours morning/afternoon-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyMorningHour' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="openHourMorning" type="time" placeholder="HH:MM:SS" name="openHourMorning" ng-model="formData.openHourMorning" class="form-control"/>
+						</div>
+						<label class="control-label col-sm-2">{{ 'label.input.agencyAfternoonHour' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="openHourAfternoon" type="time" placeholder="HH:MM:SS" name="openHourAfternoon" ng-model="formData.openHourAfternoon" class="form-control"/>
+						</div>
+					</div>
+					<!--financial year from/to-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyFinancialYearFrom' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="financialYearFrom" ng-model="formData.financialYearFrom" class="form-control" name="financialYearFrom"
+									ng-options="financialYearFrom.id as financialYearFrom.name for financialYearFrom in financialMonthOptions"
+									value="{{financialYearFrom.id}}"></select>
+						</div>
+						<label class="control-label col-sm-2">{{ 'label.input.agencyFinancialYearTo' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="financialYearTo" ng-model="formData.financialYearTo" class="form-control" name="financialYearTo"
+									ng-options="financialYearTo.id as financialYearTo.name for financialYearTo in financialMonthOptions"
+									value="{{financialYearTo.id}}"></select>
+						</div>
+					</div>
+					<!--no labour days-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyNoLabourDay1' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="nonBusinessDay1" ng-model="formData.nonBusinessDay1" class="form-control" name="nonBusinessDay1"
+									ng-options="nonBusinessDay1.id as nonBusinessDay1.name for nonBusinessDay1 in labourDayOptions"
+									value="{{nonBusinessDay1.id}}"></select>
+						</div>
+						<label class="control-label col-sm-2">{{ 'label.input.agencyNoLabourDay2' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="nonBusinessDay2" ng-model="formData.nonBusinessDay2" class="form-control" name="nonBusinessDay2"
+									ng-options="nonBusinessDay2.id as nonBusinessDay2.name for nonBusinessDay2 in labourDayOptions"
+									value="{{nonBusinessDay2.id}}"></select>
+						</div>
+					</div>
+					<!--half labour days-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyHalfLabourDay1' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="halfBusinessDay1" ng-model="formData.halfBusinessDay1" class="form-control" name="halfBusinessDay1"
+									ng-options="halfBusinessDay1.id as halfBusinessDay1.name for halfBusinessDay1 in labourDayOptions"
+									value="{{halfBusinessDay1.id}}"></select>
+						</div>
+						<label class="control-label col-sm-2">{{ 'label.input.agencyHalfLabourDay2' | translate }}</label>
+						<div class="col-sm-3">
+							<select id="halfBusinessDay2" ng-model="formData.halfBusinessDay2" class="form-control" name="halfBusinessDay2"
+									ng-options="halfBusinessDay2.id as halfBusinessDay2.name for halfBusinessDay2 in labourDayOptions"
+									value="{{halfBusinessDay2.id}}"></select>
+						</div>
+					</div>
+					<!--responsible user-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.agencyResponsibleUser' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="responsibleUserId" ng-model="formData.responsibleUserId" class="form-control" required late-Validate name="responsibleUserId"
+									ng-options="responsibleUser.id as responsibleUser.firstname + ' ' + responsibleUser.lastname + ' (' + responsibleUser.username + ')'
+									for responsibleUser in responsibleUserOptions"
+									value="{{responsibleUser.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createagencyform" valattribute="responsibleUserId"/>
+						</div>
+					</div>
+					<!--cancel / submit buttons-->
+    		        <div class="col-md-offset-3">
+    		            <a id="cancel" href="#/agencies">
+    		                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    		            </a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_AGENCY'>{{'label.button.save' | translate}}</button>
+    		        </div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

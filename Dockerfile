@@ -10,14 +10,13 @@ RUN npm install -g bower
 RUN npm install -g grunt-cli
 COPY . /usr/src/app
 RUN bower --allow-root install
-RUN npm install
+RUN npm install --force
 RUN bundle install
-#RUN grunt test --code-coverage --force
 RUN grunt prod
 
 FROM nginx:1.19.3
 COPY --from=builder /usr/src/app/dist/community-app /usr/share/nginx/html
 COPY ./nginx-conf/* /etc/nginx/conf.d/
-COPY default.conf.template /etc/nginx/conf.d/default.conf
+COPY default.conf.template /etc/nginx/conf.d/default.conf.template
 EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]

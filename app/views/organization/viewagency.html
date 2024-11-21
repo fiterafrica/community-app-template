@@ -1,0 +1,39 @@
+<div class="content-container" ng-controller="ViewAgencyController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/agencies">{{'label.anchor.manageagencies' | translate}}</a></li>
+        <li class="active">{{agency.name}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <uib-tabset class="overflowhidden marginbottom0 scrollable" tabset-name="agencyTabset" scrollable>
+                <uib-tab heading="{{'label.heading.general' | translate}}">
+                    <div class="container-fluid">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row primarydiv">
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <a href="#/editagency/{{agency.id}}" class="btn btn-primary" has-permission='UPDATE_AGENCY'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+                                            'label.button.edit' | translate }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3><strong>{{agency.name}}</strong></h3>
+                            <table class="table-bordered table view-table" style="width: 350px">
+                                <tr>
+                                    <td>{{ 'label.heading.parentoffice' | translate }}</td>
+                                    <td>{{agency.parentName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'label.heading.namedecorated' | translate }}</td>
+                                    <td>{{agency.name | DotRemove}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

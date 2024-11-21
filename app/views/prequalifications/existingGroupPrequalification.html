@@ -1,0 +1,76 @@
+<div class="content-container" ng-controller="PrequalificationsController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/prequalificationsmenu">{{'label.anchor.prequalifications' | translate}}</a></li>
+            <li class="active">{{'label.heading.existinggroup.prequalification' | translate}}</li>
+        </ul>
+    </div>
+    <div class="card">
+        <api-validate></api-validate>
+        <div class="content">
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <form ng-submit="getResultsPage(1)" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input data-ng-model="searchText" type="text"
+                                        placeholder="{{'label.input.searchByGroupOrGroupNameOrCenter' | translate}}"
+                                        class="form-control unstyled"/>
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-primary form-control" ng-disabled="!searchText">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    <!--             <div class="col-sm-12">
+                    <a href="#/prequalifications/individual/create" class="btn btn-primary pull-right"
+                    has-permission='CREATE_PREQUALIFICATIONS'><i
+                            class="fa fa-plus"></i> {{'label.heading.newgroup.prequalification' | translate}}</a> &nbsp;&nbsp;
+                </div> -->
+            <hr/>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{'label.heading.prequalificationnumber' | translate}}</th>
+                    <th>{{'label.input.agency' | translate}}</th>
+                    <th>{{'label.input.group' | translate}}</th>
+                    <th>{{'label.input.center' | translate}}</th>
+    <!--                    <th>{{'label.input.portfolio' | translate}}</th>-->
+                    <th>{{'label.input.product' | translate}}</th>
+                    <th>{{'label.input.addedBy' | translate}}</th>
+                    <th>{{'label.heading.action' | translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr dir-paginate="group in groupsList | itemsPerPage: groupsPerPage" class="pointer-main"
+                    total-items="totalGroups"  pagination-id="blacklist">
+                    <td class="pointer" data-ng-click="routeTo('#/prequalification/' + group.id + '/viewdetails')">{{group.prequalificationNumber}}</td>
+                    <td class="pointer">{{group.agencyName}}</td>
+                    <td class="pointer">{{group.groupName}}</td>
+                    <td class="pointer">{{group.centerName}}</small></td>
+    <!--                    <td class="pointer">{{client.portforlioName}}</td>-->
+                    <td class="pointer">{{group.productName}}</td>
+                    <td class="pointer">{{group.addedBy}}</td>
+                    <td class="pointer">
+                        <a href="#/prequalification/{{group.id}}/viewdetails" has-permission='VIEW_PREQUALIFICATIONS'>
+                            <i class="fa fa-search fa fa-2x" title="View Prequalifications"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+                                    template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                    on-page-change="getResultsPage(newPageNumber)" pagination-id="blacklist">
+            </dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

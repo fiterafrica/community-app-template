@@ -14,6 +14,7 @@
             scope.showfreewithdrawalfrequency = false;
             scope.showrestartfrequency = false;
             scope.paymentTypes = [];
+            scope.formData.adminFeeRanges = [];
 
             resourceFactory.chargeTemplateResource.get(function (data) {
                 scope.template = data;
@@ -77,8 +78,6 @@
                         scope.showPenalty = false ;
                             break ;
                 }
-                
-                
             }
             //when chargeAppliesTo is savings, below logic is
             //to display 'Due date' field, if chargeTimeType is
@@ -91,37 +90,35 @@
                 if (scope.showChargePaymentByField === false) {
                     for (var i in scope.chargeTimeTypeOptions) {
                         if (chargeTimeType === scope.chargeTimeTypeOptions[i].id) {
-                            if (scope.chargeTimeTypeOptions[i].value == "Annual Fee" || scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
-                                scope.showdatefield = true;
-                                scope.showenablefreewithdrawal = false;
-                                scope.showenablepaymenttype = false;
-                                scope.repeatsEveryLabel = 'label.input.months';
-                                //to show 'repeats every' field for monthly fee
-                                if (scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
+                                if (scope.chargeTimeTypeOptions[i].value == "Annual Fee" || scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
+                                    scope.showdatefield = true;
+                                    scope.showenablefreewithdrawal = false;
+                                    scope.showenablepaymenttype = false;
+                                    scope.repeatsEveryLabel = 'label.input.months';
+                                    //to show 'repeats every' field for monthly fee
+                                    if (scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
+                                        scope.repeatEvery = true;
+                                    } else {
+                                        scope.repeatEvery = false;
+                                    }
+                                } else if (scope.chargeTimeTypeOptions[i].value == "Weekly Fee") {
                                     scope.repeatEvery = true;
-                                } else {
+                                    scope.showdatefield = false;
+                                    scope.repeatsEveryLabel = 'label.input.weeks';
+                                    scope.showenablefreewithdrawal = false;
+                                    scope.showenablepaymenttype = false;
+                                }
+                                else if (scope.chargeTimeTypeOptions[i].value == "Withdrawal Fee") {
+                                    scope.showenablefreewithdrawal = true;
+                                    scope.showenablepaymenttype = true;
+                                }
+                                else{
+                                    scope.showenablefreewithdrawal = false;
+                                    scope.showenablepaymenttype = false;
+                                    scope.showdatefield = false;
                                     scope.repeatEvery = false;
                                 }
-                            } else if (scope.chargeTimeTypeOptions[i].value == "Weekly Fee") {
-                                scope.repeatEvery = true;
-                                scope.showdatefield = false;
-                                scope.repeatsEveryLabel = 'label.input.weeks';
-                                scope.showenablefreewithdrawal = false;
-                                scope.showenablepaymenttype = false;
                             }
-                            else if (scope.chargeTimeTypeOptions[i].value == "Withdrawal Fee") {
-                                scope.showenablefreewithdrawal = true;
-                                scope.showenablepaymenttype = true;
-                            }
-                            else{
-                                scope.showenablefreewithdrawal = false;
-                                scope.showenablepaymenttype = false;
-                                scope.showdatefield = false;
-                                scope.repeatEvery = false;
-                            }
-                            }
-
-
                         }
                     }
 
@@ -173,20 +170,44 @@
                 return this.formData.countFrequencyType.id !==1;
             };
 
-	    scope.filterChargeCalculations = function(chargeTimeType) {
+	        scope.filterChargeCalculations = function(chargeTimeType) {
+                return function (item) {
+                    if (chargeTimeType == 12 && ((item.id == 3) || (item.id == 4)))
+                    {
+                        return false;
+                    }
+                    if (chargeTimeType != 12 && item.id == 5)
+                    {
+                        return false;
+                    }
+                    return true;
+                };
+            };
 
-		    return function (item) {
-			    if (chargeTimeType == 12 && ((item.id == 3) || (item.id == 4)))
-			    {
-				    return false;
-			    }
-                if (chargeTimeType != 12 && item.id == 5)
+            scope.addAdminFeeRange = function() {
+                if (this.adminFeeMin && this.adminFeeRate && parseFloat(this.adminFeeMin) > 0 && parseFloat(this.adminFeeRate) > 0 &&
+                    (!this.adminFeeMax || (this.adminFeeMax && parseFloat(this.adminFeeMax) >= parseFloat(this.adminFeeMin)))
+                )
                 {
-                    return false;
+                    this.formData.adminFeeRanges.push({
+                        adminFeeMin: this.adminFeeMin,
+                        adminFeeMax: this.adminFeeMax,
+                        adminFeeRate: this.adminFeeRate
+                    });
+                    this.adminFeeMin = this.adminFeeMax = this.adminFeeRate = undefined;
                 }
-			    return true;
-		    };
-	    };
+            };
+
+            scope.deleteAdminFeeRange= function(index) {
+                this.formData.adminFeeRanges.splice(index, 1);
+            };
+
+            scope.changeChargeType = function() {
+                if (this.chargeType == 'normal') {
+                    this.formData.adminFeeRanges = [];
+                }
+            };
+
             scope.submit = function () {
                 //when chargeTimeType is 'annual' or 'monthly fee' then feeOnMonthDay added to
                 //the formData
@@ -210,6 +231,12 @@
                 this.formData.enableFreeWithdrawalCharge = this.formData.enableFreeWithdrawalCharge || false;
                 this.formData.enablePaymentType = this.formData.enablePaymentType || false;
                 this.formData.locale = scope.optlang.code;
+
+                if (this.formData.adminFeeRanges) {
+                    this.formData.adminFeeRanges.map(function (x) {
+                        x.locale = scope.optlang.code; });
+                }
+
                 this.formData.monthDayFormat = 'dd MMM';
                 resourceFactory.chargeResource.save(this.formData, function (data) {
                     location.path('/viewcharge/' + data.resourceId);

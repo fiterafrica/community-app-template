@@ -1,0 +1,77 @@
+<div class="content-container" ng-controller="TransferCenterGroupController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/portfolios">{{'label.anchor.managecentergroups' | translate}}</a></li>
+        <li class="active">{{'label.anchor.transfercentergroup' | translate}}</li>
+    </ul>
+	<script type="text/ng-template" id="transferGroupToCenter.html">
+		<div class="modal-header silver">
+			<h3 class="bolder">{{'label.heading.transfergroup' | translate}}</h3>
+		</div>
+		<div class="modal-body">
+			<api-validate></api-validate>
+			<br>
+			<button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+			<button class="btn btn-primary" ng-click="transfer()">	{{'label.button.confirm' | translate}}</button>
+		</div>
+	</script>
+    <div class="card">
+    	<div class="content">
+			<uib-tabset class="overflowhidden marginbottom0 scrollable" tabset-name="transferCenterGroupTabset" scrollable>
+				<uib-tab heading="{{'label.heading.general' | translate}}">
+					<div class="container-fluid">
+						<div class="col-md-12 col-sm-12">
+							<div class="row primarydiv">
+								<div class="pull-right">
+									<div class="btn-group">
+									</div>
+								</div>
+							</div>
+							<h3><strong>{{centerGroup.name}}</strong></h3>
+							<table class="table-bordered table view-table" style="width: 350px">
+								<tr>
+									<td>{{ 'label.heading.namedecorated' | translate }}</td>
+									<td>{{centerGroup.name | DotRemove}}</td>
+								</tr>
+								<tr>
+									<td>{{ 'label.heading.centerName' | translate }}</td>
+									<td>{{centerGroup.portfolioCenterName}}</td>
+								</tr>
+								<tr>
+									<td>{{ 'label.heading.centermeetingtimes' | translate }}</td>
+									<td>{{centerGroup.meetingStartTime | date: 'HH:mm'}} - {{centerGroup.meetingEndTime | date: 'HH:mm'}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</uib-tab>
+			</uib-tabset>
+			<div class="clear"></div>
+			<!--availability by centers of the portfolio-->
+			<div class="clear"></div>
+			<div>
+				<table class="table">
+					<thead>
+					<span class="span gray-head">
+                        <strong>{{ 'label.heading.availability.centers' | translate }}</strong>
+					</span>
+					<tr class="graybg">
+						<th>{{'label.input.centerName' | translate}}</th>
+						<th>{{'label.input.meetingStartTime' | translate}}</th>
+						<th>{{'label.input.meetingEndTime' | translate}}</th>
+						<th>{{'label.input.transfergroup' | translate}}</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr class="pointer-main" ng-repeat="centerAvailability in centersAvailability">
+						<td class="pointer" >{{centerAvailability.portfolioCenterName}}</td>
+						<td class="pointer">{{centerAvailability.meetingStartTime | date: 'HH:mm'}}</td>
+						<td class="pointer">{{centerAvailability.meetingEndTime | date: 'HH:mm'}}</td>
+						<td><button class="btn btn-default" has-permission='TRANSFER_CENTER_GROUP' data-ng-click="transferGroup(centerAvailability.portfolioCenterId, centerAvailability.meetingStartTime, centerAvailability.meetingEndTime)"><i class="fa fa-pencil"></i></button></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -49,15 +49,15 @@
                         </tr>
                         <tr>
                             <th class="table-bold-loan">{{'label.heading.approvedamount' | translate}}</th>
-                            <td><span class="padded-td">{{loandetails.approvedPrincipal | number}}</span></td>
+                            <td><span class="padded-td">{{loandetails.approvedPrincipal | FormatByLocale}}</span></td>
                         </tr>
                         <tr>
-                            <th class="table-bold-loan">{{'label.heading.disburseamount' | translate}}</th>
-                            <td><span class="padded-td">{{loandetails.principal | number}}</span></td>
+                            <th class="table-bold-loan">{{'label.heading.disburseamount' | FormatByLocale}}</th>
+                            <td><span class="padded-td">{{loandetails.principal | FormatByLocale}}</span></td>
                         </tr>
                         <tr>
                             <th class="table-bold-loan">{{'label.heading.arrearsby' | translate}}</th>
-                            <td><span class="padded-td">{{loandetails.summary.totalOverdue | number}}<span
+                            <td><span class="padded-td">{{loandetails.summary.totalOverdue | FormatByLocale}}<span
                                     data-ng-hide="loandetails.summary.totalOverdue>=0">{{'label.heading.notprovided' | translate}}</span></span>
                             </td>
                         </tr>
@@ -99,8 +99,8 @@
                         </td>
                         <td>{{guarantor.guarantorType.code | translate}}</td>
                         <td>{{guarantorfund.savingsAccount.accountNo}}</td>
-                        <td>{{guarantorfund.amount | number}}</td>
-                        <td>{{guarantorfund.amountRemaining | number}}</td>
+                        <td>{{guarantorfund.amount | FormatByLocale}}</td>
+                        <td>{{guarantorfund.amountRemaining | FormatByLocale}}</td>
                         <td>{{guarantorfund.status.code | translate}}</td>
                         <td>
                             <button class="btn btn-info" data-ng-click="showDetails($parent.$index,$index)"
@@ -191,7 +191,7 @@
                             </tr>
                             <tr data-ng-show="guarantorFundDetail && guarantorFundDetail.amount">
                                 <td>{{'label.heading.guarantee.amount' | translate}}</td>
-                                <td>{{guarantorFundDetail.amount | number}}</td>
+                                <td>{{guarantorFundDetail.amount | FormatByLocale}}</td>
                             </tr>
                             <tr data-ng-show="guarantorFundDetail && guarantorFundDetail.amountReleased">
                                 <td>{{'label.heading.guarantee.amount.released' | translate}}</td>
@@ -199,7 +199,7 @@
                             </tr>
                             <tr data-ng-show="guarantorFundDetail && guarantorFundDetail.amountRemaining">
                                 <td>{{'label.heading.guarantee.amount.remaining' | translate}}</td>
-                                <td>{{guarantorFundDetail.amountRemaining | number}}</td>
+                                <td>{{guarantorFundDetail.amountRemaining | FormatByLocale}}</td>
                             </tr>
                             <tr data-ng-show="guarantorFundDetail && guarantorFundDetail.status">
                                 <td>{{'label.heading.guarantee.status' | translate}}</td>

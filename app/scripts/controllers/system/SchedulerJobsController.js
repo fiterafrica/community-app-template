@@ -8,7 +8,7 @@
             });
 
             resourceFactory.schedulerResource.get(function (data) {
-                scope.schedulerstatus = data.active === true ? 'Active' : 'Standby';
+                scope.schedulerstatus = data.active === true ? 'scheduler.status.active' : 'scheduler.status.standby';
             });
 
             scope.selectAll = function (selectAll) {
@@ -20,12 +20,19 @@
                 } else {
                     for (var i = 0; i < scope.jobs.length; i++) {
                         jobIdArray = _.without(jobIdArray,scope.jobs[i].jobId);
-                        scope.jobs[i].checkbox = false;
                     }
+                        scope.jobs[i].checkbox = false;
                 }
 
                 jobIdArray =  _.uniq(jobIdArray);
             };
+
+            scope.resolvePreviousRunStatus = function (status){
+                if(status){
+                    return 'scheduler.job.last.run.history.' + status;
+                }
+                return '';
+            }
 
             scope.errorLog = function (id){
                 scope.id = id;

@@ -1,0 +1,95 @@
+<div class="col-md-12" ng-controller="LoanFuturePaymentController">
+    <ul class="breadcrumb">
+        <li><a href="#/viewloanaccount/{{accountId}}">{{'label.anchor.viewloanaccount' | translate}}</a></li>
+        <li class="active">{{'label.anchor.futurepayment' | translate}}</li>
+    </ul>
+    <form class="form-horizontal well" novalidate="" name="futurepaymentform" rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.heading.loan.futurepayments' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.paymentdate' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="paymentDate" name="paymentDate" class="form-control" type="text" sort datepicker-pop="dd MMMM yyyy"
+                           ng-model="formData.paymentDate" max="restrictDate" is-open="opened"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.paymenttype' | translate}}<span
+                        class="required">*</span></label>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" ng-model="formData.paymentType" value="partial">{{'label.input.partialPayment'
+                    |translate}}
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" ng-model="formData.paymentType" value="full">{{'label.input.fullPayment'
+                    |translate}}
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-offset-3">
+                <button id="cancel" type="reset" class="btn btn-default" ng-click="cancel()">{{ 'label.button.cancel' | translate }}</button>
+                <button id="save" type="submit" class="btn btn-primary" ng-click="simulatePayment()">{{ 'label.button.process' | translate }}</button>
+            </div>
+            <br/>
+            <br/>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.bank.agreements' | translate}}</label>
+            </div>
+            <!-- table with loan bank agreements payment details -->
+            <div class="col-md-3 col-md-offset-1">
+                <table class="table">
+                    <thead>
+                    <tr class="graybg">
+                        <th>{{'label.heading.futurepayment.bank' | translate}} : {{'label.heading.futurepayment.agreement' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="loanBankAgreement in simulationPaymentData.loanBankAgreements">
+                        <td>{{loanBankAgreement}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            <br/>
+            <div style="clear:both">
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                <label class="control-label col-sm-2">{{'label.anchor.futurepayment.details' | translate}}</label>
+            </div>
+            <!-- table with loan future payment details -->
+            <div class="col-md-6 col-md-offset-1">
+                <table class="table">
+                    <thead>
+                        <tr class="graybg">
+                            <th>{{'label.heading.futurepayment.code' | translate}}</th>
+                            <th>{{'label.heading.futurepayment.principal' | translate}}</th>
+                            <th>{{'label.heading.futurepayment.interest' | translate}}</th>
+                            <th>{{'label.heading.futurepayment.lateinterest' | translate}}</th>
+                            <th>{{'label.heading.futurepayment.totalamount' | translate}}</th>
+                            <th>{{'label.heading.futurepayment.availableguarantee' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{simulationPaymentData.paymentCode}}</td>
+                            <td>{{simulationPaymentData.principalPortion | number}}</td>
+                            <td>{{simulationPaymentData.interestPortion | number}}</td>
+                            <td>{{simulationPaymentData.lateInterestPortion | number}}</td>
+                            <td>{{simulationPaymentData.totalAmount | number}}</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+        </fieldset>
+        <br/>
+    </form>
+</div>

@@ -94,12 +94,12 @@
                         </td>
                         <td class="pointer" data-ng-click="routeTo(transaction.transactionId)">
                             <div ng-show="transaction.entryType.value == 'DEBIT'">
-                                {{transaction.currency.displaySymbol}}&nbsp;{{transaction.amount | number}}
+                                {{transaction.currency.displaySymbol}}&nbsp;{{transaction.amount | FormatNumber:2}}
                             </div>
                         </td>
                         <td class="pointer" data-ng-click="routeTo(transaction.transactionId)">
                             <div ng-show="transaction.entryType.value == 'CREDIT'">
-                                {{transaction.currency.displaySymbol}}&nbsp;{{transaction.amount | number}}
+                                {{transaction.currency.displaySymbol}}&nbsp;{{transaction.amount | FormatNumber:2}}
                             </div>
                         </td>
                     </tr>

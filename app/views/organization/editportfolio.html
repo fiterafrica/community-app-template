@@ -1,0 +1,76 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/portfolios">{{'label.anchor.manageportfolios' | translate}}</a></li>
+        <li class="active">{{'label.anchor.editportfolio' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<form name="editportfolioform" novalidate="" class="form-horizontal"
+    			ng-controller="EditPortfolioController"
+    		      rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		        <legend>{{'label.heading.editportfolio' | translate}}</legend>
+					<!--parent office-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.parentoffice' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="parentId" ng-model="formData.parentId" class="form-control" name="parentId"
+									ng-options="office.id as office.name for office in parentOfficesOptions"
+									value="{{office.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editportfolioform" valattribute="parentId"/>
+						</div>
+					</div>
+					<!--portfolio name-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.portfolio' | translate }}<span
+								class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="name" ng-autofocus="true" type="text" name="name" ng-model="formData.name" class="form-control"
+								   required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editportfolioform" valattribute="name"/>
+						</div>
+					</div>
+					<!--responsible user-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.portfolioResponsibleUser' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="responsibleUserId" ng-model="formData.responsibleUserId" class="form-control" required late-Validate name="responsibleUserId"
+									ng-options="responsibleUser.id as responsibleUser.firstname + ' ' + responsibleUser.lastname + ' (' + responsibleUser.username + ')'
+									for responsibleUser in responsibleUserOptions"
+									value="{{responsibleUser.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editportfolioform" valattribute="responsibleUserId"/>
+						</div>
+					</div>
+
+					<!-- Supervision -->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.select.supervision' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="supervisionId" ng-model="formData.supervisionId" class="form-control" required late-Validate name="supervisionId"
+									ng-options="supervision.id as supervision.name for supervision in supervisionOptions"
+									value="{{supervision.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createportfolioform" valattribute="supervisionId"/>
+						</div>
+					</div>
+					<!--cancel / submit buttons-->
+					<div class="col-md-offset-3">
+						<a id="cancel" href="#/portfolios">
+							<button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+						</a>
+						<button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_PORTFOLIO'>{{'label.button.save' | translate}}</button>
+					</div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

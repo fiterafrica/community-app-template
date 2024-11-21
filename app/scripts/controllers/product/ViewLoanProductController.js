@@ -33,6 +33,7 @@
                     scope.allowAttributeConfiguration = false;
                 }
                 scope.enableRates = scope.loanproduct.isRatesEnabled;
+                scope.requireCommitteeApproval = data.requireCommitteeApproval;
             });
 
             scope.scrollto = function (link) {

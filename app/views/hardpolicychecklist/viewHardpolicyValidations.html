@@ -1,0 +1,65 @@
+<div class="content-container" ng-controller="ViewHardpolicyValidationController">
+    <ul class="breadcrumb">
+        <li><a href="#/prequalification/{{prequalificationId}}/viewdetails/group">{{'label.heading.view.prequalification' | translate}}</a></li>
+        <li class="active">{{'label.button.hardpolicyvalidations' | translate}}</li>
+    </ul>
+
+    <div ng-show="prequalificationType === 'GROUP'">
+        <div class="card well">
+            <api-validate></api-validate>
+            <div class="span gray-head" style="margin-left:0%;height:30px;">
+                  <span style="margin-left: 10px;font-size:20px;">
+                        <strong>{{'label.heading.group.hard.policies' | translate}}</strong>
+                  </span>
+            </div>
+            <div scroll>
+                <table style="width: 1200px;white-space:nowrap" class="table table-bordered" data-anchor>
+                    <thead>
+                    <tr class="graybg">
+                        <th ng-repeat="columnHeader in prequalification.columnHeaders">{{columnHeader | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="{{$index}}" data-ng-click="highlight($index)" ng-repeat="row in prequalification.rows track by $index">
+                        <td ng-repeat="col in row track by $index">
+                            <span class="{{checkValidationColor(col)}}">
+                                <span ng-if="colorLabel(col)">{{colorLabel(col)|translate}}</span>
+                                <span ng-if="!colorLabel(col)">{{col}}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="card well">
+        <api-validate></api-validate>
+        <div class="span gray-head" style="margin-left:0%;height:30px;">
+	          <span style="margin-left: 10px;font-size:20px;">
+	                <strong>{{'label.heading.members.hard.policies' | translate}}</strong>
+              </span>
+        </div>
+        <div scroll>
+            <table style="width: 1200px;white-space:nowrap" class="table table-bordered" data-anchor>
+                <thead>
+                <tr class="graybg">
+                    <th ng-repeat="columnHeader in members.columnHeaders">{{columnHeader | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- http://www.anujgakhar.com/2013/06/15/duplicates-in-a-repeater-are-not-allowed-in-angularjs/ -->
+                <tr id="{{$index}}" data-ng-click="highlight($index)" ng-repeat="row in members.rows track by $index">
+                    <td ng-repeat="col in row track by $index">
+                            <span class="{{checkValidationColor(col)}}">
+                                <span ng-if="colorLabel(col)">{{colorLabel(col)|translate}}</span>
+                                <span ng-if="!colorLabel(col)">{{col}}</span>
+                            </span>
+                    </td>
+                <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

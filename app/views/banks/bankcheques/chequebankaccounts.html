@@ -1,0 +1,66 @@
+<div class="content-container" ng-controller="ChequeAccountsController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.heading.bankaccount' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4 class="pull-left">{{'label.anchor.list.bank.account'|translate}}</h4>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form ng-submit="getResultsPage()" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input data-ng-model="searchText" type="text"
+                                           placeholder="{{'label.input.filter.bank.accounts' | translate}}"
+                                           class="form-control unstyled"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary form-control" ng-disabled="!searchText">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#/bankaccounts/createbankaccount" class="btn btn-primary pull-left" has-permission='CREATE_BANKACCOUNT'><i
+                            class="fa fa-plus"></i> {{'label.addBankAccount' | translate}}</a> &nbsp;&nbsp;
+                </div>
+            </div>
+            <br/>
+            <table class="table">
+                <thead>
+                <tr class="graybg">
+                    <th>{{'label.heading.bank.acc.no' | translate}}</th>
+                    <th>{{'label.heading.bank.name' | translate}}</th>
+                    <th>{{'label.heading.agencyName' | translate}}</th>
+                    <th>{{'label.heading.glname' | translate}}</th>
+                    <th>{{'label.heading.description' | translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="account in bankAccountList" class="pointer-main">
+                    <td class="pointer" data-ng-click="routeTo(account.id)">{{account.accountNumber}}</td>
+                    <td class="pointer" data-ng-click="routeTo(account.id)">{{account.bank.name}}</td>
+                    <td class="pointer" data-ng-click="routeTo(account.id)">{{account.agency.name}}</td>
+                    <td class="pointer" data-ng-click="routeTo(account.id)">{{account.glAccount.name}}</td>
+                    <td class="pointer" data-ng-click="routeTo(account.id)">{{account.description}}</td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+
+</div>

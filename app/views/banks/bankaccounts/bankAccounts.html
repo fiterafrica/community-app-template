@@ -1,0 +1,83 @@
+<div class="content-container" ng-controller="BankAccountController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.heading.bankaccount' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+
+    <div class="card">
+        <div class="toolbar">
+            <h4 class="pull-left">{{'label.heading.bankaccount.list'|translate}}</h4>
+        </div>
+        <div class="content">
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form ng-submit="getResultsPage(1)" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input data-ng-model="searchText" type="text"
+                                           placeholder="{{'label.input.searchByAccountNumberOrBankNameOrBankCode' | translate}}"
+                                           class="form-control unstyled"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary form-control" ng-disabled="!searchText">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-3">
+                <a href="#/bankaccounts/createbankaccount" class="btn btn-primary pull-right" has-permission='CREATE_BANKACCOUNT'><i
+                            class="fa fa-plus"></i> {{'label.addBankAccount' | translate}}</a> &nbsp;&nbsp;
+                </div>
+            </div>
+            <hr/>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{'label.heading.account' | translate}}</th>
+                    <th>{{'label.heading.bank' | translate}}</th>
+                    <th>{{'label.heading.agencyName' | translate}}</th>
+                    <th>{{'label.heading.glname' | translate}}</th>
+                    <th>{{'label.heading.description' | translate}}</th>
+                    <th>{{'label.heading.action' | translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr dir-paginate="account in bankAccountlist | itemsPerPage: banksPerPage" class="pointer-main"
+                    total-items="totalBanks"  pagination-id="bankAccountlist" >
+                    <td class="pointer" data-ng-click="routeTo('/viewbankaccount/'+account.id)">{{account.accountNumber}}</td>
+                    <td class="pointer">{{account.bank.name}}</td>
+                    <td class="pointer">{{account.agency.name}}</td>
+                    <td class="pointer">{{account.glAccount.name}}</td>
+                    <td class="pointer">{{account.description}}</td>
+                    <td class="pointer">
+                       <!--  <a href="#/banks/{{bank.id}}/removebank" has-permission='DELETE_BANK'>
+                        <i class="fa fa-minus-square-o fa fa-2x" title="Remove Bank"></i></a> -->
+                        <a href="#/bankaccounts/{{account.id}}/viewdetails" has-permission='VIEW_BANKACCOUNT'>
+                        <i class="fa fa-search fa fa-2x" title="View Bank Account"></i></a>
+                        <a href="#/bankaccounts/{{account.id}}/editbankaccount" has-permission='EDIT_BANKACCOUNT'>
+                            <i class="fa fa-edit fa fa-2x" title="Edit Bank Account"></i></a>
+                        <a href="#/bankaccounts/{{account.id}}/removebankaccount" has-permission='DELETE_BANKACCOUNT'>
+                        <i class="fa fa-minus-square-o fa fa-2x" title="Delete Bank Account"></i></a> 
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+                                     template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                     on-page-change="getResultsPage(newPageNumber)" pagination-id="bankAccountlist">
+            </dir-pagination-controls>
+
+        </div>
+    </div>
+
+
+</div>

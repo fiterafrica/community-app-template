@@ -173,6 +173,7 @@
 					<strong>{{client.displayName}} </strong>
 					<small>
 						{{ 'label.heading.clientno' | translate }}: {{client.accountNo}} |
+						{{ 'label.input.dpi' | translate }}: {{client.dpiNumber}} |
 						{{ 'label.input.externalid' | translate }}: {{client.externalId}} |
 						{{ 'label.input.staff' | translate }}: {{client.staffName}}
 					</small>
@@ -248,6 +249,9 @@
 										</li>
 										<li class="{{button.icon}}">
 											<a href="#/selfservice/createuser/{{client.id}}">{{'label.createselfserviceuser' | translate}}</a>
+										</li>
+										<li class="{{button.icon}}">
+											<a href="#/loans/restructurecredit/{{client.id}}">{{'label.heading.creditrestructure' | translate}}</a>
 										</li>
 									</ul>
 								</span>
@@ -361,13 +365,16 @@
 												<a uib-tooltip="{{'label.button.makerepayment' | translate}}" ng-href="#/loanaccount/{{loanaccount.id}}/repayment" class="btn btn-xs btn-primary ng-binding">
 													<i class="fa fa-dollar"></i>
 												</a>
+												<a uib-tooltip="{{'label.button.futurepayment' | translate}}" ng-href="#/loanfuturepayment/{{loanaccount.id}}" class="btn btn-xs btn-primary ng-binding">
+													<i class="fa fa-question-circle"></i>
+												</a>
 											</td>
-											<td class="pointer center" ng-if="loanaccount.status.pendingApproval">
+											<td class="pointer center" ng-if="loanaccount.status.pendingApproval && showNonPrequalificationActionBtn">
 												<a uib-tooltip="{{'label.button.approve' | translate}}" has-permission='APPROVE_LOAN' ng-href="#/loanaccount/{{loanaccount.id}}/approve" class="btn btn-xs btn-primary ng-binding">
 													<i class="fa fa-check"></i>
 												</a>
 											</td>
-											<td class="pointer center" ng-if="!loanaccount.status.pendingApproval && !loanaccount.status.active && !loanaccount.status.overpaid">
+											<td class="pointer center" ng-if="!loanaccount.status.pendingApproval && !loanaccount.status.active && !loanaccount.status.overpaid && showNonPrequalificationActionBtn">
 												<a uib-tooltip="{{'label.button.disburse' | translate}}" has-permission='DISBURSE_LOAN' ng-href="#/loanaccount/{{loanaccount.id}}/disburse" class="btn btn-xs btn-primary ng-binding">
 													<i class="fa fa-flag"></i>
 												</a>
@@ -383,9 +390,9 @@
 										<tr class="graybg">
 											<th>{{'label.heading.accnum' | translate}}</th>
 											<th>{{'label.heading.loanaccount' | translate}}</th>
-                      <th>{{'label.heading.loanamount' | translate}}</th>
-                      <th>{{'label.heading.outstandingamount' | translate}}</th>
-                      <th>{{'label.heading.dueamount' | translate}}</th>
+										    <th>{{'label.heading.loanamount' | translate}}</th>
+										    <th>{{'label.heading.outstandingamount' | translate}}</th>
+										    <th>{{'label.heading.dueamount' | translate}}</th>
 											<th class="center">{{'label.heading.type' | translate}}</th>
 											<th>{{'label.heading.closedate' | translate}}</th>
 										</tr>
@@ -1146,6 +1153,92 @@
 					</div>
 				</uib-tab>
 
+				<!--Contact information-->
+				<uib-tab ng-show="clientContactInformation" heading="{{'label.heading.contact.information' | translate}}" >
+					<div ng-show="clientContactInformation">
+						<div class="row" style="margin-right: auto; margin-left: auto">
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.client.area'| translate}}<span class="pull-right">{{clientContactInformation.area}}</span></span>
+							</div>
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.client.housingtype'| translate}}<span class="pull-right">{{clientContactInformation.housingType}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.residenceYears'| translate}}<span class="pull-right">{{clientContactInformation.yearsOfResidence}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.communityYears'| translate}}<span class="pull-right">{{clientContactInformation.communityYears}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.client.publicservice'| translate}}<span class="pull-right"><span ng-repeat="publicServiceType in clientContactInformation.publicServiceTypes track by $index">{{publicServiceType.name}}, </span></span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.client.department'| translate}}<span class="pull-right">{{clientContactInformation.department}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.client.municipal'| translate}}<span class="pull-right">{{clientContactInformation.municipality}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.village'| translate}}<span class="pull-right">{{clientContactInformation.village}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.referencedata'| translate}}<span class="pull-right">{{clientContactInformation.referenceHousingData}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.street'| translate}}<span class="pull-right">{{clientContactInformation.street}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.avenue'| translate}}<span class="pull-right">{{clientContactInformation.avenue}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.streetNumber'| translate}}<span class="pull-right">{{clientContactInformation.streetNumber}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.houseNumber'| translate}}<span class="pull-right">{{clientContactInformation.homePhone}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.colony'| translate}}<span class="pull-right">{{clientContactInformation.colony}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.sector'| translate}}<span class="pull-right">{{clientContactInformation.sector}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.batch'| translate}}<span class="pull-right">{{clientContactInformation.batch}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.square'| translate}}<span class="pull-right">{{clientContactInformation.square}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.zone'| translate}}<span class="pull-right">{{clientContactInformation.zone}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.lightDeviceNumber'| translate}}<span class="pull-right">{{clientContactInformation.lightMeterNumber}}</span></span>
+							</div>
+
+							<div class="col-md-5 m-1  alert alert-info">
+								<span>{{'label.input.homeNumber'| translate}}<span class="pull-right">{{clientContactInformation.homePhone}}</span></span>
+							</div>
+						</div>
+					</div>
+				</uib-tab>
+
 
 				<!--end of family tab-->
 
@@ -1206,8 +1299,11 @@
 						<thead>
 						<tr class="graybg">
 							<th>{{'label.heading.name' | translate}}</th>
-							<th>{{'label.heading.description' | translate}}</th>
+							<th>{{'label.input.observations' | translate}}</th>
 							<th>{{'label.heading.filename' | translate}}</th>
+							<th>{{'label.input.documenttype' | translate}}</th>
+							<th>{{'label.input.document.purpose' | translate}}</th>
+							<th>{{'label.input.date' | translate}}</th>
 							<th>{{'label.heading.actions' | translate}}</th>
 						</tr>
 						</thead>
@@ -1216,6 +1312,10 @@
 						  <td>{{clientdocument.name}}</td>
 							<td>{{clientdocument.description}}</td>
 							<td>{{clientdocument.fileName}}</td>
+							<td>{{clientdocument.documentType?clientdocument.documentType:'---'}}</td>
+							<td>{{clientdocument.documentPurpose?clientdocument.documentPurpose:'---'}}</td>
+							<td ng-if="clientdocument.dateCreated">{{clientdocument.dateCreated |DateFormat}}</td>
+							<td ng-if="!clientdocument.dateCreated">---</td>
 							<td>
 								<a target="_blank" href="{{hostUrl}}{{clientdocument.docUrl}}"><i class="fa fa-cloud-download"></i></a>&nbsp;
 								<a ng-show="clientdocument.fileIsImage" ng-click="previewDocument(clientdocument.docUrl,clientdocument.fileName)"><i class="fa fa-eye"></i></a>
@@ -1324,6 +1424,31 @@
                         </form>
 
                     </uib-tab>
+					<uib-tab heading="{{ 'label.heading.prequalifications' | translate }}">
+						<div class="">
+							<table class="table ">
+								<thead>
+								<tr>
+									<th>{{ 'label.heading.groupname' | translate }}</th>
+									<th>{{ 'label.heading.prequalificationnumber' | translate }}</th>
+									<th>{{ 'label.heading.status' | translate }}</th>
+									<th>{{ 'label.heading.createdby' | translate }}</th>
+									<th>{{ 'label.heading.createdAt' | translate }}</th>
+									<th></th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr ng-repeat="prequal in client.clientPrequalifications">
+									<td>{{prequal.groupName}}</td>
+									<td><a href="#/prequalification/{{prequal.id}}/viewdetails/individual">{{prequal.prequalificationNumber}}</a></td>
+									<td>{{prequal.status.value}}</td>
+									<td>{{prequal.addedBy}}</td>
+									<td>{{prequal.createdAt |DateFormat}}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</uib-tab>
                 </uib-tabset>
             </div>
         </div>

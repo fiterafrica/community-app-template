@@ -1,0 +1,47 @@
+<div ng-controller="IndividualPrequalificatoinFormController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/prequalificationsmenu">{{'label.anchor.prequalifications' | translate}}</a></li>
+            <li class="active">{{'label.heading.newgroup.prequalification' | translate}}</li>
+        </ul>
+    </div>
+    <div class="card">
+        <api-validate></api-validate>
+
+        <div class="content">
+            <legend>{{ 'label.heading.indidualcredit.prequalification' | translate }}</legend>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="alert alert-info">
+                        <span>{{'label.input.prequalification.number'|translate}}: <span class="pull-right">{{groupData.prequalificationNumber}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.groupname'|translate}}: <span class="pull-right">{{groupData.groupName}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.productname'|translate}}: <span class="pull-right">{{groupData.productName}}</span></span>
+                    </div>
+                    <div class="alert alert-info" ng-if="groupData.createdAt">
+                        <span>{{'label.heading.createdAt'|translate}}: <span class="pull-right">{{groupData.createdAt | DateTimeFormat}}</span></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="alert alert-info">
+                        <span>{{'label.input.agency'|translate}}: <span class="pull-right">{{groupData.agencyName}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.center'|translate}}: <span class="pull-right">{{groupData.centerName}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.addedBy'|translate}}: <span class="pull-right">{{groupData.addedBy}}</span></span>
+                    </div>
+                    <div class="alert alert-default" ng-if="groupData.comments">
+                        <span>{{'label.input.comments'|translate}}: <span class="pull-right">{{groupData.comments}}</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

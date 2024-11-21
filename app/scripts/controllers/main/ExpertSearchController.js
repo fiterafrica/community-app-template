@@ -12,7 +12,9 @@
                                   'create user', 'employees', 'create employee', 'manage funds', 'offices', 'chart of accounts', 'frequent postings', 'Journal entry',
                                   'search transaction', 'account closure', 'accounting rules', 'add accounting rule', 'data tables', 'create data table', 'add code',
                                   'jobs', 'codes', 'reports', 'create report', 'holidays', 'create holiday', 'create charge', 'product mix', 'add member', 'add product mix',
-                                  'bulk loan reassignment', 'audit', 'create accounting closure', 'enter collection sheet', 'navigation', 'accounting', 'organization', 'system'];
+                                  'bulk loan reassignment', 'audit', 'create accounting closure', 'enter collection sheet', 'navigation', 'accounting', 'organization', 'system',
+                                  'Prequalification of Credits'
+                                  ];
             scope.search = function () {
 		      switch (this.formData.search) {
 		          case 'create client':
@@ -177,6 +179,9 @@
 		          case 'system users':
 		              location.path('/admin/users');
 		              break;
+                  case 'Prequalification of Credits':
+                       location.path('/prequalificationsmenu');
+                      break;
 		          default:
 		              location.path('/home');
 		      }

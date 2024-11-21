@@ -1,0 +1,130 @@
+<div class="content-container" ng-controller="RemoveBlacklistController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.anchor.blacklist' | translate}}</li>
+    </ul>
+
+    <div class="card">
+        <api-validate></api-validate>
+
+        <div class="toolbar">
+            <h4 class="pull-left">{{'label.heading.details' | translate}}</h4>
+        </div>
+        <div class="row" style="margin: 1rem">
+            <hr/>
+            <div class="col-sm-6">
+                <div class="alert alert-info">
+                    <span>{{'label.input.clientName'| translate}}<span class="pull-right">{{client.clientName}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.dpi'|translate}}<span class="pull-right">{{client.dpi}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.nit'|translate}}<span class="pull-right">{{client.nit}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.product'| translate}}<span class="pull-right">{{client.productCode}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.description'|translate}}<span class="pull-right">{{client.description}}</span></span>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="alert alert-info">
+                    <span>{{'label.input.reasons'| translate}}<span class="pull-right">{{client.typification.description|translate}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.agencyid'|translate}}<span class="pull-right">{{client.agencyId}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.disbursementAmount'|translate}}<span class="pull-right">{{client.disbursementAmount}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.balance'| translate}}<span class="pull-right">{{client.balance}}</span></span>
+                </div>
+                <div class="alert alert-info">
+                    <span>{{'label.input.year'| translate}}<span class="pull-right">{{client.year}}</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="action=='viewdetails'">
+            <table class="table" ng-if="blacklistDocuments.length > 0">
+                <thead>
+                <tr class="graybg">
+                    <th>{{'label.heading.name' | translate}}</th>
+                    <th>{{'label.heading.description' | translate}}</th>
+                    <th>{{'label.heading.filename' | translate}}</th>
+                    <th>{{'label.heading.actions' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="document in blacklistDocuments">
+                    <td>{{document.name}}</td>
+                    <td>{{document.description}}</td>
+                    <td>{{document.fileName}}</td>
+                    <td>
+                        <a target="_blank" href="{{hostUrl}}{{document.docUrl}}"><i class="fa fa-cloud-download"></i></a>&nbsp;
+<!--                        <a ng-show="document.fileIsImage" ng-click="previewDocument(document.docUrl,document.fileName)"><i class="fa fa-eye"></i></a>-->
+<!--                        <a ng-click="deleteDocument(document.id,$index)"><i class="fa fa-times"></i></a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a id="close" href="#/blacklist">
+                    <button type="reset" class="btn btn-default">{{'label.button.back' | translate}}
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <form name="blacklistForm" novalidate="" class="card form-horizontal well" rc-submit="submit()" ng-if="action=='removeblacklist'">
+            <api-validate></api-validate>
+            <fieldset>
+                <legend>{{'label.anchor.uploadDocuments' | translate}}</legend>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="concentDocs">{{'label.input.supportingDocuments' | translate}}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="concentDocs" type="file" ngf-select="onFileSelect($files)"
+                               accept="zip,application/zip,application/x-zip,application/x-zip-compressed" name="concentDocs"
+                               ng-model="formData.fileUpload"
+                               required="required" class="form-control" late-Validate/>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="blacklistForm" valattribute="concentDocs"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="description">{{'label.input.description' | translate}}</label>
+
+                    <div class="col-sm-3">
+                                <textarea id="description" rows="2" ng-model="formData.description"
+                                          class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-offset-3">
+                    <a id="cancel" href="#/blacklist">
+                        <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}
+                        </button>
+                    </a>
+                    <button id="save" type="submit" has-permission='REMOVE_BLACKLIST'
+                            class="btn btn-primary">{{'label.button.save' | translate}}
+                    </button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    <hr/>
+
+
+</div>

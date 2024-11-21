@@ -1,0 +1,67 @@
+<div ng-controller="IndividualPrequalificatoinController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/prequalificationsmenu">{{'label.anchor.prequalifications' | translate}}</a></li>
+            <li class="active">{{'label.heading.newgroup.prequalification' | translate}}</li>
+        </ul>
+    </div>
+    <div class="card">
+        <api-validate></api-validate>
+
+        <div class="content">
+            <div class="row filterbg m-1">
+
+                <div class="col-sm-6">
+                    <form ng-submit="getResultsPage(1)" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input data-ng-model="searchText" type="text"
+                                           placeholder="{{'label.input.searchByNameDpi' | translate}}"
+                                           class="form-control unstyled"/>
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-info form-control">
+                                        <span class="fa fa-search"></span>
+                                      </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-12">
+                    <a href="#/prequalifications/individual/create" class="btn btn-primary pull-right"
+                       has-permission='CREATE_PREQUALIFICATIONS'><i
+                            class="fa fa-plus"></i> {{'label.heading.newgroup.prequalification' | translate}}</a> &nbsp;&nbsp;
+                </div>
+            </div>
+            <table class="width100 table table-striped table-bordered">
+                <tr>
+                    <th>{{'label.input.name' | translate}}</th>
+                    <th>{{'label.input.dpi' | translate}}</th>
+                    <th>{{'label.input.dateofbirth' | translate}}</th>
+                    <th>{{'label.input.work.with.puente' | translate}}</th>
+                    <th>{{'label.input.amount.requested' | translate}}</th>
+                    <th>{{'label.input.status' | translate}}</th>
+                </tr>
+
+                <tr dir-paginate="member in membersList | itemsPerPage: clientsPerPage" class="pointer-main"
+                    total-items="totalGroups" pagination-id="blacklist">
+                    <td>{{member.name}}</td>
+                    <td>{{member.dpi}}</td>
+                    <td>{{member.dob | DateFormat}}</td>
+                    <td>{{member.workWithPuente}}</td>
+                    <td>{{member.requestedAmount}}</td>
+                    <td>
+                        <i class="fa fa-circle fa-2x {{resolveMemberStatus(member.status.value)}}">{{member.blacklistCount}}</i>
+                    </td>
+                </tr>
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+                                     template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                     on-page-change="getResultsPage(newPageNumber)" pagination-id="member">
+            </dir-pagination-controls>
+
+        </div>
+    </div>
+</div>

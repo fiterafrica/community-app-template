@@ -60,6 +60,8 @@
                 scope.formData.digitsAfterDecimal = '2';
                 scope.formData.inMultiplesOf = '0';
                 scope.formData.repaymentFrequencyType = scope.product.repaymentFrequencyType.id;
+                scope.formData.ownerType = scope.product.loanProductOwnerTypes[0].id;
+                scope.formData.addNewCyclesEnabled = true;
                 scope.formData.interestRateFrequencyType = scope.product.interestRateFrequencyType.id;
                 scope.formData.amortizationType = scope.product.amortizationType.id;
                 scope.formData.interestType = scope.product.interestType.id;
@@ -90,6 +92,9 @@
                 //Rate Module
                 scope.rateOptions = scope.product.rateOptions || [];
                 scope.enableRates = scope.product.isRatesEnabled;
+
+                // Limit of days to apply the addon charges
+                scope.formData.daysLimitAddOn = scope.product.daysLimitAddOn;
             });
 
              scope.$watch('formData',function(newVal){

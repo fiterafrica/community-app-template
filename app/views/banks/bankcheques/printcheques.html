@@ -1,0 +1,198 @@
+<div class="content-container" ng-controller="PrintChequesController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.anchor.print.cheques' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+    <div class="card">
+        <div class="content">
+            <div ng-show="report" class="col-md-12 alert-block span tab-content">
+                <div id="printcontent">
+                    <iframe id="rptLoadingFrame" ng-src="{{reportURL}}" frameborder="0" width="100%" height="800px"></iframe>
+                </div>
+                <div class="col-md-13 center">
+                    <a id="back"  ng-click="reloadPage()" class="btn btn-default">{{'label.button.back' | translate}}</a>
+                </div>
+            </div>
+
+            <div class="row"></div>
+            <div ng-hide="report">
+                <div class="col-sm-8">
+                    <div class="toolbar">
+                        <h4 class="pull-left">{{'label.anchor.print.cheques' | translate}}</h4>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary pull-right" ng-click="isCollapsed=!isCollapsed">
+                        <i class="fa fa-chevron-down "></i>{{ 'label.button.parameters' | translate }}
+                    </button>
+                </div>
+            </div>
+
+            <hr>
+            <br>
+            <div ng-hide="report">
+                <div>
+                    <form ng-submit="search()" class="form-horizontal" ng-show="!isCollapsed">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="pull-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-6">{{'label.heading.bank.acc.no' | translate}}</label>
+                                        <div class="col-sm-6">
+                                            <select id="bankAccId" name="bankAccId"
+                                                        ng-model="formData.bankAccId"
+                                                        class="form-control"
+                                                        ng-options="bankAccount.id as bankAccount.accountName for bankAccount in bankAccountOptions"
+                                                        value="{{bankAccount.id}}">
+                                                    <option value="">--{{'label.heading.bank.acc.no' | translate}}--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-6">{{'label.heading.agencyName' | translate}}</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="agencyName" name="agencyName" ng-model="formData.agencyName" class="form-control" disabled/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-6">{{'label.input.bank' | translate}}</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="bankName" name="bankName" ng-model="formData.bankName" class="form-control" disabled/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-6">{{'label.heading.cheque.from' | translate}}</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="from" name="from" ng-model="formData.from" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-6">{{'label.heading.cheque.to' | translate}}</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="to" name="to" ng-model="formData.to" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="pull-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4">{{'label.input.facilitator' | translate }}</label>
+                                        <div class="col-sm-8">
+                                            <select id="facilitatorId" name="facilitatorId" chosen="facilitatorOptions"
+                                                    ng-model="formData.facilitatorId"
+                                                    class="form-control"
+                                                    ng-options="responsibleUser.id as responsibleUser.firstname + ' ' + responsibleUser.lastname + ' (' + responsibleUser.username + ')' for responsibleUser in facilitatorOptions"
+                                                    value="{{facilitator.id}}">
+                                                <option value="">-- {{'label.input.facilitator' | translate}} --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4">{{'label.selectcenter' | translate}}</label>
+                                        <div class="col-sm-8">
+                                            <select id="centerId" name="centerId" chosen="centerOptions"
+                                                    ng-model="formData.centerId"
+                                                    class="form-control" data-ng-change="filterGroups()"
+                                                    ng-options="center.id as center.name for center in centerOptions"
+                                                    value="{{center.id}}">
+                                                <option value="">-- {{'label.selectcenter' | translate}} --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4">{{'label.menu.selectgroup' | translate}}</label>
+                                        <div class="col-sm-8">
+                                            <select id="groupId" name="groupId" chosen="groupOptions"
+                                                    ng-model="formData.groupId"
+                                                    class="form-control"
+                                                    ng-options="group.id as group.name for group in groupOptions"
+                                                    value="{{group.id}}">
+                                                <option value="">-- {{'label.menu.selectgroup' | translate}} --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-3 pull-right">
+                            <button id="search" type="submit" class="btn btn-primary"><span class="fa fa-search"></span> {{'label.button.searchdata' | translate}}</button>
+                        </div>
+                    </form>
+                </div>
+                <br/>
+                <form novalidate="">
+                    <div scroll>
+                        <table style="width: 1200px;white-space:nowrap" class="table table-bordered" data-anchor>
+                            <thead>
+                            <tr class="graybg">
+                                <th>
+                                    <div class="checkbox form-group">
+                                        <label for="isAllChequesSelected">
+                                            <input type="checkbox" id="isAllChequesSelected" name="isAllChequesSelected" ng-model="isAllChequesSelected" data-ng-change="selectAllCheques()">
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>{{'label.heading.chequeNo' | translate}}</th>
+                                <th>{{'label.heading.status' | translate}}</th>
+                                <th>{{'label.heading.batchNo' | translate}}</th>
+                                <th>{{'label.heading.bankAccNo' | translate}}</th>
+                                <th>{{'label.heading.bank.name' | translate}}</th>
+                                <th>{{'label.input.type' | translate}}</th>
+                                <th>{{'label.heading.loanaccount' | translate}}</th>
+                                <th>{{'label.heading.chequeAmount' | translate}}</th>
+                                <th>{{'label.heading.clientno' | translate}}</th>
+                                <th>{{'label.heading.clientname' | translate}}</th>
+                                <th>{{'label.heading.groupno' | translate}}</th>
+                                <th>{{'label.heading.groupname' | translate}}</th>
+                                <th >{{'label.heading.description' | translate}}</th>
+                                <th>{{'label.heading.createdby' | translate}}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr dir-paginate="cheque in cheques | orderBy:'chequeNo':reverse | itemsPerPage: chequesPerPage" total-items="totalCheques" pagination-id="cheques">
+                                <td>
+                                    <div class="checkbox form-group">
+                                        <label for="isSelected">
+                                            <input type="checkbox" id="isSelected" name="isSelected" ng-model="cheque.isSelected">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{cheque.chequeNo}}</td>
+                                <td>{{cheque.status.code | translate}}</td>
+                                <td>{{cheque.batchNo}}</td>
+                                <td>{{cheque.bankAccNo}}</td>
+                                <td>{{cheque.bankName}}</td>
+                                <td>{{cheque.loanAmount && cheque.loanAmount>0? 'label.heading.disbursement':'label.heading.guarantees'|translate }}</td>
+                                <td>{{cheque.loanAccNo}}</td>
+                                <td>{{cheque.chequeAmount}}</td>
+                                <td>{{cheque.clientNo}}</td>
+                                <td>{{cheque.clientName}}</td>
+                                <td>{{cheque.groupNo}}</td>
+                                <td>{{cheque.groupName}}</td>
+                                <td>{{cheque.description}}</td>
+                                <td>{{cheque.createdByUsername}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <dir-pagination-controls boundary-links="true"  pagination-id="cheques" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html" on-page-change="getResultsPage(newPageNumber)"></dir-pagination-controls>
+                    <div class="col-md-offset-2 paddedleft">
+                        <a id="cancel" href="#/organization" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                        <button has-permission='PRINT_BANKCHEQUE' ng-disabled="isExportBtnDisabled()" type="button" class="btn btn-primary" ng-csv="processCsvData()" filename="{{fileName}}" ><i class="fa fa-file "></i>&nbsp;&nbsp;{{'label.button.exportcsv' | translate }}</button>
+                        <button has-permission='PRINT_BANKCHEQUE' ng-disabled="isExportBtnDisabled()" type="button" class="btn btn-primary" ng-click="issueCheques()">{{'label.button.disburse.and.print.cheque' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

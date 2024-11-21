@@ -1,0 +1,150 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/portfolios">{{'label.anchor.managecentergroups' | translate}}</a></li>
+        <li class="active">{{'label.anchor.createCenterGroup' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<form name="createcentergroupform" novalidate="" class="form-horizontal"
+    			ng-controller="CreateCenterGroupController"
+    		      rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		        <legend>{{'label.heading.createcentergroup' | translate}}</legend>
+					<!--portfolio center name-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.portfolioCenter' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="portfolioCenterId" ng-model="formData.portfolioCenterId" class="form-control" name="portfolioCenterId" disabled
+									ng-options="portfolioCenterOption.id as portfolioCenterOption.name for portfolioCenterOption in portfolioCenterOptions"
+									value="{{portfolioCenterOption.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="portfolioCenterId"/>
+						</div>
+					</div>
+					<!--center group name-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.centerGroupName' | translate }}<span
+								class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="name" ng-autofocus="true" type="text" name="name" ng-model="formData.name" class="form-control"
+								   required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="name"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.grouplocation' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="grpLocation" ng-model="formData.grouplocation" class="form-control" name="grpLocation"
+									ng-options="location.id as location.code |translate for location in centerGroupLocations"
+									value="{{location.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="grpLocation"/>
+						</div>
+					</div>
+					<!--legacy center group number-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.legacyGroupNumber' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="centerLegacyNumber" type="text" name="legacyGroupNumber" ng-model="formData.legacyGroupNumber" class="form-control"/>
+						</div>
+					</div>
+					<!--latitude-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.groupLatitude' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="latitude" type="text" name="latitude" ng-model="formData.latitude" class="form-control"/>
+						</div>
+					</div>
+					<!--longitude-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.groupLongitude' | translate }}</label>
+						<div class="col-sm-3">
+							<input id="longitude" type="text" name="longitude" ng-model="formData.longitude" class="form-control"/>
+						</div>
+					</div>
+					<!--formation date-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.groupformationdate' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="formationDate" name="formationDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.formationDate"
+								   class="form-control" is-open="opened" min="minDate" max="restrictDate" required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="formationDate"/>
+						</div>
+					</div>
+					<!--center group status-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.centerGroupStatus' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="statusId" ng-model="formData.statusId" class="form-control" name="statusId"
+									ng-options="statusOption.id as statusOption.code | translate for statusOption in statusOptions"
+									value="{{statusOption.id}}" required late-Validate></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="statusId"/>
+						</div>
+					</div>
+					<!--size-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.groupSize' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="size" type="text" name="size" ng-model="formData.size" class="form-control" required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="size"/>
+						</div>
+					</div>
+					<!--meeting start / end-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.meetingStartTime' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="meetingStartTime" type="time" placeholder="HH:MM:SS" name="meetingStartTime" ng-model="formData.meetingStartTime"
+								   class="form-control" ng-change="startTimeChanged()" required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="meetingStartTime"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.meetingEndTime' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input id="meetingEndTime" type="time" placeholder="HH:MM:SS" name="meetingEndTime" ng-model="formData.meetingEndTime"
+								   class="form-control" disabled late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcentergroupform" valattribute="meetingEndTime"/>
+						</div>
+					</div>
+					<!--responsible user-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.groupResponsibleUser' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="responsibleUserId" ng-model="formData.responsibleUserId" class="form-control" required late-Validate name="responsibleUserId"
+									ng-options="responsibleUser.id as responsibleUser.firstname + ' ' + responsibleUser.lastname + ' (' + responsibleUser.username + ')'
+									for responsibleUser in responsibleUserOptions"
+									value="{{responsibleUser.id}}" required late-Validate></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createsupervisionform" valattribute="responsibleUserId"/>
+						</div>
+					</div>
+					<!--cancel / submit buttons-->
+					<div class="col-md-offset-3">
+						<a id="cancel" href="#/viewcentergroups/{{formData.portfolioId}}/{{formData.portfolioCenterId}}">
+							<button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+						</a>
+						<button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER_GROUP'>{{'label.button.save' | translate}}</button>
+					</div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

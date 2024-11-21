@@ -1,0 +1,57 @@
+<div class="content-container" ng-controller="CreateChequeBatchController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+            <li><a href="#/chequebankaccounts">{{'label.anchor.bankaccount' | translate}}</a></li>
+            <li><a href="#/viewchequeaccount/{{bankAccountData.id}}">{{accountName}}</a></li>
+            <li class="active">{{'label.button.add.batch' | translate}}</li>
+        </ul>
+    </div>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4>{{'label.button.add.batch' | translate}}</h4>
+            </div>
+            <br>
+            <form name="createchequebatch" novalidate="" class="form-horizontal" rc-submit="submit()">
+                <api-validate></api-validate>
+                <fieldset>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >{{'label.heading.bank.account.name' | translate}}</label>
+                        <div class="col-sm-5">
+                            <input name="accountName" ng-model="formData.accountName" type="text" class="form-control" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >{{'label.heading.cheque.from' | translate}}</label>
+                        <div class="col-sm-3">
+                            <input name="from" ng-model="formData.from" type="text" class="form-control" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="chequeto">{{'label.heading.cheque.to' | translate}}<span
+                                class="required">*</span></label>
+
+                        <div class="col-sm-3">
+                            <input ng-autofocus="true" type="text" id="chequeto" name="chequeto" ng-model="formData.to" class="form-control" required
+                                   late-validate/>
+                        </div>
+                        <div class="col-sm-3">
+                            <form-validate valattributeform="createpaymenttype" valattribute="chequeto"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >{{'label.input.description' | translate}}</label>
+                        <div class="col-sm-3">
+                            <textarea name="description" ng-model="formData.description" type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-2 paddedleft">
+                        <a id="cancel" href="#/viewchequeaccount/{{bankAccountData.id}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                        <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_BANKCHEQUE'>{{'label.button.save' | translate}}</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

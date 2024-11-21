@@ -1,0 +1,77 @@
+<div class="content-container" ng-controller="ViewChequeAccountController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+            <li><a href="#/chequebankaccounts">{{'label.heading.bankaccount' | translate}}</a></li>
+            <li class="active">{{accountName}}</li>
+        </ul>
+    </div>
+    <api-validate></api-validate>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4 class="pull-left">{{accountName}}</h4>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-8">
+                    <table class="table-bordered table view-table" style="width: 500px">
+                        <tr>
+                            <td>{{'label.heading.bank.account.name' | translate}}</td>
+                            <td>{{accountName}}</td>
+                        </tr>
+                        <tr class="graybg">
+                            <td>{{'label.heading.bank.agency.name' | translate}}</td>
+                            <td>{{bankAccountData.agency.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'label.heading.bank.name' | translate}}</td>
+                            <td>{{bankAccountData.bank.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'label.heading.description' | translate}}</td>
+                            <td>{{bankAccountData.description}}</td>
+                        </tr>
+                    </table>
+
+                    <br/>
+                    <table class="table">
+                        <thead>
+                        <tr class="graybg">
+                            <th>{{'label.heading.batchNo' | translate}}</th>
+                            <th>{{'label.heading.cheque.from' | translate}}</th>
+                            <th>{{'label.heading.cheque.to' | translate}}</th>
+                            <th>{{'label.heading.description' | translate}}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr ng-repeat="batch in bankAccountData.batches" class="pointer-main">
+                            <td class="pointer" data-ng-click="routeTo(batch.id)">{{batch.batchNo}}</td>
+                            <td class="pointer" data-ng-click="routeTo(batch.id)">{{batch.from}}</td>
+                            <td class="pointer" data-ng-click="routeTo(batch.id)">{{batch.to}}</td>
+                            <td class="pointer" data-ng-click="routeTo(batch.id)">{{batch.description}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="pull-right">
+                        <a href="#/bankaccounts/{{bankAccountData.id}}/editbankaccount" class="btn btn-primary" has-permission='EDIT_BANKACCOUNT'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+                            'label.button.edit' | translate }}</a>
+                        <button type="button" ng-click="deleteBankAccount(bankAccountData.id)" class="btn btn-danger" has-permission='DELETE_BANKACCOUNT'><i
+                                class="fa fa-trash-o"></i>&nbsp;&nbsp;{{ 'label.button.delete' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <a href="#/createchequebatch/{{bankAccountData.id}}" class="btn btn-primary pull-left" has-permission='CREATE_BANKCHEQUE'><i class="fa fa-plus fa fa-large"></i>&nbsp;&nbsp;{{'label.button.add.batch' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

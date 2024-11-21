@@ -1,0 +1,112 @@
+<div class="content-container" ng-controller="ViewPortfolioPlanningController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/planningportfolios">{{'label.anchor.portfoliosplanning' | translate}}</a></li>
+        <li class="active">{{portfolio.name}}</li>
+    </ul>
+    <div class="card">
+        <api-validate></api-validate>
+        <div class="content">
+            <uib-tabset class="overflowhidden marginbottom0 scrollable" tabset-name="portfolioTabset" scrollable>
+                <uib-tab heading="{{'label.heading.general' | translate}}">
+                    <div class="container-fluid">
+                        <div class="col-md-12 col-sm-12">
+                            <h3><strong>{{ 'label.heading.portfolioHeader' | translate }}{{portfolio.name}}</strong></h3>
+                            <table class="table-bordered table view-table" style="width: 350px">
+                                <tr>
+                                    <td>{{ 'label.heading.agencyName' | translate }}</td>
+                                    <td>{{portfolio.agencyName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'label.heading.parentoffice' | translate }}</td>
+                                    <td>{{portfolio.parentName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'label.heading.namedecorated' | translate }}</td>
+                                    <td>{{portfolio.name | DotRemove}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+            <div class="clear"></div>
+            <!--filter planning by date range -->
+            <div class="form-group" style="margin-bottom: 50px">
+                <div>
+                    <label class="control-label col-sm-2">{{ 'label.input.fromdate' | translate }}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="fromDate" name="fromDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="fromDate" is-open="opened" min="minDat"
+                               max="'2050-06-22'" class="form-control" required/>
+                    </div>
+                    <div class="">
+                        <span class="error" ng-if="firstError">{{ 'validation.msg.planning.date.cannot.be.past.date' | translate }}</span>
+                        <form-validate valattributeform="planningfrom" valattribute="fromDate"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="control-label col-sm-1">{{ 'label.input.todate' | translate }}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="toDate" name="toDate" sort type="text" datepicker-pop="dd MMMM yyyy"
+                               ng-model="toDate" is-open="opened1" min="minDate"
+                               class="form-control" required/>
+
+                        <span class="error" ng-if="secondError">{{ 'validation.msg.planning.date.cannot.be.past.date' | translate }}</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-primary" ng-click="retrievePlanning()"><i class="fa fa-filter "></i>&nbsp;&nbsp;{{
+                        'label.button.searchPlanning' | translate }}</a>
+                </div>
+            </div>
+            <!--centers-->
+            <div class="clear"></div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary" ng-csv="csvData"><i class="fa fa-file "></i>&nbsp;&nbsp;{{'label.button.exportcsv' | translate }}</button>
+            </div>
+            <div>
+                <table class="table" id="planning">
+                    <thead>
+                        <tr class="graybg">
+                            <span class="span gray-head">
+                                <strong>{{ 'label.heading.portfolioplanning' | translate }}</strong>
+                            </span>
+                        </tr>
+                        <tr class="graybg">
+                            <th>{{'label.heading.planningDate' | translate}}</th>
+                            <th>{{'label.heading.planningDay' | translate}}</th>
+                            <th>{{'label.heading.meetingStartTime' | translate}}</th>
+                            <th>{{'label.heading.portfolioCenter' | translate}}</th>
+                            <th>{{'label.heading.centerGroupId' | translate}}</th>
+                            <th>{{'label.heading.centerGroupName' | translate}}</th>
+                            <th>{{'label.heading.category' | translate}}</th>
+                            <th>{{'label.heading.type' | translate}}</th>
+                            <th>{{'label.heading.loanTotalRepayment' | translate}}</th>
+                            <th>{{'label.heading.loanTotalOverdue' | translate}}</th>
+                            <th>{{'label.heading.groupNumberOfClients' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pointer-main" ng-repeat="planning in detailedPlanningData">
+                            <td>{{planning.meetingDate | DateFormat}}</td>
+                            <td>{{planning.meetingDayName}}</td>
+                            <td>{{planning.meetingStartTime | date: 'HH:mm'}}</td>
+                            <td>{{planning.portfolioCenterName}}</td>
+                            <td>{{planning.centerGroupId}}</td>
+                            <td>{{planning.centerGroupName}}</td>
+                            <td>{{planning.planningType | translate}}</td>
+                            <td>{{'label.anchor.cobro' | translate}}</td>
+                            <td>{{planning.totalRepayment |number}}</td>
+                            <td>{{planning.totalOverdue |number}}</td>
+                            <td>{{planning.numberOfClients}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

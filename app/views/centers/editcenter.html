@@ -19,7 +19,7 @@
 
                                 <div class="col-sm-3">
                                     <input ng-autofocus="true" type="text" id="name" name="name" placeholder="{{edit.name}}"
-                                           ng-model="formData.name" class="form-control" required late-Validate/>
+                                           ng-model="formData.name" class="form-control" disabled required late-Validate/>
                                 </div>
                                 <div class="col-sm-3">
                                     <form-validate valattributeform="editcenterform" valattribute="name"/>
@@ -52,10 +52,104 @@
                                            is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control" readonly/>
                                 </div>
                             </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>{{'label.input.company.fieldset.custom' | translate}}</legend>
+                            <!--portfolio name-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.portfolio' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="portfolioName" type="text" name="portfolioName" ng-model="formData.portfolioName" class="form-control" disabled
+                                           required late-Validate/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editportfoliocenterform" valattribute="portfolioName"/>
+                                </div>
+                            </div>
+                            <!--legacy center number-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerLegacyNumber' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="centerLegacyNumber" type="text" name="centerLegacyNumber" ng-model="formData.legacyNumber" class="form-control"/>
+                                </div>
+                            </div>
+                            <!--city-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerCity' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <select id="cityId" ng-model="formData.cityId" class="form-control" name="cityId"
+                                            ng-options="city.id as city.name for city in cityOptions"
+                                            value="{{city.id}}"></select>
+                                </div>
+                            </div>
+                            <!--department-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerDepartment' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <select id="stateId" ng-model="formData.stateId" class="form-control" name="stateId"
+                                            ng-options="state.id as state.name for state in stateOptions"
+                                            value="{{state.id}}"></select>
+                                </div>
+                            </div>
+                            <!--reference point-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerReferencePoint' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="centerReferencePoint" type="text" name="centerReferencePoint" ng-model="formData.referencePoint" class="form-control"/>
+                                </div>
+                            </div>
+                            <!--center type-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerType' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <select id="centerType" ng-model="formData.centerTypeId" class="form-control" name="centerTypeId"
+                                            ng-options="type.id as type.name for type in typeOptions">
+                                        value="{{type.id}}"></select>
+                                    <!-- <option value="">{{'label.selectcentertype' | translate}}</option> -->
+                                </div>
+                            </div>
+                            <!--distance-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerDistance' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="distance" type="text" name="distance" ng-model="formData.distance" class="form-control"/>
+                                </div>
+                            </div>
+                            <!--meeting day-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centerMeetingDay' | translate }}<span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <select id="meetingDay" ng-model="formData.meetingDay" class="form-control" name="meetingDay"
+                                            ng-options="meetingDayOption.id as meetingDayOption.name for meetingDayOption in meetingDayOptions"
+                                            value="{{meetingDayOption.id}}"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form-validate valattributeform="editportfoliocenterform" valattribute="meetingDay"/>
+                                </div>
+                            </div>
+                            <!--meeting start / end-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.meetingStartTime' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="meetingStartTime" type="time" placeholder="HH:MM:SS" name="meetingStartTime" ng-model="formData.meetingStartTime" class="form-control"/>
+                                </div>
+                                <label class="control-label col-sm-2">{{ 'label.input.meetingEndTime' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="meetingEndTime" type="time" placeholder="HH:MM:SS" name="meetingEndTime" ng-model="formData.meetingEndTime" class="form-control"/>
+                                </div>
+                            </div>
+                            <!--created date-->
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{ 'label.input.centercreateddate' | translate }}</label>
+                                <div class="col-sm-3">
+                                    <input id="createdDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.createdDate"
+                                           class="form-control" is-open="opened" min="minDate" max="restrictDate" disabled/>
+                                </div>
+                            </div>
                             <div class="col-md-offset-2 paddedleft120">
                                 <a href="#/viewcenter/{{edit.id}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                                 <button type="button" class="btn btn-primary" data-ng-click="updateGroup()" has-permission='UPDATE_CENTER'>{{'label.button.save' |
-                                    translate}}
+                                translate}}
                                 </button>
                             </div>
                         </fieldset>

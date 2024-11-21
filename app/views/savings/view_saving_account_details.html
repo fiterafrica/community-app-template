@@ -130,8 +130,8 @@
             </div>
             <br>
             <div class="col-md-12" ng-show="!savingaccountdetails.status.rejected && !savingaccountdetails.status.submittedAndPendingApproval">
-                <h3>{{'label.heading.currentBalance' | translate}}: {{savingaccountdetails.currency.displaySymbol}} {{savingaccountdetails.summary.accountBalance | number}}</h3>
-                <h3>{{'label.heading.availableBalance' | translate}}: {{savingaccountdetails.currency.displaySymbol}} {{savingaccountdetails.summary.availableBalance | number}}</h3>
+                <h3>{{'label.heading.currentBalance' | translate}}: {{savingaccountdetails.currency.displaySymbol}} {{savingaccountdetails.summary.accountBalance | FormatByLocale}}</h3>
+                <h3>{{'label.heading.availableBalance' | translate}}: {{savingaccountdetails.currency.displaySymbol}} {{savingaccountdetails.summary.availableBalance | FormatByLocale}}</h3>
             </div>
             <div class="row" style="margin-left:-1px;margin-right: 1px;">
                 <div class="col-sm-7 col-md-7">
@@ -158,20 +158,20 @@
                                     <th class="table-bold-acc fontnormal">{{'label.totalwithdarawals' |
                                         translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalWithdrawals| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalWithdrawals| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr ng-show="savingaccountdetails.summary.totalWithdrawalFees">
                                     <th class="table-bold-acc fontnormal">{{'label.totalwithdrawalsfees' |
                                         translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalWithdrawalFees| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalWithdrawalFees| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr ng-show="savingaccountdetails.summary.totalAnnualFees">
                                     <th class="table-bold-acc fontnormal">{{'label.totalannualfees' | translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalAnnualFees| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalAnnualFees| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr ng-show="savingaccountdetails.summary.totalInterestEarned >= 0">
@@ -179,30 +179,30 @@
                                         translate}}
                                     </th>
                                     <td><span class="padded-td"
-                                              ng-class="{statusactiveoverdue : savingaccountdetails.summary.totalInterestEarned < 0}">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestEarned| number}}</span>
+                                              ng-class="{statusactiveoverdue : savingaccountdetails.summary.totalInterestEarned < 0}">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestEarned| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr ng-show="savingaccountdetails.summary.totalInterestPosted">
                                     <th class="table-bold-acc fontnormal">{{'label.totalinterestposted' |
                                         translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestPosted| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestPosted| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr ng-show="savingaccountdetails.summary.interestNotPosted >= 0">
-                                    {{savingaccountdetails.summary.earnedInterestNotPosted | number}}
+                                    {{savingaccountdetails.summary.earnedInterestNotPosted | FormatByLocale}}
                                     <th class="table-bold-acc fontnormal">{{'label.interestEarnedNotPosted' |
                                         translate}}
                                     </th>
                                     <td><span class="padded-td">
-                                    {{savingaccountdetails.currency.displaySymbol }}&nbsp;{{savingaccountdetails.summary.interestNotPosted | number}}</span>
+                                    {{savingaccountdetails.currency.displaySymbol }}&nbsp;{{savingaccountdetails.summary.interestNotPosted | FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr ng-show="savingaccountdetails.summary.totalOverdraftInterestDerived">
                                     <th class="table-bold-acc fontnormal">{{'label.totaloverdraftinterestderived' |
                                         translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalOverdraftInterestDerived| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalOverdraftInterestDerived| FormatByLocale}}</span>
                                     </td>
                                 </tr>
 
@@ -210,7 +210,7 @@
                                     <th class="table-bold-acc fontnormal">{{'label.overdraftInterestNotPosted' |
                                         translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.interestNotPosted| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.interestNotPosted| FormatByLocale}}</span>
                                     </td>
                                 </tr>
 
@@ -253,7 +253,7 @@
                                 <tr data-ng-show="savingaccountdetails.withdrawalFee">
                                     <th class="table-bold-acc fontnormal">{{'label.withdrawalfee' | translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.withdrawalFee.currency.displaySymbol}}&nbsp;&nbsp;{{savingaccountdetails.withdrawalFee.amount| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.withdrawalFee.currency.displaySymbol}}&nbsp;&nbsp;{{savingaccountdetails.withdrawalFee.amount| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.lastActiveTransactionDate">
@@ -272,27 +272,27 @@
                                 <tr data-ng-show="savingaccountdetails.daysToInactive">
                                     <th class="table-bold-acc fontnormal">{{'label.daysToInactive' | translate}}
                                     </th>
-                                    <td><span
-                                            class="padded-td">{{savingaccountdetails.daysToInactive| number}}</span>
+                                    <td><span lang="en"
+                                            class="padded-td">{{savingaccountdetails.daysToInactive| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.daysToDormancy">
                                     <th class="table-bold-acc fontnormal">{{'label.daysToDormancy' | translate}}
                                     </th>
                                     <td><span
-                                            class="padded-td">{{savingaccountdetails.daysToDormancy| number}}</span>
+                                            class="padded-td">{{savingaccountdetails.daysToDormancy| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.daysToEscheat">
                                     <th class="table-bold-acc fontnormal">{{'label.daysToEscheat' | translate}}
                                     </th>
                                     <td><span
-                                            class="padded-td">{{savingaccountdetails.daysToEscheat| number}}</span>
+                                            class="padded-td">{{savingaccountdetails.daysToEscheat| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.annualFee">
                                     <th class="table-bold-acc fontnormal">{{'label.annualfee' | translate}}</th>
-                                    <td><span class="padded-td">{{savingaccountdetails.annualFee.currency.displaySymbol}}&nbsp;{{savingaccountdetails.annualFee.amount| number}}&nbsp;{{'label.on' | translate}}&nbsp;{{annualdueDate | date:'d MMMM'}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.annualFee.currency.displaySymbol}}&nbsp;{{savingaccountdetails.annualFee.amount| FormatByLocale}}&nbsp;{{'label.on' | translate}}&nbsp;{{annualdueDate | date:'d MMMM'}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.allowOverdraft">
@@ -300,21 +300,21 @@
                                         translate}}
                                     </th>
                                     <td><span
-                                            class="padded-td">{{savingaccountdetails.overdraftLimit| number}}</span>
+                                            class="padded-td">{{savingaccountdetails.overdraftLimit| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.allowOverdraft">
                                     <th class="table-bold-acc fontnormal">
                                         {{'label.heading.minoverdraftforinterestcalculation' | translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.minOverdraftForInterestCalculation| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.minOverdraftForInterestCalculation| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.minBalanceForInterestCalculation">
                                     <th class="table-bold-acc fontnormal">
                                         {{'label.heading.minbalanceforinterestcalculation' | translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.minBalanceForInterestCalculation| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.minBalanceForInterestCalculation| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.savingsAmountOnHold">
@@ -325,7 +325,7 @@
                                     <td><span class="padded-td"></span>
                                         <a class="btn-link"
                                            href="#/viewsavingsholdtransactions/{{savingaccountdetails.id}}">
-                                            {{savingaccountdetails.savingsAmountOnHold| number}}
+                                            {{savingaccountdetails.savingsAmountOnHold| FormatByLocale}}
                                         </a>
                                     </td>
                                 </tr>
@@ -341,7 +341,7 @@
                                         {{'label.heading.enforceMinRequiredBalance' |
                                         translate}}
                                     </th>
-                                    <td><span class="padded-td">{{savingaccountdetails.enforceMinRequiredBalance| number}}</span>
+                                    <td><span class="padded-td">{{savingaccountdetails.enforceMinRequiredBalance| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.enforceMinRequiredBalance">
@@ -349,7 +349,7 @@
                                         translate}}
                                     </th>
                                     <td><span
-                                            class="padded-td">{{savingaccountdetails.minRequiredBalance| number}}</span>
+                                            class="padded-td">{{savingaccountdetails.minRequiredBalance| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.lienAllowed">
@@ -357,7 +357,7 @@
                                         translate}}
                                     </th>
                                     <td><span
-                                            class="padded-td">{{savingaccountdetails.maxAllowedLienLimit| number}}</span>
+                                            class="padded-td">{{savingaccountdetails.maxAllowedLienLimit| FormatByLocale}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.summary.lastInterestCalculationDate">
@@ -376,7 +376,7 @@
                                      <a class="btn-link"
                                         has-permission='READ_SAVINGSACCOUNT'
                                         href="#/viewonholdtransactions/{{savingaccountdetails.id}}/viewsavingaccount/{{savingaccountdetails.id}}">
-                                         {{savingaccountdetails.onHoldFunds| number}}
+                                         {{savingaccountdetails.onHoldFunds| FormatByLocale}}
                                      </a>
                                     </span></td>
                                 </tr>
@@ -397,7 +397,7 @@
                         </tr>
                         <tr>
                             <th>{{'label.heading.balance' | translate}}</th>
-                            <td  ng-class="{statusactiveoverdue : savingaccountdetails.summary.accountBalance < 0}">{{savingaccountdetails.summary.accountBalance | number}}</td>
+                            <td  ng-class="{statusactiveoverdue : savingaccountdetails.summary.accountBalance < 0}">{{savingaccountdetails.summary.accountBalance | FormatByLocale}}</td>
                         </tr>
                     </table>
                     <table class="table table-bordered table-striped" ng-show="!savingaccountdetails.status.rejected && !savingaccountdetails.status.submittedAndPendingApproval">
@@ -437,7 +437,7 @@
                         <tr ng-show="savingaccountdetails.summary.totalDeposits">
                             <th class="table-bold-acc fontnormal">{{'label.totaldeposits' | translate}}
                             </th>
-                            <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalDeposits| number}}</span>
+                            <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalDeposits| FormatByLocale}}</span>
                             </td>
                         </tr>
                         <tr ng-show="savingaccountdetails.summary.totalInterestEarned >= 0">
@@ -445,7 +445,7 @@
                                 translate}}
                             </th>
                             <td><span class="padded-td"
-                                      ng-class="{statusactiveoverdue : savingaccountdetails.summary.totalInterestEarned < 0}">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestEarned| number}}</span>
+                                      ng-class="{statusactiveoverdue : savingaccountdetails.summary.totalInterestEarned < 0}">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestEarned| FormatByLocale}}</span>
                             </td>
                         </tr>
                     </table>
@@ -493,7 +493,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="pointer-main" ng-class="{'pointer-main strike-grey' : transaction.reversed, 'pointer-main amber' : transaction.isReversal, 
+                            <tr class="pointer-main" ng-class="{'pointer-main strike-grey' : transaction.reversed, 'pointer-main amber' : transaction.isReversal,
                             'pointer-main': !(transaction.reversed || transaction.isReversal)}"
                                 ng-repeat="transaction in savingaccountdetails.transactions | orderBy:transactionSort.column[2]:transactionSort.ascending">
                                 <td class="pointer"
@@ -506,25 +506,25 @@
                                 </td>
                                 <td class="pointer"
                                     data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
-                                    {{transaction.transactionType.value}}<span ng-if=" transaction.isReversal">(R)</span>
+                                    {{transaction.transactionType.code | translate}}<span ng-if=" transaction.isReversal">(R)</span>
                                 </td>
-                                <td class="pointer"
+                                <td class="pointer" lang="en"
                                     data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
                                     <div ng-show="(isDebit(transaction.transactionType)&&!transaction.isReversal)||
                                     (!isDebit(transaction.transactionType)&&transaction.isReversal)">
-                                        {{transaction.amount| number}}
+                                        {{transaction.amount| FormatNumber:2}}
                                     </div>
                                 </td>
-                                <td class="pointer"
+                                <td class="pointer" lang="en"
                                     data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
                                     <div ng-show="(!isDebit(transaction.transactionType)&&!transaction.isReversal)||
                                     (isDebit(transaction.transactionType)&&transaction.isReversal)">
-                                        {{transaction.amount| number}}
+                                        {{transaction.amount | FormatNumber:2}}
                                     </div>
                                 </td>
                                 <td class="pointer"
                                     data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
-                                    {{transaction.runningBalance| number}}
+                                    {{transaction.runningBalance | FormatNumber:2}}
                                 </td>
                                 <td><span ng-if=" transaction.reversed!=true"
                                        ng-click="viewSavingsTransactionReceipts(transaction.id)">
@@ -570,7 +570,7 @@
 
                                 </td>
                                 <td>{{instruction.toAccount.accountNo}}({{instruction.toAccountType.value}})</td>
-                                <td>{{instruction.instructionType.value}}/{{instruction.amount | number}}</td>
+                                <td>{{instruction.instructionType.value}}/{{instruction.amount | FormatByLocale}}</td>
                                 <td>{{instruction.validFrom | DateFormat}} to {{instruction.validTill | DateFormat}}</td>
                                 <td class="select-row:selection">
                                     <a type="button"  class="btn btn-primary" uib-tooltip="{{'label.tooltip.editInstruction' | translate}}" has-permission='UPDATE_STANDINGINSTRUCTION' data-ng-show="instruction.status.value!='Deleted'"  href="#/editstandinginstruction/{{instruction.id}}/list">
@@ -689,16 +689,16 @@
                                 </td>
                                 <td class="pointer" data-ng-click="viewCharge(charge.id)"></td>
                                 <td class="pointer" data-ng-click="viewCharge(charge.id)">
-                                    {{charge.currency.displaySymbol}}{{charge.amount| number}}
+                                    {{charge.currency.displaySymbol}}{{charge.amount| FormatByLocale}}
                                 </td>
                                 <td class="pointer" data-ng-click="viewCharge(charge.id)">
-                                    {{charge.currency.displaySymbol}}{{charge.amountPaid| number}}
+                                    {{charge.currency.displaySymbol}}{{charge.amountPaid| FormatByLocale}}
                                 </td>
                                 <td class="pointer" data-ng-click="viewCharge(charge.id)">
-                                    {{charge.currency.displaySymbol}}{{charge.amountWaived| number}}
+                                    {{charge.currency.displaySymbol}}{{charge.amountWaived| FormatByLocale}}
                                 </td>
                                 <td class="pointer" data-ng-click="viewCharge(charge.id)">
-                                    {{charge.currency.displaySymbol}}{{charge.amountOutstanding| number}}
+                                    {{charge.currency.displaySymbol}}{{charge.amountOutstanding| FormatByLocale}}
                                 </td>
                                 <td class="pointer" data-ng-click="viewCharge(charge.id)"></td>
                                 <td>

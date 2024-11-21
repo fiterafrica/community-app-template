@@ -100,6 +100,62 @@
                     </div>
                 </div>
 
+                <! -- Start Administrative Fee Charge -->
+                <div class="form-group" ng-show="formData.chargeTimeType == 1 || formData.chargeTimeType == 8" >
+                    <label class="control-label col-sm-2" for="chargeType">{{'label.input.chargetype' | translate}}<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select ng-show="formData.chargeTimeType == 1" id="chargeType" name="chargedisbursementtypebyfield" ng-model="formData.chargeDisbursementType"
+                                class="form-control"
+                                ng-change="changeChargeType()" required late-Validate
+                                ng-options="chargeDisbursement.id as chargeDisbursement.code | translate for chargeDisbursement in template.chargeDisbursementTypeOptions"
+                                value="{{chargeDisbursement.id}}" ng-required="chargedisbursementtypebyfield" class="form-control">
+                        </select>
+                        <select ng-show="formData.chargeTimeType == 8" id="chargeType" name="chargeinstallmentfeetypebyfield" ng-model="formData.chargeInstallmentFeeType"
+                        class="form-control"
+                        ng-change="changeChargeType()" required late-Validate
+                        ng-options="chargeInstallmentFee.id as chargeInstallmentFee.code | translate for chargeInstallmentFee in template.chargeInstallmentFeeTypeOptions"
+                        value="{{chargeInstallmentFee.id}}" ng-required="chargeinstallmentfeetypebyfield" class="form-control">
+                </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="createchargeform" valattribute="chargeType"/>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="formData.chargeDisbursementType == 2 || formData.chargeInstallmentFeeType == 2"  style="padding-left: 30px;">
+                    <label><strong>{{ 'label.input.adminfee' | translate }}</strong></label>
+                    <table class="width50 table">
+                        <tr class="bottomborder graybg">
+                            <th>{{'label.heading.adminfee.min' | translate}}</th>
+                            <th>{{'label.heading.adminfee.max' | translate}}</th>
+                            <th>{{'label.heading.adminfee.rate' | translate}}</th>
+                            <th>{{'label.heading.adminfee.actions' | translate}}</th>
+                        </tr>
+                        <tr class="bottomborder graybg">
+                            <td>
+                                <input id="adminFeeMin" name="adminFeeMin" type="text" ng-model="adminFeeMin" class="form-control" number-format/>
+                            </td>
+                            <td>
+                                <input id="adminFeeMax" name="adminFeeMax" type="text" ng-model="adminFeeMax" class="form-control" number-format/>
+                            </td>
+                            <td>
+                                <input id="adminFeeRate" name="adminFeeRate" type="text" ng-model="adminFeeRate" class="form-control"/>
+                            </td>
+                            <td>
+                                <a ng-click="addAdminFeeRange()"><i class="fa fa-plus"></i></a>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="range in formData.adminFeeRanges">
+                            <td>{{range.adminFeeMin | number}}</td>
+                            <td>{{range.adminFeeMax | number}}</td>
+                            <td>{{range.adminFeeRate | number}}</td>
+                            <td><a ng-click="deleteAdminFeeRange($index)"><i class="fa fa-times"></i></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <! -- End of Administrative Fee Charge -->
+
                 <div class="form-group" ng-show="showdatefield">
                     <label class="control-label col-sm-2">{{'label.input.duedate' | translate}}<span
                             class="required">*</span></label>

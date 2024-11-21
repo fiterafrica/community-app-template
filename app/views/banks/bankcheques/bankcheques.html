@@ -1,0 +1,104 @@
+<div class="content-container" ng-controller="BankChequesController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.heading.bankcheques' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4 class="pull-left">{{'label.heading.bankcheques' | translate}}</h4>
+            </div>
+            <br>
+            <div>
+                <form ng-submit="search()" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="pull-left">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label class="control-label col-sm-2">{{'label.input.status' | translate}}</label>
+                                            <div class="col-sm-4">
+                                                <div>
+                                                    <select id="chequeStatusId" name="chequeStatusId"
+                                                            ng-model="formData.status"
+                                                            class="form-control"
+                                                            ng-options="status.id as status.code | translate  for status in statusOptions"
+                                                            value="{{status.id}}">
+                                                        <option value="">--{{'label.selectstatus' | translate}}--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <label class="control-label col-sm-2">{{'label.input.agency' | translate}}</label>
+                                            <div class="col-sm-4">
+                                                <div>
+                                                    <select id="agencyId" name="chequeStatusId"
+                                                            ng-model="formData.agencyId"
+                                                            class="form-control"
+                                                            ng-options="agency.id as agency.name for agency in agencyOptions"
+                                                            value="{{agency.id}}">
+                                                        <option value="">--{{'label.input.agency' | translate}}--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="pull-left">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label class="control-label col-sm-2">{{'label.heading.bank.acc.no' | translate}}</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" id="bankAccNo" name="bankAccNo" ng-model="formData.bankAccNo" class="form-control" placeholder="{{'label.heading.bank.acc.no' | translate}}"/>
+                                            </div>
+                                            <label class="control-label col-sm-2">{{'label.heading.chequeNo' | translate}}</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" id="chequeNo" name="chequeNo" ng-model="formData.chequeNo" class="form-control" placeholder="{{'label.input.chequeNo' | translate}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-3 pull-right">
+                        <button id="search" type="submit" class="btn btn-primary"><span class="fa fa-search"></span> {{'label.button.searchdata' | translate}}</button>
+                    </div>
+                    <hr/>
+                </form>
+            </div>
+            <br/>
+            <table class="table">
+                <thead>
+                <tr class="graybg">
+                    <th>{{'label.heading.chequeNo' | translate}}</th>
+                    <th>{{'label.heading.batchNo' | translate}}</th>
+                    <th>{{'label.heading.bankAccNo' | translate}}</th>
+                    <th>{{'label.heading.chequeAmount' | translate}}</th>
+                    <th>{{'label.heading.status' | translate}}</th>
+                    <th>{{'label.heading.description' | translate}}</th>
+                    <th>{{'label.heading.createdon' | translate}}</th>
+                    <th>{{'label.heading.createdby' | translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="pointer-main" dir-paginate="cheque in cheques | orderBy:'chequeNo':reverse | itemsPerPage: chequesPerPage" total-items="totalCheques" pagination-id="cheques">
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.chequeNo}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.batchNo}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.bankAccNo}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.chequeAmount}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.status.code | translate}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.description}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.createdDate | DateFormat}}</td>
+                    <td class="pointer" data-ng-click="routeTo(cheque.batchId, cheque.id)">{{cheque.createdByUsername}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls boundary-links="true"  pagination-id="cheques" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html" on-page-change="getResultsPage(newPageNumber)"></dir-pagination-controls>
+        </div>
+    </div>
+</div>

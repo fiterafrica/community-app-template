@@ -11,7 +11,7 @@
                 <span class="fa fa-bars"></span>
             </a>
             <a class="navbar-brand" href="#/home">
-                <img src="./images/mifos-logo-flat.png" alt="Mifos X">
+                <img src="./images/fb_logo_flat.png" alt="Mifos X">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" uib-collapse="!isNavCollapsed">
@@ -25,9 +25,13 @@
                     <ul class="" uib-dropdown-menu id="swatch-menu">
                         <li><a href="#/clients" has-permission='READ_CLIENT'>{{ 'label.anchor.clients' | translate
                             }}</a></li>
+
                         <li><a href="#/groups" has-permission='READ_GROUP'>{{ 'label.anchor.groups' | translate
                             }}</a></li>
                         <li><a href="#/centers" has-permission='READ_CENTER'>{{ 'label.anchor.centers' | translate
+                            }}</a></li>
+                        <li><a href="#/prequalificationsmenu" has-permission='VIEW_PREQUALIFICATIONS'>{{'label.anchor.prequalifications' | translate}}</a></li>
+                        <li><a href="#/blacklist" has-permission='VIEW_BLACKLIST'>{{ 'label.anchor.blacklist' | translate
                             }}</a></li>
                     </ul>
                 </li>

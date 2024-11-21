@@ -404,22 +404,22 @@
             .when('/editaccrule/:id', {
                 templateUrl: 'views/accounting/edit_acc_rule.html'
             })
-            .when('/run_periodic_accrual',{
+            .when('/run_periodic_accrual', {
                 templateUrl: 'views/accounting/periodic_accrual_accounting.html'
             })
-            .when('/openingbalances',{
+            .when('/openingbalances', {
                 templateUrl: 'views/accounting/openingbalances.html'
             })
-            .when('/viewprovisioningentries',{
+            .when('/viewprovisioningentries', {
                 templateUrl: 'views/accounting/provisioning/ProvisioningEntries.html'
             })
-            .when('/createprovisioningentries',{
+            .when('/createprovisioningentries', {
                 templateUrl: 'views/accounting/provisioning/CreateProvisioningEntries.html'
             })
-            .when('/viewprovisioningentry/:entryId',{
+            .when('/viewprovisioningentry/:entryId', {
                 templateUrl: 'views/accounting/provisioning/ViewProvisioningEntry.html'
             })
-            .when('/viewprovisioningjournalentry/:entryId',{
+            .when('/viewprovisioningjournalentry/:entryId', {
                 templateUrl: 'views/accounting/provisioning/ViewProvisioningJournalEntries.html'
             })
             .when('/viewcode/:id', {
@@ -899,7 +899,7 @@
             .when('/editprovisioningcriteria/:criteriaId', {
                 templateUrl: 'views/organization/provisioning/EditProvisioningCriteria.html'
             })
-            .when('/taxconfiguration',{
+            .when('/taxconfiguration', {
                 templateUrl: 'views/products/tax/TaxConfigurations.html'
             })
             .when('/createtaxcomponent', {
@@ -956,6 +956,9 @@
             .when('/loanforeclosure/:id', {
                 templateUrl: 'views/loans/loanforeclosure.html'
             })
+            .when('/loanfuturepayment/:id', {
+                templateUrl: 'views/loans/loanfuturepayment.html'
+            })
             .when('/address/:id', {
                 templateUrl: 'views/administration/AddressForm.html'
             })
@@ -980,13 +983,13 @@
             .when('/notifications', {
                 templateUrl: 'views/notification/notifications.html'
             })
-            .when('/surveys',{
+            .when('/surveys', {
                 templateUrl: 'views/surveys/surveys.html'
             })
-            .when('/surveys/add',{
+            .when('/surveys/add', {
                 templateUrl: 'views/surveys/createsurvey.html'
             })
-            .when('/editsurvey/:id',{
+            .when('/editsurvey/:id', {
                 templateUrl: 'views/surveys/editsurvey.html'
             })
             .when('/editfamilymember/:clientId/:familyMemberId', {
@@ -996,13 +999,13 @@
                 templateUrl: 'views/clients/addfamilymembers.html'
             })
             .when('/bulkimportoffices', {
-                 templateUrl: 'views/organization/bulkimport/bulkimportoffices.html'
-             })
-             .when('/bulkimportclients', {
-                 templateUrl: 'views/organization/bulkimport/bulkimportclients.html'
-             })
+                templateUrl: 'views/organization/bulkimport/bulkimportoffices.html'
+            })
+            .when('/bulkimportclients', {
+                templateUrl: 'views/organization/bulkimport/bulkimportclients.html'
+            })
             .when('/bulkimportloanaccounts', {
-            templateUrl: 'views/organization/bulkimport/bulkimportloanaccounts.html'
+                templateUrl: 'views/organization/bulkimport/bulkimportloanaccounts.html'
             })
             .when('/bulkimportloanrepayments', {
                 templateUrl: 'views/organization/bulkimport/bulkimportloanrepayments.html'
@@ -1052,7 +1055,7 @@
             .when('/bulkimport', {
                 templateUrl: 'views/organization/bulkimport/bulkimport.html'
             })
-			.when('/adhocquery/', {
+            .when('/adhocquery/', {
                 templateUrl: 'views/adhocquery/adhocquerylists.html'
             })
             .when('/createadhocquery/', {
@@ -1064,14 +1067,14 @@
             .when('/editadhocquery/:id', {
                 templateUrl: 'views/adhocquery/editadhocquery.html'
             })
-            .when('/selfservice/createuser/:clientId',{
+            .when('/selfservice/createuser/:clientId', {
                 templateUrl: 'views/selfservice/createuser.html'
             })
             .when('/externalservicesCB/CreditBureau', {
                 templateUrl: 'views/administration/CreditBureauSummary.html'
             })
-             .when('/externalservicesCB/CreditBureau/addcb', {
-                 templateUrl: 'views/administration/addNewCreditBureau.html'
+            .when('/externalservicesCB/CreditBureau/addcb', {
+                templateUrl: 'views/administration/addNewCreditBureau.html'
             })
             .when('/externalservicesCB/CreditBureau/configuration', {
                 templateUrl: 'views/administration/CreditBureauConfiguration.html'
@@ -1111,16 +1114,16 @@
             })
             .when('/clients/cupo/:clientId', {
                 templateUrl: 'views/cupo/viewclientcupo.html'
-            })     
+            })
             .when('/createcupo/:entityName/:entityId', {
                 templateUrl: 'views/cupo/createcupo.html'
-            })         
+            })
             .when('/viewcupo/:cupoId', {
                 templateUrl: 'views/cupo/viewcupo.html'
-            })    
+            })
             .when('/editcupo/:cupoId', {
                 templateUrl: 'views/cupo/editcupo.html'
-            })  
+            })
             .when('/groups/cupo/:groupId', {
                 templateUrl: 'views/cupo/viewgroupcupo.html'
             })
@@ -1135,7 +1138,157 @@
             })
             .otherwise({
                 templateUrl: "views/errors/404.html"
-            });
+            })
+            .when('/agencies', {
+                templateUrl: 'views/organization/agencies.html'
+            })
+            .when('/createagency', {
+                templateUrl: 'views/organization/createagency.html'
+            })
+            .when('/viewagency/:id', {
+                templateUrl: 'views/organization/viewagency.html'
+            })
+            .when('/editagency/:id', {
+                templateUrl: 'views/organization/editagency.html'
+            })
+            .when('/supervisions', {
+                templateUrl: 'views/organization/supervisions.html'
+            })
+            .when('/createsupervision', {
+                templateUrl: 'views/organization/createsupervision.html'
+            })
+            .when('/viewsupervision/:id', {
+                templateUrl: 'views/organization/viewsupervision.html'
+            })
+            .when('/editsupervision/:id', {
+                templateUrl: 'views/organization/editsupervision.html'
+            })
+            .when('/portfolios', {
+                templateUrl: 'views/organization/portfolios.html'
+            })
+            .when('/planningportfolios', {
+                templateUrl: 'views/organization/planningportfolios.html'
+            })
+            .when('/createportfolio', {
+                templateUrl: 'views/organization/createportfolio.html'
+            })
+            .when('/viewportfolio/:id', {
+                templateUrl: 'views/organization/viewportfolio.html'
+            })
+            .when('/viewportfolioplanning/:id', {
+                templateUrl: 'views/organization/viewportfolioplanning.html'
+            })
+            .when('/editportfolio/:id', {
+                templateUrl: 'views/organization/editportfolio.html'
+            })
+            .when('/editportfoliocenter/:portfolioId/:portfolioCenterId', {
+                templateUrl: 'views/organization/editportfoliocenter.html'
+            })
+            .when('/viewcentergroups/:portfolioId/:portfolioCenterId', {
+                templateUrl: 'views/organization/viewcentergroups.html'
+            })
+            .when('/createcentergroup/:portfolioId/:portfolioCenterId', {
+                templateUrl: 'views/groups/creategroup.html'
+            })
+            .when('/editcentergroup/:portfolioId/:portfolioCenterId/:centerGroupId', {
+                templateUrl: 'views/organization/editcentergroup.html'
+            })
+            .when('/transfercentergroup/:portfolioId/:portfolioCenterId/:centerGroupId', {
+                templateUrl: 'views/organization/transfercentergroup.html'
+            })
+            .when('/transferagency/:id', {
+                templateUrl: 'views/organization/transferagency.html'
+            }).when('/blacklist', {
+            templateUrl: 'views/blacklist/blacklist.html'
+        }).when('/blacklist/:blacklistId/:action', {
+            templateUrl: 'views/blacklist/removeblacklist.html'
+        }).when('/blacklist/createblacklist', {
+            templateUrl: 'views/blacklist/addToBlacklist.html'
+        }).when('/prequalificationsmenu', {
+            templateUrl: 'views/prequalifications/prequalificationsMenu.html'
+        }).when('/prequalificationGroups/:groupingType/:type', {
+            templateUrl: 'views/prequalifications/prequalificationsGroups.html'
+        }).when('/prequalificationAnalysis/:type', {
+            templateUrl: 'views/prequalifications/prequalificationsAnalysis.html'
+        }).when('/prequalifications/newprequalification/new/:groupingType', {
+            templateUrl: 'views/prequalifications/newgroup.html'
+        }).when('/prequalifications/newprequalification/existing', {
+            templateUrl: 'views/prequalifications/existingGroupPrequalification.html'
+        }).when('/prequalification/:groupId/viewdetails/:groupingType', {
+            templateUrl: 'views/prequalifications/prequalificationDetails.html'
+        }).when('/prequalification/:groupId/viewdetailsAnalysis', {
+            templateUrl: 'views/prequalifications/prequalificationDetailsAnalysis.html'
+        }).when('/prequalification/:groupId/edit/:groupingType', {
+            templateUrl: 'views/prequalifications/editgroup.html'
+        }).when('/prequalifications/individualprequalifications', {
+            templateUrl: 'views/prequalifications/individualPrequalificationList.html'
+        }).when('/prequalifications/individual/create', {
+            templateUrl: 'views/prequalifications/individualPrequalification.html'
+        }).when('/loans/restructurecredit/:clientId', {
+            templateUrl: 'views/loans/restructurecredits.html'
+        }).when('/banks', {
+            templateUrl: 'views/banks/banks.html'
+        }).when('/banks/createbank', {
+            templateUrl: 'views/banks/createBank.html'
+        }).when('/banks/:bankId/viewdetails', {
+            templateUrl: 'views/banks/bankDetails.html'
+        }).when('/banks/:bankId/editbank', {
+            templateUrl: 'views/banks/editBank.html'
+        }).when('/bankaccounts', {
+            templateUrl: 'views/banks/bankaccounts/bankAccounts.html'
+        }).when('/bankaccounts/createbankaccount', {
+            templateUrl: 'views/banks/bankaccounts/createBankAccount.html'
+        }).when('/bankaccounts/:bankAccountId/viewdetails', {
+            templateUrl: 'views/banks/bankaccounts/bankAccountDetails.html'
+        }).when('/bankaccounts/:bankAccountId/editbankaccount', {
+            templateUrl: 'views/banks/bankaccounts/editBankAccount.html'
+        }).when('/bankaccounts/:bankAccountId/removebankaccount', {
+            templateUrl: 'views/banks/bankaccounts/bankAccountDetails.html'
+        }).when('/prequalification/:prequalificationId/validations', {
+            templateUrl: 'views/hardpolicychecklist/viewHardpolicyValidations.html'
+        }).when('/prequalification/:prequalificationId/requalification', {
+            templateUrl: 'views/prequalifications/requalification.html'
+        }).when('/chequebankaccounts', {
+           templateUrl: 'views/banks/bankcheques/chequebankaccounts.html'
+        }).when('/viewchequeaccount/:accountId', {
+            templateUrl: 'views/banks/bankcheques/viewchequeaccount.html'
+        }).when('/createchequebatch/:accountId', {
+           templateUrl: 'views/banks/bankcheques/createchequebatch.html'
+        }).when('/viewchequebatch/:batchId', {
+            templateUrl: 'views/banks/bankcheques/viewchequebatch.html'
+         }).when('/editchequebatch/:batchId', {
+           templateUrl: 'views/banks/bankcheques/editchequebatch.html'
+        }).when('/viewdetails/:batchId/cheque/:chequeId', {
+           templateUrl: 'views/banks/bankcheques/viewchequedetails.html'
+        }).when('/reassigncheque/:batchId/cheque/:chequeId', {
+           templateUrl: 'views/banks/bankcheques/reassigncheque.html'
+        }).when('/voidcheque/:batchId/cheque/:chequeId', {
+           templateUrl: 'views/banks/bankcheques/voidcheque.html'
+        }).when('/disburseloansbycheques', {
+          templateUrl: 'views/loans/disburseloansbycheques.html'
+        }).when('/bankcheques', {
+          templateUrl: 'views/banks/bankcheques/bankcheques.html'
+        }).when('/approvesingleissuance/:batchId/cheque/:chequeId', {
+          templateUrl: 'views/banks/bankcheques/approvesinglechequeissuance.html'
+        }).when('/approvechequesissuance', {
+           templateUrl: 'views/banks/bankcheques/approvechequesissuance.html'
+        }).when('/authorizechequesissuance', {
+           templateUrl: 'views/banks/bankcheques/authorizechequesissuance.html'
+        }).when('/authorizesingleissuance/:batchId/cheque/:chequeId', {
+           templateUrl: 'views/banks/bankcheques/authorizesinglechequeissuance.html'
+        }).when('/printcheques', {
+           templateUrl: 'views/banks/bankcheques/printcheques.html'
+        }).when('/payguaranteeswithcheques', {
+           templateUrl: 'views/banks/bankcheques/payguaranteeswithcheques.html'
+         }).when('/committees', {
+            templateUrl: 'views/organization/committees.html'
+        }).when('/createcommittee', {
+            templateUrl: 'views/organization/createcommittee.html'
+        }).when('/viewcommittee/:id', {
+            templateUrl: 'views/organization/viewcommittee.html'
+        }).when('/editcommittee/:id', {
+            templateUrl: 'views/organization/editcommittee.html'
+        });
         $locationProvider.hashPrefix('');
         $locationProvider.html5Mode(false);
     };

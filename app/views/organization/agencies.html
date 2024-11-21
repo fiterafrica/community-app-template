@@ -1,0 +1,36 @@
+<div class="content-container" ng-controller="AgenciesController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li class="active">{{'label.anchor.manageagencies' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <div class="pull-right">
+                    <a href="#/createagency" class="btn btn-primary" has-permission='CREATE_AGENCY'><i class="fa fa-plus "></i>&nbsp;&nbsp;{{'label.button.createagency' | translate}}</a>&nbsp;&nbsp;
+                </div>
+            </div>
+            <br>
+            <div class="clear"></div>
+            <div>
+                 <table class="table">
+                    <thead>
+                    <tr class="graybg">
+                        <th>{{'label.heading.officeName' | translate}}</th>
+                        <th>{{'label.heading.parentoffice' | translate}}</th>
+                        <th>{{'label.heading.transferAgency' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="pointer-main" dir-paginate="agency in agencies | orderBy:'name':reverse  | filter:filterText |  itemsPerPage: AgenciesPerPage">
+                        <td class="pointer" data-ng-click="routeTo(agency.id)">{{agency.name}}</td>
+                        <td class="pointer" data-ng-click="routeTo(agency.id)">{{agency.parentName}}</td>
+                        <td><button class="btn btn-default" data-ng-click="transferAgency(agency.id)"><i class="fa fa-adjust"></i></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls boundary-links="true" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        <li><a href="#/portfolios">{{'label.anchor.managecommittees' | translate}}</a></li>
+        <li class="active">{{'label.anchor.createcommittee' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.heading.createcommittee' | translate}}</h4>
+    		</div>
+    		<br/>
+    		<form name="createcommitteeform" novalidate="" class="form-horizontal" ng-controller="CreateCommitteeController"
+    		      rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+					<!--committee-->
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.committee' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="committeeId" ng-model="formData.id" class="form-control" name="id"
+									ng-options="committee.id as committee.name for committee in committees"
+									value="{{committee.id}}"></select>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createcommitteeform" valattribute="committeeId"/>
+						</div>
+					</div>
+					<!--list of unassigned and assigned users-->
+					<div class="form-group">
+						<div class="col-sm-3 col-md-3 col-md-offset-1">
+							<label class="control-label col-sm-9">{{ 'label.input.availableusers' | translate }}</label>
+							<select id="available" name="availableToSelect" ng-model="available" class="form-control multiselectmin" multiple>
+								<option ng-repeat="availableuser in availableUsers" value="{{availableuser.userId}}">
+									{{availableuser.firstname}} {{availableuser.lastname}}
+								</option>
+							</select>
+						</div>
+						<div class="col-sm-1 col-md-1 paddedtop25px">
+							<button type="button" class="btn btn-primary" data-ng-click="addUser()"><i
+									class="fa fa-angle-double-right"></i></button>
+							<br/>
+							<button type="button" class="btn btn-primary" data-ng-click="removeUser()"><i
+									class="fa fa-angle-double-left"></i></button>
+						</div>
+						<div class="col-sm-3 col-md-3">
+							<label class="control-label col-sm-9">{{ 'label.input.selectedusers' | translate}}<span
+									class="required">*</span></label>
+							<select id="committeeusers" name="committeeusers" ng-model="selected" class="form-control multiselectmin" multiple>
+								<option ng-repeat="selecteduser in selectedUsers" value="{{selecteduser.userId}}">
+									{{selecteduser.firstname}} {{selecteduser.lastname}}
+								</option>
+							</select>
+						</div>
+					</div>
+					<!--cancel / submit buttons-->
+    		        <div class="col-md-offset-3">
+    		            <a id="cancel" href="#/committees">
+    		                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    		            </a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_PORTFOLIO'>{{'label.button.save' | translate}}</button>
+    		        </div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

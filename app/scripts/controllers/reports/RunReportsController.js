@@ -33,7 +33,7 @@
                     i.className = 'selected-row';
                 }
             };
-            if (scope.reportType == 'Pentaho') {
+            if (scope.reportType === 'Pentaho' || scope.reportType === 'Table') {
                 scope.formData.outputType = 'HTML';
             };
 
@@ -95,12 +95,20 @@
             }
 
             function intializeParams(paramData, params) {
+                for (var i in scope.reportDateParams) {
+                    if (scope.formData[scope.reportDateParams[i].inputName]) {
+                        scope.formData[scope.reportDateParams[i].inputName] = dateFilter(scope.formData[scope.reportDateParams[i].inputName], 'yyyy-MM-dd');
+                    }
+                }
+                const requestJson = {...scope.formData};
+                requestJson.parameterType = true;
+                requestJson.reportSource = paramData.name;
                 scope.errorStatus = undefined;
                 scope.errorDetails = [];
                 params.reportSource = paramData.name;
                 params.parameterType = true;
                 var successFunction = getSuccuessFunction(paramData);
-                resourceFactory.runReportsResource.getReport(params, successFunction);
+                resourceFactory.runReportsResource.getReport(requestJson, successFunction);
             }
 
             scope.getDependencies = function (paramData) {
@@ -151,6 +159,18 @@
                 });
             }
 
+            scope.$watchGroup(['formData.R_disbursementDate', 'formData.R_officeIdSelectAll', 'formData.R_loanProductSelectAll'], function(){
+                if(scope.reportDateParams && scope.reportDateParams.length > 0){
+                    for (var i = 0; i < scope.reportDateParams.length; i++) {
+                        if(scope.reportDateParams[i].name === 'disbursementDate'){
+                            if(scope.formData.R_disbursementDate && scope.formData.R_officeIdSelectAll && scope.formData.R_loanProductSelectAll){
+                                scope.getDependencies(scope.reportDateParams[i]);
+                            }
+                            break;
+                        }
+                    }
+                }
+            });
             function parameterValidationErrors() {
                 var tmpStartDate = "";
                 var tmpEndDate = "";
@@ -301,7 +321,7 @@
                 //Custom validation for report parameters
                 parameterValidationErrors();
 
-                if (scope.errorDetails.length == 0) {
+                if (scope.errorDetails.length === 0) {
                     scope.isCollapsed = true;
                     switch (scope.reportType) {
                         case "Table":
@@ -310,21 +330,33 @@
                             scope.hidePentahoReport = true;
                             scope.hideChart = true;
                             scope.formData.reportSource = scope.reportName;
-                            resourceFactory.runReportsResource.getReport(scope.formData, function (data) {
-                                //clear the csvData array for each request
-                                scope.csvData = [];
-                                scope.reportData.columnHeaders = data.columnHeaders;
-                                scope.reportData.data = data.data;
-                                for (var i in data.columnHeaders) {
-                                    scope.row.push(data.columnHeaders[i].columnName);
-                                }
-                                scope.csvData.push(scope.row);
-                                for (var k in data.data) {
-                                    scope.csvData.push(data.data[k].row);
-                                }
-                            });
+                            if(scope.formData.outputType === 'CSV' || scope.formData.outputType === 'PDF'){
+                                scope.hidePentahoReport = false;
+                                scope.hideTable = true;
+                                resourceFactory.runReportsResource.downloadReport(scope.formData, function (responseObj) {
+                                    const responseData = responseObj.data;
+                                    const headers = responseObj.headers;
+                                    const contentType = headers('Content-Type');
+                                    const file = new Blob([responseData], {type: contentType});
+                                    const fileContent = URL.createObjectURL(file);
+                                    scope.baseURL = $sce.trustAsResourceUrl(fileContent);
+                                });
+                            } else {
+                                resourceFactory.runReportsResource.getReport(scope.formData, function (data) {
+                                    //clear the csvData array for each request
+                                    scope.csvData = [];
+                                    scope.reportData.columnHeaders = data.columnHeaders;
+                                    scope.reportData.data = data.data;
+                                    for (var i in data.columnHeaders) {
+                                        scope.row.push(data.columnHeaders[i].columnName);
+                                    }
+                                    scope.csvData.push(scope.row);
+                                    for (var k in data.data) {
+                                        scope.csvData.push(data.data[k].row);
+                                    }
+                                });
+                            }
                             break;
-
                         case "Pentaho":
                             scope.hideTable = true;
                             scope.hidePentahoReport = false;
@@ -343,13 +375,10 @@
                             http.get(reportURL, {responseType: 'arraybuffer'})
                                 .then(function(response) {
                                     let data = response.data;
-                                    let status = response.status;
                                     let headers = response.headers;
-                                    let config = response.config;
                                     var contentType = headers('Content-Type');
                                     var file = new Blob([data], {type: contentType});
                                     var fileContent = URL.createObjectURL(file);
-
                                     // Pass the form data to the iframe as a data url.
                                     scope.baseURL = $sce.trustAsResourceUrl(fileContent);
                               })

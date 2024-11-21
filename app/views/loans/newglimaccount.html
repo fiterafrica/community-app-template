@@ -100,7 +100,7 @@
                                                         <input id="loanTermFrequency" class="form-control" name="loanterm" type="text"
                                                                ng-model="formData.loanTermFrequency" required late-Validate/>
                                                         <select id="loanTermFrequencyType" class="form-control" ng-model="formData.loanTermFrequencyType"
-                                                                ng-options="termFrequencyType.id as termFrequencyType.value for termFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
+                                                                ng-options="termFrequencyType.id as termFrequencyType.code | translate for termFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
                                                                 value="{{termFrequencyType.id}}"/>
                                                         <form-validate valattributeform="newloanaccountform" valattribute="loanterm"/>
                                                     </td>
@@ -119,7 +119,7 @@
                                                         <input id="repaymentEvery" class="form-control" type="text" name="repaidevery"
                                                                ng-model="formData.repaymentEvery" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.repaymentEvery" required late-Validate/>
                                                         <select id="repaymentFrequencyType" class="form-control" ng-model="formData.repaymentFrequencyType"
-                                                                ng-options="repaymentFrequencyType.id as repaymentFrequencyType.value for repaymentFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
+                                                                ng-options="repaymentFrequencyType.id as repaymentFrequencyType.code | translate for repaymentFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
                                                                 ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.repaymentEvery"
                                                                 value="{{repaymentFrequencyType.id}}"/>&nbsp;<span ng-show="formData.repaymentFrequencyType == 2">on</span>
                                                         <select id="repaymentFrequencyNthDayType" class="form-control" ng-model="formData.repaymentFrequencyNthDayType"

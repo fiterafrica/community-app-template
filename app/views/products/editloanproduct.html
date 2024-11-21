@@ -26,7 +26,7 @@
 	    </label>
 	    <div class="col-sm-2">
 	        <input type="text" id="shortName" name="shortName" ng-model="formData.shortName"
-	               class="form-control" maxlength="4" required late-validate/>
+	               class="form-control" maxlength="8" required late-validate/>
 	    </div>
 	    <div class="col-sm-2">
 	        <form-validate valattributeform="editloanproductform" valattribute="shortName"/>
@@ -77,6 +77,20 @@
 	            <input type="checkbox" ng-model="formData.includeInBorrowerCycle" ng-true-value="true" ng-false-value="false">
 	        </label>
 	    </div>
+		<label class="control-label col-sm-2 col-sm-offset-2">{{ 'label.input.usedFor' | translate }}
+			<span class="required">*</span>
+			<i class="fa fa-question-circle "
+			   uib-tooltip="{{'label.tooltip.loanproduct.usedFor' | translate}}"
+			   tooltip-append-to-body="true"></i>
+		</label>
+		<div class="col-sm-2">
+			<select id="ownerType" class="form-control"
+				ng-model="formData.ownerType" 
+				ng-options="ownerType.id as ownerType.value for ownerType in product.loanProductOwnerTypes"
+				value="{{ownerType.id}}">
+			</select>
+		</div>
+
 	</div>
 	<h3>{{ 'label.heading.currency' | translate }}</h3>
 	<hr>
@@ -121,6 +135,16 @@
     </div>
 	<h3>{{ 'label.heading.terms' | translate }}</h3>
 	<hr>
+	<div class="form-group">
+	    <label class="control-label col-sm-2">{{ 'label.input.addNewLoanCycles' | translate }}
+	        <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.loanproduct.addNewLoanCycles' | translate}}" tooltip-append-to-body="true"></i>
+	    </label>
+	    <div class="checkbox col-sm-2">
+	        <label>
+	            <input type="checkbox" ng-model="formData.addNewCyclesEnabled"/>
+	        </label>
+	    </div>
+	</div>
 	<div class="form-group">
 	    <label class="control-label col-sm-2">{{ 'label.input.useborrowerloancounter' | translate }}
 	        <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.loanproduct.useborrowerloancounter' | translate}}" tooltip-append-to-body="true"></i>
@@ -642,6 +666,45 @@
         </div>
     </div>
 
+	<div class="form-group">
+        <label class="control-label col-sm-4">{{ 'label.input.age.limit.warning' | translate }}</label>
+        <div class="col-sm-2">
+            <input id="agelimitwarning" type="text" class="form-control"	ng-model="formData.ageLimitWarning">
+        </div>
+    </div>
+
+	<div class="form-group">
+        <label class="control-label col-sm-4">{{ 'label.input.age.limit.block' | translate }}</label>
+        <div class="col-sm-2">
+            <input id="agelimitblock" type="text" class="form-control"	ng-model="formData.ageLimitBlock">
+        </div>
+    </div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-4">{{
+			'label.input.days.limit.addOn'
+			| translate }}<span class="required">*</span></label>
+		<div class="col-sm-2">
+			<input id="daysLimitForAddOn" type="text" class="form-control"	ng-model="formData.daysLimitAddOn">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-4">{{
+			'label.input.guaranteePercentage'
+			| translate }}<span class="required">*</span></label>
+		<div class="col-sm-2">
+			<input id="guaranteePercentage" type="text" class="form-control" ng-model="formData.guaranteePercentage">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-4">{{
+			'label.input.payment.tolerance.limit' | translate }}<span class="required">*</span></label>
+		<div class="col-sm-2">
+			<input id="paymentToleranceLimit" type="text" class="form-control"	ng-model="formData.paymentToleranceLimit" number-format required>
+		</div>
+	</div>
+
     <div class="form-group">
         <div class="col-sm-3">
             <input type="checkbox" name="name1" ng-model="formData.allowVariableInstallments"/>
@@ -673,6 +736,15 @@
 			<input type="checkbox" name="canUseForTopup" ng-model="formData.canUseForTopup"/>
 			{{'label.input.canUseForTopup' | translate}}
 			<i class="icon-question-sign" tooltip="{{'label.tooltip.loanproduct.canUseForTopup' | translate}}"
+			   tooltip-append-to-body="true"></i>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-3">
+			<input type="checkbox" name="requireCommitteeApproval" ng-model="formData.requireCommitteeApproval"/>
+			{{'label.input.requireCommitteeApproval' | translate}}
+			<i class="icon-question-sign" tooltip="{{'label.tooltip.loanproduct.requireCommitteeApproval' | translate}}"
 			   tooltip-append-to-body="true"></i>
 		</div>
 	</div>
@@ -1017,17 +1089,17 @@
 	<hr>
 	<div class="radio-inline">
 	    <label>
-	        <input type="radio" ng-model="formData.accountingRule" value="1"/>{{'label.input.none' | translate}}
+	        <input type="radio" ng-model="formData.accountingRule" ng-checked="formData.accountingRule==1" value="1"/>{{'label.input.none' | translate}}
 	    </label>
 	</div>
 	<div class="radio-inline">
 	    <label>
-	        <input type="radio" ng-model="formData.accountingRule" value="2"/>{{'label.input.cash' | translate}}
+	        <input type="radio" ng-model="formData.accountingRule" ng-checked="formData.accountingRule==2" value="2"/>{{'label.input.cash' | translate}}
 	    </label>
 	</div>
 	<div class="radio-inline">
 	    <label>
-	        <input type="radio" ng-model="formData.accountingRule" value="3"/>{{'label.input.periodicaccrual' | translate}}
+	        <input type="radio" ng-model="formData.accountingRule" ng-checked="formData.accountingRule==3" value="3"/>{{'label.input.periodicaccrual' | translate}}
 	    </label>
 	</div>
 	<div class="radio-inline">

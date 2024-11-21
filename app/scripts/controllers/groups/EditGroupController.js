@@ -1,13 +1,19 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        EditGroupController: function (scope, resourceFactory, location, routeParams, dateFilter, WizardHandler) {
+        EditGroupController: function (scope, resourceFactory, location, routeParams, dateFilter, WizardHandler,$q) {
             scope.first = {};
             scope.managecode = routeParams.managecode;
             scope.restrictDate = new Date();
             scope.entityformData = {};
             scope.entityformData.datatables={};
+            scope.prequlificationdata = {};
             scope.submittedDatatables = [];
             var submitStatus = [];
+            scope.parentOfficesOptions = [];
+            scope.responsibleUserOptions = [];
+            scope.portfolioCenterOptions = [];
+            scope.tf = "HH:mm";
+            scope.available = [];
 
             scope.RequestEntities = function(entity,status){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -45,8 +51,48 @@
                             }
                         });
                     });
-
                 });
+
+                var requestParams = {orderBy: 'name', sortOrder: 'ASC', staffInSelectedOfficeOnly: true};
+                if (routeParams.centerId) {
+                    requestParams.centerId = routeParams.centerId;
+                }
+
+                resourceFactory.groupTemplateResource.get(requestParams, function (data) {
+                    scope.offices = data.officeOptions;
+                    scope.staffs = data.staffOptions;
+                    scope.centerOptions = data.centerOptions;
+
+                    // FB - customization for groups
+                    scope.parentOfficesOptions = data.parentOfficesOptions;
+                    scope.responsibleUserOptions = data.responsibleUserOptions;
+                    scope.statusOptions = data.statusOptions;
+                    scope.portfolioCenterOptions = data.portfolioCenterOptions;
+                    scope.centerGroupLocations = data.centerGroupLocations;
+                });
+
+                resourceFactory.configurationResourceByName.get({configName:'meeting-default-duration'}, function (data){
+                    scope.defaultMeetingPeriod = data.value;
+                });
+
+                resourceFactory.configurationResourceByName.get({configName:'time-between-meetings'}, function (data){
+                    scope.timePeriodBetweenMeeting = data.value;
+                });
+
+                scope.startTimeChanged = function(){
+                    // Perform any additional logic or actions here
+                    if(scope.formData.meetingStartTime != null
+                        && scope.formData.meetingStartTime != undefined
+                        && scope.formData.meetingStartTime != ""){
+                        var meetingEndTime = new Date(scope.formData.meetingStartTime);
+                        var hours = meetingEndTime.getHours();
+                        var minutesToAdd = meetingEndTime.getMinutes() + scope.defaultMeetingPeriod + scope.timePeriodBetweenMeeting;
+                        var minMinutesToAdd = meetingEndTime.getMinutes() + 1;
+                        scope.minMeetingEndTime = new Date(meetingEndTime.getFullYear(), meetingEndTime.getMonth(), meetingEndTime.getDate(), hours, minMinutesToAdd);
+                        var newTime = new Date(meetingEndTime.getFullYear(), meetingEndTime.getMonth(), meetingEndTime.getDate(), hours, minutesToAdd);
+                        scope.formData.meetingEndTime = newTime;
+                    }
+                }
             };
 
             function asyncLoop(iterations, func, callback) {
@@ -105,13 +151,35 @@
                 scope.formData = {
                     name: data.name,
                     externalId: data.externalId,
-                    staffId: data.staffId
+                    staffId: data.staffId,
+                    portfolioCenterId: data.portfolioCenterId,
+                    legacyNumber: data.legacyNumber>0?data.legacyNumber:null,
+                    latitude: data.latitude,
+                    longitude: data.longitude,
+                    size: data.size,
+                    responsibleUserId: data.responsibleUserId,
+                    centerId: data.centerId
                 };
+                if(data.groupLocation) {
+                    scope.formData.groupLocation = data.groupLocation.id;
+                }
                 if (data.activationDate) {
                     var actDate = dateFilter(data.activationDate, scope.df);
                     scope.first.date = new Date(actDate);
                 }
+                if (data.formationDate) {
+                    let formationDate = dateFilter(data.formationDate, scope.df);
+                    scope.formData.formationDate = new Date(formationDate);
+                }
 
+                var date = new Date();
+                if (data.meetingStartTime) {
+                    scope.formData.meetingStartTime = new Date(date.getFullYear(), date.getMonth(), date.getDay(), data.meetingStartTime[0], data.meetingStartTime[1], 0);
+                }
+
+                if (data.meetingEndTime) {
+                    scope.formData.meetingEndTime = new Date(date.getFullYear(), date.getMonth(), date.getDay(), data.meetingEndTime[0], data.meetingEndTime[1], 0);
+                }
             });
 
             resourceFactory.groupResource.get({groupId: routeParams.id}, function (data) {
@@ -126,9 +194,42 @@
                 this.formData.activationDate = dateFilter(scope.first.date, scope.df);
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+                this.formData.timeFormat = scope.tf;
+
+                this.formData.formationDate = dateFilter(scope.formData.formationDate, scope.df);
+
+                if (scope.formData.meetingStartTime) {
+                    this.formData.meetingStartTime = dateFilter(scope.formData.meetingStartTime, scope.tf);
+                }
+                if (scope.formData.meetingEndTime) {
+                    this.formData.meetingEndTime = dateFilter(scope.formData.meetingEndTime, scope.tf);
+                }
+
+                if (scope.prequalification) {
+                    this.formData.prequalificationId = scope.prequalification.id;
+                }
+
                 resourceFactory.groupResource.update({groupId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewgroup/' + routeParams.id);
                 });
+            };
+
+            scope.prequalificationOption = function(value){
+                var deferred = $q.defer();
+
+                resourceFactory.prequalificationResource.getAllGroups({
+                    type: 'checked',
+                    portfolioCenterId:scope.formData.portfolioCenterId,
+                    searchText:value
+                }, function (data) {
+                    console.log("prequal data: "+ JSON.stringify(data));
+                    deferred.resolve(data.pageItems);
+                });
+                return deferred.promise;
+            };
+
+            scope.viewPrequal = function (item) {
+                scope.prequalification = item;
             };
 
             scope.submitDatatable = function(){
@@ -188,7 +289,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('EditGroupController', ['$scope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter','WizardHandler', mifosX.controllers.EditGroupController]).run(function ($log) {
+    mifosX.ng.application.controller('EditGroupController', ['$scope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter','WizardHandler','$q', mifosX.controllers.EditGroupController]).run(function ($log) {
         $log.info("EditGroupController initialized");
     });
 }(mifosX.controllers || {}));

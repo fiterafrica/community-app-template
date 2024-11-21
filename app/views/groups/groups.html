@@ -4,11 +4,11 @@
     </ul>
     <div class="card">
         <div class="toolbar">
-            <h4>List of Groups</h4>
+            <h4>{{'label.heading.list.of.groups' | translate}}</h4>
         </div>
         <div class="content">
             <br>
-            <div class="row"> 
+            <div class="row filterbg m-1">
                 <div class="col-sm-10">
                     <form ng-submit="search()" class="form-horizontal">
                         <div class="form-group">
@@ -19,11 +19,11 @@
                                 <div class="input-group">
                                     <input  data-ng-model="searchText" type="text" placeholder="{{'label.input.searchByNameExternalId' | translate}}" class="form-control"/>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary form-control">
+                                        <button class="btn btn-info form-control">
                                             <span class="fa fa-search"></span>
                                         </button>
                                     </span>
-                                    <div class="checkbox form-control">
+                                    <div class="checkbox form-control ml-1" >
                                         <label for="showAll">
                                             <input type="checkbox" id="showAll" name="showAll" ng-model="showClosed">
                                             &nbsp;{{'label.button.showall' | translate }}
@@ -47,6 +47,7 @@
                         <th> {{'label.heading.externalid' | translate}}</th>
                         <th>{{'label.heading.status' | translate}}</th>
                         <th>{{'label.heading.office' | translate}}</th>
+                        <th>{{'label.heading.prequalificationnumber' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +60,7 @@
                             </i>
                         </td>
                         <td data-ng-click="routeTo(group.id)">{{group.officeName}}</td>
+                        <td data-ng-click="routeTo(group.id)">{{group.prequalificationNumber}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -18,7 +18,7 @@
 
                         <div class="col-sm-3">
                             <input id="amount" ng-autofocus="true" class="form-control" type="text" name="amount" ng-model="formData.amount" required
-                                   late-Validate/>
+                                   late-Validate number-format ng-pattern="/^(?!,$)[\d,.]+$/"/>
                             <form-validate valattributeform="loanchargeform" valattribute="amount"/>
                         </div>
                     </div>

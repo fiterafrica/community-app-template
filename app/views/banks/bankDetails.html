@@ -1,0 +1,26 @@
+<div ng-controller="ViewBankController">
+    <div class="card">
+        <api-validate></api-validate>
+
+        <div class="content">
+            <div class="toolbar">
+                <ul class="breadcrumb">
+                    <li><a href="#/banks">{{'label.anchor.bank' | translate}}</a></li>
+                    <li class="active">{{'label.anchor.bank.details' | translate}}</li>
+                </ul>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="alert alert-info">
+                        <span>{{'label.input.bankcode'|translate}}: <span class="pull-right">{{bankData.code}}</span></span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>{{'label.input.bankname'|translate}}: <span class="pull-right">{{bankData.name}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+</div>

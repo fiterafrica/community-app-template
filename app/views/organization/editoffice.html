@@ -12,12 +12,24 @@
     		    <api-validate></api-validate>
     		    <fieldset>
     		        <legend>{{'label.heading.editoffice' | translate}}</legend>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{ 'label.input.officecode' | translate }}<span
+									class="required">*</span></label>
+
+							<div class="col-sm-3">
+								<input id="officecode" ng-autofocus="true" type="text" name="officecode" ng-model="formData.officeCode" class="form-control"
+									   required late-Validate/>
+							</div>
+							<div class="col-sm-3">
+								<form-validate valattributeform="editofficeform" valattribute="officecode"/>
+							</div>
+						</div>
     				    <div class="form-group">
     				        <label class="control-label col-sm-2" for="name">{{ 'label.input.office' | translate }}<span
     				                class="required">*</span></label>
     		
     				        <div class="col-sm-3">
-    				            <input id="name" ng-autofocus="true" type="text" name="name" ng-model="formData.name"
+    				            <input id="name" type="text" name="name" ng-model="formData.name"
     				                   class="form-control" required late-Validate/>
     				        </div>
     				        <div class="col-sm-3">

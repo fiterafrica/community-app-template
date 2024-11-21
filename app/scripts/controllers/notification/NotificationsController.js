@@ -88,7 +88,7 @@
             };
             scope.countFromLastResponse = function() {
                 scope.counter++;
-                if (scope.counter == 60) {
+                if (scope.counter === 3600) {
                     scope.counter = 0;
                     scope.fetchUnreadNotifications();
                 }

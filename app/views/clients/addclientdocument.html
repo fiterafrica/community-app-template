@@ -15,7 +15,7 @@
 
                 <div class="col-sm-3">
                     <select id="name" ng-model="formData.name"
-                            ng-options="documenttype.name as documenttype.name for documenttype in documenttypes"
+                            ng-options="documenttype.name as documenttype.name for documenttype in allowedDocumentTypes"
                             value="{{documenttype.name}}" required="required"
                             class="form-control">
                         <option style="display:none" value="">{{'label.menu.selectone' | translate}}
@@ -24,10 +24,53 @@
                 <div class="col-sm-3">
                     <form-validate valattributeform="clientdocumentform" valattribute="name"/>
                 </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="type">{{'label.input.documenttype' | translate}}<span
+                class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select id="type" ng-model="formData.documentType"
+                            ng-options="type.id as type.name for type in documentTypes"
+                            value="{{type.id}}" required="required"
+                            class="form-control">
+                        <option style="display:none" value="">{{'label.menu.selectone' | translate}}
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="clientdocumentform" valattribute="type"/>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="purpose">{{'label.input.purpose' | translate}}<span
+                class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select id="purpose" ng-model="formData.documentPurpose"
+                            ng-options="purpose.id as purpose.name for purpose in documentPurposes"
+                            value="{{purpose.id}}" required="required"
+                            class="form-control">
+                        <option style="display:none" value="">{{'label.menu.selectone' | translate}}
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="clientdocumentform" valattribute="purpose"/>
+                </div>
+        </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.date' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <input id="transferDate" type="text" name="datecreated" datepicker-pop="dd MMMM yyyy" required="required"
+                           class="form-control paddedbottom10 paddedtop" ng-model="formData.dateCreated" is-open="opened"
+                           max="restrictDate" autocomplete="off"/>
+                </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2">{{'label.input.description' | translate}}</label>
+                <label class="control-label col-sm-2">{{'label.input.observations' | translate}}</label>
 
                 <div class="col-sm-3">
                     <textarea rows="2" ng-model="formData.description" class="form-control"></textarea>

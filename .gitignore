@@ -35,6 +35,7 @@ app/custom_files
 Gruntfile-custom.js
 .sass-cache
 gems.locked
+package-lock.json
 .grunt/
 bin/
 *.cache

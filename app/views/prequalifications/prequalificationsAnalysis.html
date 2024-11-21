@@ -1,0 +1,105 @@
+<div class="content-container" ng-controller="PrequalificationsController">
+    <ul class="breadcrumb">
+        <li><a href="#/prequalificationsmenu">{{'label.anchor.prequalifications' | translate}}</a></li>
+        <li class="active">{{'label.anchor.prequalification.groups' | translate}}</li>
+    </ul>
+
+    <div class="card">
+        <div class="toolbar">
+            <h4 class="pull-left">{{'label.anchor.prequalification.groups'| translate}}</h4>
+        </div>
+        <div class="content">
+            <api-validate></api-validate>
+            <br>
+            <div class="row filterbg m-1">
+                <div class="col-sm-6">
+                    <form ng-submit="getResultsPage(1)" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input data-ng-model="searchText" type="text"
+                                        placeholder="{{'label.input.searchByGroupOrGroupNameOrCenter' | translate}}"
+                                        class="form-control unstyled"/>
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-info form-control">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="control-label col-sm-6 text-white">
+                                    <label>{{ 'label.input.status' | translate }}<span
+                                            class="required">*</span></label>
+                                </div>
+                                <div class="col-sm-6">
+                                <select id="statusfilter" ng-change="getResultsPage(1)"
+                                        ng-model="formData.status" class="form-control"
+                                        ng-options="gpStatus.value as gpStatus.code|translate for gpStatus in groupStatusOptions "
+                                        value="{{gpStatus.id}}">
+                                    <option value="">{{'label.all' | translate}}</option>
+                                </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr/>
+            <table class="table table-striped" style="table-layout: fixed">
+                <thead>
+                <tr>
+                    <th>{{'label.heading.createdon' | translate}}</th>
+                    <th>{{'label.heading.prequalificationnumber' | translate}}</th>
+                    <th ng-if="!isIndividual">{{'label.input.agency' | translate}}</th>
+                    <th ng-if="!isIndividual">{{'label.input.group' | translate}}</th>
+                    <th ng-if="!isIndividual">{{'label.input.center' | translate}}</th>
+                    <th>{{'label.input.type' | translate}}</th>
+                    <th>{{'label.input.product' | translate}}</th>
+                    <th>{{'label.input.addedBy' | translate}}</th>
+                    <th>{{'label.input.status' | translate}}</th>
+                    <th>{{'label.anchor.substatus' | translate}}</th>
+                    <th ng-if="prequalificationType==='analysis'">{{'label.heading.processquality' | translate}}</th>
+                    <th ng-if="prequalificationType==='analysis' || prequalificationType==='exceptionsqueue'">{{'label.heading.processtype' | translate}}</th>
+                    <th>{{'label.heading.action' | translate}}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr dir-paginate="client in groupsList | itemsPerPage: groupsPerPage" class="pointer-main"
+                    total-items="totalGroups"  pagination-id="blacklist" style="word-break: break-word">
+                    <td class="pointer">{{client.createdAt |DateTimeFormat}}</td>
+                    <td class="pointer" data-ng-click="routeTo('#/prequalification/' + client.id + '/viewdetails')">{{client.prequalificationNumber}}</td>
+                    <td ng-if="!isIndividual" class="pointer">{{client.agencyName}}</td>
+                    <td ng-if="!isIndividual" class="pointer">{{client.groupName}}</td>
+                    <td ng-if="!isIndividual" class="pointer">{{client.centerName}}</small></td>
+<!--                    <td class="pointer">{{client.portforlioName}}</td>-->
+                    <td class="pointer">{{client.prequalificationType.value}}</td>
+                    <td class="pointer">{{client.productName}}</td>
+                    <td class="pointer">{{client.addedBy}}</td>
+                    <td class="pointer" >{{client.status.code|translate}}</td>
+                    <td class="pointer" >{{client.substatus ?client.substatus.code:'' |translate}} {{client.assignedUserName?'('+client.assignedUserName+')':''}}</td>
+<!--                    <td class="pointer" ng-if="prequalificationType==='analysis' || prequalificationType==='exceptionsqueue'">{{client.statusChangedOn|DateFormat}}</td>-->
+                    <td class="pointer" ng-if="prequalificationType==='analysis' || prequalificationType==='exceptionsqueue'">{{client.processType}}</td>
+                    <td class="pointer" ng-if="prequalificationType==='analysis'">{{client.processQuality}}</td>
+                    <td class="pointer">
+                        <a href="#/prequalification/{{client.id}}/viewdetailsAnalysis?showValidatePolicies=true&prequalificationType={{prequalificationType}}"
+                           has-permission='VIEW_PREQUALIFICATIONS'>
+                            <i class="fa fa-search fa fa-2x" title="View Prequalifications"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+                                     template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                     on-page-change="getResultsPage(newPageNumber)" pagination-id="blacklist">
+            </dir-pagination-controls>
+
+        </div>
+    </div>
+
+
+</div>
