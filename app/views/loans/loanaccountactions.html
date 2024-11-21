@@ -29,7 +29,7 @@
             </table>
 
             <div class="form-group" ng-show="showDateField">
-                <label class="control-label col-sm-2" for="{{modelName}}">{{labelName | translate}}<span
+                <label class="control-label col-sm-2" for="modelName">{{labelName | translate}}<span
                         class="required">*</span></label>
 
                 <div class="col-sm-3">
@@ -84,7 +84,7 @@
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="details[{{$index}}].principal"
-                                       ng-change="addTrancheAmounts()" ng-model="details.principal" number-format>
+                                       ng-change="addTrancheAmounts()" ng-model="details.principal">
                             </td>
                             <td>
                                 <a ng-click="deleteTranches($index);addTrancheAmounts();"><i
@@ -114,44 +114,16 @@
                     </div>
                 </div>
                 <div class="form-group" ng-show="showAmountField">
-                    <label class="control-label col-sm-2" for="transactionAmount1">{{ 'label.input.transactionamount' |
+                    <label class="control-label col-sm-2" for="transactionAmount">{{ 'label.input.transactionamount' |
                         translate}}<span class="required">*</span></label>
 
                     <div class="col-sm-3">
-                        <input id="transactionAmount1" type="text" name="transactionAmount" ng-model="formData.transactionAmount"
-                               class="form-control" data-ng-change="calculateReceivableAmount()"
+                        <input id="transactionAmount" type="text" name="amount" ng-model="formData.transactionAmount"
+                               class="form-control"
                                number-format required late-Validate>
                     </div>
                     <div class="col-sm-3">
                         <form-validate valattributeform="loanactionform" valattribute="amount"/>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-if="lastPayment && formData.collateralAmount">
-                    <label class="control-label col-sm-2" for="collateralAmount">{{ 'label.input.collateralAmount' |
-                        translate}}<span class="required">*</span></label>
-
-                    <div class="col-sm-3">
-                        <input id="collateralAmount" type="text" name="collateralAmount" ng-model="formData.collateralAmount"
-                               class="form-control" disabled
-                               number-format late-Validate>
-                    </div>
-                    <div class="col-sm-3">
-                        <form-validate valattributeform="loanactionform" valattribute="collateralAmount"/>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-if="lastPayment && formData.netAmountReceivable">
-                    <label class="control-label col-sm-2" for="receivableAmount">{{ 'label.input.netAmountReceivable' |
-                        translate}}<span class="required">*</span></label>
-
-                    <div class="col-sm-3">
-                        <input id="receivableAmount" type="text" name="netAmountReceivable" ng-model="formData.netAmountReceivable"
-                               class="form-control" disabled
-                               number-format late-Validate>
-                    </div>
-                    <div class="col-sm-3">
-                        <form-validate valattributeform="loanactionform" valattribute="netAmountReceivable"/>
                     </div>
                 </div>
                 <div class="form-group" ng-show="principalPortion">
@@ -193,7 +165,7 @@
 
                     <div class="col-sm-3">
                         <input id="writeOffAmount" type="text" name="amount" ng-model="writeOffAmount"
-                               class="form-control" number-format readonly>
+                               class="form-control" readonly>
                     </div>
                 </div>
 
@@ -208,7 +180,7 @@
 
                     <div class="col-sm-3">
                         <input id="transactionAmount" type="text" class="form-control" name="amount"
-                               ng-model="formData.fixedEmiAmount" number-format>
+                               ng-model="formData.fixedEmiAmount">
                     </div>
                 </div>
 
@@ -234,7 +206,7 @@
                         </div>
                     </div>
                     <div uib-collapse="!showPaymentDetails">
-                        <div class="form-group" ng-show="!isRepaymentTransaction">
+                        <div class="form-group">
                             <label class="control-label col-sm-2" for="accountNumber">{{ 'label.input.accnum' |
                                 translate}}</label>
 
@@ -243,26 +215,7 @@
                                        ng-model="formData.accountNumber">
                             </div>
                         </div>
-                        <div class="form-group" ng-show="isRepaymentTransaction">
-                            <label class="control-label col-sm-2" for="accountNumber">{{ 'label.input.accnum' |
-                            translate}}</label>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <select id="repaymentAccountNumber" chosen="bankAccounts" ng-autofocus="true" class="form-control" ng-model="formData.glAccountId" ng-options="bankAccount.glAccount.id as bankAccount.bank.name + ' (' + bankAccount.accountNumber + ')' for bankAccount in bankAccounts" value="{{bankAccount.glAccount.id}}">
-                                        <option class="displaynone" value="">{{'label.heading.select.bank.account' | translate}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group" ng-show="isRepaymentTransaction">
-                            <label class="control-label col-sm-2" for="billNumber">{{ 'label.input.billnumber' |
-                            translate}}</label>
-                            <div class="col-sm-3">
-                                <input id="billNumber" class="form-control" type="text"
-                                       ng-model="formData.billNumber" required late-Validate>
-                            </div>
-                        </div>
-                        <div class="form-group" ng-show="!isRepaymentTransaction">
+                        <div class="form-group">
                             <label class="control-label col-sm-2" for="checkNumber">{{ 'label.input.checknumber' |
                                 translate}}</label>
 
@@ -271,7 +224,7 @@
                                        ng-model="formData.checkNumber">
                             </div>
                         </div>
-                        <div class="form-group" ng-show="!isRepaymentTransaction">
+                        <div class="form-group">
                             <label class="control-label col-sm-2" for="routingCode">{{ 'label.input.routingcode' |
                                 translate}}</label>
 
@@ -280,7 +233,7 @@
                                        ng-model="formData.routingCode">
                             </div>
                         </div>
-                        <div class="form-group" ng-show="!isRepaymentTransaction">
+                        <div class="form-group">
                             <label class="control-label col-sm-2" for="receiptNumber">{{ 'label.input.receiptnumber' |
                                 translate}}</label>
 
@@ -289,7 +242,7 @@
                                        ng-model="formData.receiptNumber">
                             </div>
                         </div>
-                        <div class="form-group" ng-show="!isRepaymentTransaction">
+                        <div class="form-group">
                             <label class="control-label col-sm-2" for="bankNumber">{{ 'label.input.banknumber' |
                                 translate}}</label>
 
@@ -300,14 +253,6 @@
                     </div>
                 </div>
             </div>
-            <!-- FBR-437 Add gurantee checkbox -->
-            <div class="form-group" ng-show="lastPayment">
-                <label class="control-label col-sm-2">{{'label.heading.adjustGuarantee' | translate}}</label>
-                <div class="col-sm-8">
-                    <input type="checkbox" id="adjustGuarantee"  ng-model="formData.adjustGuarantee">
-                </div>
-            </div>
-
             <div class="form-group" ng-show="showNoteField">
                 <label class="control-label col-sm-2" for="note">{{ 'label.input.note' | translate}}</label>
 
@@ -324,18 +269,8 @@
                             value="{{installmentCharge.installmentNumber}}"></select>
                 </div>
             </div>
-            <div class="form-group" ng-show="editFundField">
-                <label class="control-label col-sm-2" for="note">{{ 'label.input.fund' | translate}}</label>
-                <div class="col-sm-3">
-                    <select id="fundId" ng-model="formData.fundId" class="form-control"
-                            ng-options="fund.id as fund.name for fund in fundOptions"
-                            value="{{fund.id}}">
-                        <option value="" style="left:0;">{{'label.selectfund' | translate}}</option>
-                    </select>
-                </div>
-            </div>
             <div class="form-group" ng-show="paymentDatefield">
-                <label class="control-label col-sm-2" for="{{modelName}}">{{'label.input.paymentdate' | translate}}<span
+                <label class="control-label col-sm-2" for="modelName">{{'label.input.paymentdate' | translate}}<span
                         class="required">*</span></label>
 
                 <div class="col-sm-3">
@@ -348,7 +283,7 @@
                         class="required">*</span></label>
 
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="amount" ng-model="formData.amount" number-format>
+                    <input type="text" class="form-control" id="amount" ng-model="formData.amount">
                 </div>
             </div>
             <div class="form-group" ng-show="showEditChargeDueDate">

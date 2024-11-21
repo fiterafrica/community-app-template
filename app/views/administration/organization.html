@@ -2,7 +2,7 @@
     <div class="card">
         <div class="content">
             <div class="toolbar">
-                <h4 class="pull-left">{{'label.heading.organization' | translate}}</h4>
+                <h5>Organization</h5>
             </div>
             <br>
             <div class="row">
@@ -14,34 +14,6 @@
 
                             <p class="list-group-item-text">{{'label.addnewofficeormodifyordeactivateofficeormodifyofficeheirarchy'
                                 | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/agencies" has-permission='READ_AGENCY'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-building-o fa fa-large"></i>&nbsp;&nbsp;{{'label.anchor.manageagencies'
-                            | translate}}</h5>
-
-                            <p class="list-group-item-text">{{'label.addnewagencyormodifyagency'
-                            | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/supervisions" has-permission='READ_SUPERVISION'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-credit-card fa fa-large"></i>&nbsp;&nbsp;{{'label.anchor.managesupervisions'
-                            | translate}}</h5>
-
-                            <p class="list-group-item-text">{{'label.addnewsupervisionormodifysupervision'
-                            | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/portfolios" has-permission='MANAGEMENT_PORTFOLIO'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-book fa fa-large"></i>&nbsp;&nbsp;{{'label.anchor.manageportfolios'
-                            | translate}}</h5>
-
-                            <p class="list-group-item-text">{{'label.addnewportfolioormodifyportfolio'
-                            | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/planningportfolios" has-permission='PLANNING_PORTFOLIO'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-book fa fa-large"></i>&nbsp;&nbsp;{{'label.anchor.portfoliosplanning'
-                            | translate}}</h5>
-
-                            <p class="list-group-item-text">{{'label.portfolioplanning'
-                            | translate}}</p>
                         </a>
                         <a class="list-group-item" href="#/holidays" has-permission='READ_HOLIDAY'>
                             <h5 class="list-group-item-heading"><i class="fa fa-calendar fa fa-large"></i>&nbsp;&nbsp;{{'label.anchor.manageholidays'
@@ -92,23 +64,6 @@
                                 {{'label.anchor.adhoc' | translate}}</h5>
                             <p class="list-group-item-text">{{'label.view.adhocs' | translate}}</p>
                        </a>
-                        <a class="list-group-item" href="#/approvechequesissuance" has-permission='APPROVEISSUANCE_LOAN'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-money fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.approve.cheques.issuance' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.approve.cheques.issuance' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/printcheques" has-permission='AUTHORIZEISSUANCE_BANKCHEQUES'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-print fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.print.cheques' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.print.cheques' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/committees" has-permission='READ_COMMITTEE'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-group fa fa-large"></i>&nbsp;&nbsp;{{'label.anchor.managecommittes'
-                            | translate}}</h5>
-
-                            <p class="list-group-item-text">{{'label.addnewcommitteeormodifycommittee'
-                            | translate}}</p>
-                        </a>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
@@ -162,36 +117,6 @@
                             <h5 class="list-group-item-heading"><i class="fa fa-upload fa fa-large"></i>&nbsp;&nbsp;
                                 {{'label.anchor.bulkimport' | translate}}</h5>
                             <p class="list-group-item-text">{{'label.view.bulkimport' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/banks" has-permission='READ_BANK'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-building fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.bank' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.banks' | translate}}</p>
-                       </a>
-                       <a class="list-group-item" href="#/chequebankaccounts" has-permission='READ_BANKACCOUNT'>
-                        <h5 class="list-group-item-heading"><i class="fa fa-building fa fa-large"></i>&nbsp;&nbsp;
-                            {{'label.anchor.bankaccounts' | translate}}</h5>
-                        <p class="list-group-item-text">{{'label.view.bankaccounts' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/bankcheques" has-permission='READ_BANKCHEQUES'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-building fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.bankcheques' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.bankcheques' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/disburseloansbycheques" has-permission='DISBURSEBYCHEQUES_LOAN'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-building fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.disburse.loans.by.cheques' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.disburse.loans.by.cheques' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/authorizechequesissuance" has-permission='AUTHORIZEISSUANCE_BANKCHEQUE'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-money fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.authorize.cheques.issuance' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.authorize.cheques.issuance' | translate}}</p>
-                        </a>
-                        <a class="list-group-item" href="#/payguaranteeswithcheques" has-permission='PAYGUARANTEEBYCHEQUE_BANKCHEQUE'>
-                            <h5 class="list-group-item-heading"><i class="fa fa-money fa fa-large"></i>&nbsp;&nbsp;
-                                {{'label.anchor.pay.guarantees.by.cheques' | translate}}</h5>
-                            <p class="list-group-item-text">{{'label.view.pay.guarantees.by.cheques' | translate}}</p>
                         </a>
                     </div>
                 </div>

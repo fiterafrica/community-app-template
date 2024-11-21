@@ -103,14 +103,8 @@
                                                 </div>
                                                 <div class="panel-body">
                                                     <div class="list-group">
-                                                        <a ng-repeat="group in center.groupMembers" class="list-group-item">
-                                                            <span >
-                                                                <i data-ng-click="goToPage('viewgroup/'+group.id)" uib-tooltip="{{group.status.value}}" class="fa fa-stop fa-2x {{group.status.code | StatusLookup}}" uib-tooltip=""></i>
-                                                                <span class="h5" data-ng-click="goToPage('viewgroup/'+group.id)">{{group.name}} ({{timeDisplayFormat(group.meetingStartTime) +' - '+ timeDisplayFormat(group.meetingEndTime)}})</span>
-                                                                <span class="pull-right">
-                                                                  <i class="fa fa-adjust fa-2x" title="Transfer Group" ng-click="transferGroup(group)"></i>
-                                                                </span>
-                                                            </span>
+                                                        <a href="#/viewgroup/{{group.id}}" ng-repeat="group in center.groupMembers" class="list-group-item">
+                                                            <i uib-tooltip="{{group.status.value}}" class="fa fa-stop {{group.status.code | StatusLookup}}" uib-tooltip=""></i> {{group.name}}
                                                         </a>
                                                         <p ng-if="!center.groupMembers" class="list-group-item">No Groups added.</p>
                                                     </div>
@@ -123,14 +117,10 @@
                                                     <tr>
                                                         <td><strong>{{ 'label.heading.nextmeetingon' | translate }}</strong>
                                                         </td>
-
-                                                        <td>{{center.meetingDayName}}</td>
-                                                        <td>FROM - {{center.meetingStartTime}}</td>
-                                                        <td>TO - {{center.meetingEndTime}}</td>
-<!--                                                        <td><span class="padded-td">{{center.collectionMeetingCalendar.nextTenRecurringDates[0] | DateFormat}}&nbsp;<a href="#/editcalendar/centers/{{center.id}}/{{center.collectionMeetingCalendar.id}}"-->
-<!--                                                        ng-show="center.collectionMeetingCalendar" has-permission='UPDATE_MEETING'><i class="fa fa-edit "></i></a>-->
-<!--                                                        <span class="marginleftn7px" data-ng-hide="center.collectionMeetingCalendar.nextTenRecurringDates[0]">{{ 'label.unassigned' | translate }}</span></span>-->
-<!--                                                        </td>-->
+                                                        <td><span class="padded-td">{{center.collectionMeetingCalendar.nextTenRecurringDates[0] | DateFormat}}&nbsp;<a href="#/editcalendar/centers/{{center.id}}/{{center.collectionMeetingCalendar.id}}"
+                                                        ng-show="center.collectionMeetingCalendar" has-permission='UPDATE_MEETING'><i class="fa fa-edit "></i></a>
+                                                        <span class="marginleftn7px" data-ng-hide="center.collectionMeetingCalendar.nextTenRecurringDates[0]">{{ 'label.unassigned' | translate }}</span></span>
+                                                        </td>
                                                     </tr>
                                                     <tr data-ng-show="center.collectionMeetingCalendar.humanReadable">
                                                         <td><strong>{{ 'label.heading.meetingfrequency' | translate }}</strong>
@@ -333,83 +323,4 @@
             </div>
         </div>
     </div>
-
-    <script type="text/ng-template" id="transferGroupToCenter.html">
-        <div class="modal-header silver">
-            <h3 class="bolder">{{'label.heading.transfergroup' | translate}}</h3>
-            <hr/>
-            <h5>Group - {{group.name}}</h5>
-            <h5>Start Time - {{timeDisplayFormat(group.meetingStartTime)}}</h5>
-            <h5>End Time - {{timeDisplayFormat(group.meetingEndTime)}}</h5>
-        </div>
-        <div class="modal-body">
-            <api-validate></api-validate>
-            <h3 class="bolder">{{'label.input.select.center' | translate}}</h3>
-            <hr/>
-
-            <div class="text-right">
-                <form ng-submit="search()" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-8">
-                            <div class="input-group">
-                                <input  data-ng-model="searchText" type="text" placeholder="{{'label.input.searchByNameExternalId' | translate}}" class="form-control"/>
-                                <span class="input-group-btn">
-                                        <button class="btn btn-primary form-control">
-                                            <span class="fa fa-search"></span>
-                                        </button>
-                                    </span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <table class="table">
-                <thead>
-                <tr class="graybg">
-                    <th>{{'label.heading.name' | translate}}</th>
-                    <th>{{'label.heading.status' | translate}}</th>
-                    <th>{{'label.heading.actions' | translate}}</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr class="pointer-main" dir-paginate="center in centers | filter:filterText |  itemsPerPage: centersPerPage" total-items="totalCenters" pagination-id="centers" ng-show="center.status.code != 'groupingStatusType.closed' || showClosed">
-                    <td class="pointer">{{center.name}}</td>
-                    <td class="pointer">
-                        {{center.status.value}}
-                    </td>
-                    <td class="pointer" data-ng-click="routeTo(center.id)">
-                        <i class="fa fa-2x fa-adjust" ng-click="confirmTransfer(center)"></i>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <dir-pagination-controls boundary-links="true" pagination-id="centers" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html" on-page-change="getResultsPage(newPageNumber)"></dir-pagination-controls>
-
-            <br>
-            <button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
-            <button class="btn btn-primary" ng-click="confirmGp()">	{{'label.button.confirm' | translate}}</button>
-        </div>
-    </script>
-
-    <script type="text/ng-template" id="confirmTransfer.html">
-        <div class="modal-header silver">
-            <h3 class="bolder">{{'label.heading.transfergroup' | translate}}</h3>
-        </div>
-
-        <div class="modal-body">
-            <api-validate></api-validate>
-            <h3 class="bolder">{{'label.heading.confirm' | translate}}</h3>
-            <div>
-                {{'label.confirm.group.transfer' | translate}} {{group.name}} {{'label.input.from'|translate}} {{center.name}}
-                {{'label.input.to'|translate}} {{newCenter.name}} ?
-            </div>
-            <br>
-            <button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
-            <button class="btn btn-primary" ng-click="transfer()">	{{'label.button.confirm' | translate}}</button>
-        </div>
-    </script>
-
 </div>

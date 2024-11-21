@@ -9,7 +9,6 @@
                     "Active": "statusactive",
                     "loanStatusType.submitted.and.pending.approval": "statuspending",
                     "loanStatusType.approved": "statusApproved",
-                    "loanStatusType.disburse.authorization.pending": "statusApproved",
                     "loanStatusType.active": "statusactive",
                     "loanStatusType.overpaid": "statusoverpaid",
                     "savingsAccountStatusType.submitted.and.pending.approval": "statuspending",
@@ -40,16 +39,7 @@
                     "purchasedSharesStatusType.approved": "statusApproved",
                     "purchasedSharesStatusType.rejected": "statusrejected",
                     "charges.StatusType.active.true": "statusactive",
-                    "employees.StatusType.active.true": "statusactive",
-                    "prequalification.status.blacklist.checked": "statusApproved",
-                    "prequalification.status.blacklist.rejected": "statusrejected",
-                    "prequalification.status.expired": "statusexpired",
-                    "BUREAU_AVAILABLE": "text-success",
-                    "buro.check.classification.green": "statusactive",
-                    "buro.check.classification.yellow": "statushold",
-                    "buro.check.classification.orange": "statuspending",
-                    "buro.check.classification.red": "statusactiveoverdue",
-                    "buro.check.classification.grey": "statusclosed",
+                    "employees.StatusType.active.true": "statusactive"
                 }
 
                 return cssClassNameLookup[input];

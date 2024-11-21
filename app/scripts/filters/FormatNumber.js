@@ -2,15 +2,14 @@
     mifosX.filters = _.extend(module, {
         FormatNumber: function ($filter) {
             return function (input, fractionSize) {
-                let formattedText = input;
                 if (isNaN(input)) {
-                    formattedText = input;
+                    return input;
                 } else {
-                    if (input !== "" && input !== undefined) {
-                        formattedText = $filter('number')(input, fractionSize);
-                    }
-                }
-                return formattedText;
+                    //TODO- Add number formatting also
+                    if (input != "" && input != undefined) {
+                        return $filter('number')(input, fractionSize);
+                    };
+                };
             }
         }
     });

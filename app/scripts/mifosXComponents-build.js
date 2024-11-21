@@ -10,7 +10,6 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'SessionManager.js',
             'Paginator.js',
             'UIConfigService.js',
-            "ValidationService.js",
             'NotificationResponseHeaderProvider'
         ],
         controllers: [

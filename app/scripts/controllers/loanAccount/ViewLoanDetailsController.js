@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        ViewLoanDetailsController: function (scope, routeParams, resourceFactory,paginatorService, location, route, http, $uibModal, dateFilter, API_VERSION, $sce, $rootScope, $locale) {
+        ViewLoanDetailsController: function (scope, routeParams, resourceFactory,paginatorService, location, route, http, $uibModal, dateFilter, API_VERSION, $sce, $rootScope) {
             scope.loandocuments = [];
             scope.report = false;
             scope.hidePentahoReport = true;
@@ -10,7 +10,6 @@
             scope.hideAccrualTransactions = false;
             scope.isHideAccrualsCheckboxChecked = true;
             scope.loandetails = [];
-            scope.showNonPrequalificationActionBtn = false;
 
             scope.routeTo = function (loanId, transactionId, transactionTypeId) {
                 if (transactionTypeId == 2 || transactionTypeId == 4 || transactionTypeId == 1) {
@@ -110,9 +109,6 @@
                     case "recoverguarantee":
                         location.path('/loanaccount/' + accountId + '/recoverguarantee');
                         break;
-                    case "editloanfund":
-                        location.path('/loanaccount/' + accountId + '/editloanfund');
-                        break;
                     case "unassignloanofficer":
                         location.path('/loanaccount/' + accountId + '/unassignloanofficer');
                         break;
@@ -167,19 +163,6 @@
                 scope.status = data.status.value;
                 scope.chargeAction = data.status.value == "Submitted and pending approval" ? true : false;
                 scope.decimals = data.currency.decimalPlaces;
-                scope.loandetails = data;
-                scope.groupLoanAdditionalData = data.groupLoanAdditionalData;
-                if(scope.loandetails.loanAdditionalData){
-                    scope.loanAdditionalData = scope.loandetails.loanAdditionalData;
-                    scope.caseId = scope.loandetails.loanAdditionalData.caseId;
-                    scope.prequalificationId = scope.loandetails.prequalificationData.id;
-                    resourceFactory.prequalificationResource.get({groupId:  scope.prequalificationId}, function (prequalificationData) {
-                        if (prequalificationData.prequalificationType) {
-                            scope.prequalificationType = prequalificationData.prequalificationType.value;
-                        }
-                    });
-                }
-
                 if (scope.loandetails.charges) {
                     scope.charges = scope.loandetails.charges;
                     for (var i in scope.charges) {
@@ -197,38 +180,32 @@
                 else {
                     scope.chargeTableShow = false;
                 }
-                if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved" || scope.status == "Pending Disbursement Authorization") {
+                if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
                     scope.choice = true;
                 }
                 if (data.status.value == "Submitted and pending approval") {
-                    var singlebuttons = [
+                    scope.buttons = { singlebuttons: [
                         {
                             name: "button.addloancharge",
                             icon: "fa fa-plus",
                             taskPermissionName: 'CREATE_LOANCHARGE'
                         },
                         {
+                            name: "button.approve",
+                            icon: "fa fa-check",
+                            taskPermissionName: 'APPROVE_LOAN'
+                        },
+                        {
                             name: "button.modifyapplication",
                             icon: "fa fa-pincel-square-o",
                             taskPermissionName: 'UPDATE_LOAN'
-                        }
-                    ];
-
-                    if(scope.showNonPrequalificationActionBtn){
-                        singlebuttons.push(
-                            {
-                                name: "button.approve",
-                                icon: "fa fa-check",
-                                taskPermissionName: 'APPROVE_LOAN'
-                            },
-                            {
+                        },
+                        {
                             name: "button.reject",
                             icon: "fa fa-times",
                             taskPermissionName: 'REJECT_LOAN'
-                        });
-                    }
-
-                    scope.buttons = { singlebuttons: singlebuttons,
+                        }
+                    ],
                         options: [
                             {
                                 name: (scope.loandetails.loanOfficerName?"button.changeloanofficer":"button.assignloanofficer"),
@@ -257,10 +234,6 @@
                             {
                                 name: "button.loanscreenreport",
                                 taskPermissionName: 'READ_LOAN'
-                            },
-                            {
-                                name: "button.editloanfund",
-                                taskPermissionName: 'UPDATEFUND_LOAN'
                             }
                         ]
 
@@ -273,36 +246,30 @@
                     }
                 }
 
-                if (data.status.value == "Approved" || data.status.value == "Pending Disbursement Authorization") {
-                    var singlebuttonsApproved = [
+                if (data.status.value == "Approved") {
+                    scope.buttons = { singlebuttons: [
                         {
-                        name: (scope.loandetails.loanOfficerName?"button.changeloanofficer":"button.assignloanofficer"),
-                        icon: "fa fa-user",
-                        taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+                            name: (scope.loandetails.loanOfficerName?"button.changeloanofficer":"button.assignloanofficer"),
+                            icon: "fa fa-user",
+                            taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+                        },
+                        {
+                            name: "button.disburse",
+                            icon: "fa fa-flag",
+                            taskPermissionName: 'DISBURSE_LOAN'
+                        },
+                        {
+                            name: "button.disbursetosavings",
+                            icon: "fa fa-flag",
+                            taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
+                        },
+                        {
+                            name: "button.undoapproval",
+                            icon: "fa fa-undo",
+                            taskPermissionName: 'APPROVALUNDO_LOAN'
                         }
-                    ];
-
-                    if(scope.showNonPrequalificationActionBtn){
-                        singlebuttonsApproved.push({
-                                name: "button.disburse",
-                                icon: "fa fa-flag",
-                                taskPermissionName: 'DISBURSE_LOAN'
-                            },
-                            {
-                                name: "button.disbursetosavings",
-                                icon: "fa fa-flag",
-                                taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
-                            });
-                    }
-
-
-                    scope.buttons = { singlebuttons: singlebuttonsApproved,
+                    ],
                         options: [
-                            {
-                                name: "button.undoapproval",
-                                icon: "fa fa-undo",
-                                taskPermissionName: 'APPROVALUNDO_LOAN'
-                            },
                             {
                                 name: "button.addloancharge",
                                 taskPermissionName: 'CREATE_LOANCHARGE'
@@ -318,10 +285,6 @@
                             {
                                 name: "button.loanscreenreport",
                                 taskPermissionName: 'READ_LOAN'
-                            },
-                            {
-                                name: "button.editloanfund",
-                                taskPermissionName: 'UPDATEFUND_LOAN'
                             }
                         ]
 
@@ -387,10 +350,6 @@
                             {
                                 name: "button.recoverguarantee",
                                 taskPermissionName: 'RECOVERGUARANTEES_LOAN'
-                            },
-                            {
-                                name: "button.editloanfund",
-                                taskPermissionName: 'UPDATEFUND_LOAN'
                             }
                         ]
 
@@ -731,7 +690,7 @@
             };
             scope.showDisbursedAmountBasedOnStatus = function(){
                 if(scope.status == 'Submitted and pending approval' ||scope.status == 'Withdrawn by applicant' || scope.status == 'Rejected' ||
-                    scope.status == 'Approved' || scope.status == 'Pending Disbursement Authorization'){
+                    scope.status == 'Approved'){
                     return false;
                 }
                 return true;
@@ -744,11 +703,6 @@
                 }
                 return false;
             };
-
-            scope.isAdditionalDateProperty = function(propertyName){
-                var dateFields = ["fechaInicio", "cFechaNacimiento", "fechaPrimeraReunion", "dateOpened", "fechaSolicitud", "fecha_solicitud", "fechaFin", "fecha_estacionalidad", "fecha_inico_operaciones", "fecha_integraciones", "fecha_inventario", "fecha_nacimiento_solicitante", "fecha_visita","fecha_inicio_negocio"];
-                return dateFields.includes(propertyName);
-            }
 
             scope.showAddDeleteTrancheButtons = function(action){
                 scope.return = true;
@@ -776,17 +730,9 @@
 
                 return true;
             };
-
-            scope.formatNumber = function(value){
-                if (locale.id == 'es') {
-                    return value.toLocaleString('en');
-                } else {
-                    return value.toLocaleString(locale.id);
-                }
-            };
         }
     });
-    mifosX.ng.application.controller('ViewLoanDetailsController', ['$scope', '$routeParams', 'ResourceFactory','PaginatorService', '$location', '$route', '$http', '$uibModal', 'dateFilter', 'API_VERSION', '$sce', '$rootScope', '$locale', mifosX.controllers.ViewLoanDetailsController]).run(function ($log) {
+    mifosX.ng.application.controller('ViewLoanDetailsController', ['$scope', '$routeParams', 'ResourceFactory','PaginatorService', '$location', '$route', '$http', '$uibModal', 'dateFilter', 'API_VERSION', '$sce', '$rootScope', mifosX.controllers.ViewLoanDetailsController]).run(function ($log) {
         $log.info("ViewLoanDetailsController initialized");
     });
 }(mifosX.controllers || {}));

@@ -7,29 +7,19 @@
         <li class="active">{{'label.anchor.modifyloanapplication' | translate}}</li>
     </ul>
 </div>
-<form name="editloanaccountform" class="well form-inline card" ng-submit="submit()">
+<form name="editloanaccountform" novalidate="" class="well form-inline card" rc-submit="submit()">
 <api-validate></api-validate>
 <fieldset>
         <legend>{{ 'label.heading.editloanapplication' | translate }}</legend>
 <table class="width100">
     <tr>
-        <td class="width14" ng-hide="isIndividualJlgLoanAccount">
-            <label>{{ 'label.anchor.prequalifications' | translate }}<span class="required">*</span>:&nbsp;</label>
-        </td>
-        <td class="width36 paddedbottom10">
-            <select id="prequalificationId" ng-model="formData.prequalificationId" class="form-control width170px"
-                    ng-options="prequalification.id as prequalification.prequalificationNumber + ' (' + prequalification.productName + ')' for prequalification in prequalificationOptions"
-                    value="{{prequalification.id}}" ng-change="prequalificationChange(formData.prequalificationId)">
-                <option style="display:none" value="">{{'label.input.select.prequalification' | translate}}</option>
-            </select>
-        </td>
         <td class="width14">
             <label>{{ 'label.input.product' | translate }}<span class="required">*</span>:&nbsp;</label>
         </td>
         <td class="width36 paddedbottom10">
             <select id="productId" ng-model="formData.productId" class="form-control width170px"
                     ng-options="product.id as product.name for product in loanaccountinfo.productOptions"
-                    value="{{product.id}}" ng-change="loanProductChange(formData.productId)" ng-disabled="!isIndividualJlgLoanAccount"/>
+                    value="{{product.id}}" ng-change="loanProductChange(formData.productId)"/>
             <option style="display:none" value="">{{'label.selectloanproduct' | translate}}</option>
             </select>
         </td>
@@ -77,7 +67,7 @@
         </td>
         <td class="paddedbottom10">
             <input id="expectedDisbursementDate" type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
-                   ng-model="formData.expectedDisbursementDate" is-open="opened1" min="minDate"
+                   ng-model="formData.expectedDisbursementDate" is-open="opened1" min="minDate" 
                    date-disabled="disabled(date, mode)" late-Validate/>
         </td>
     </tr>
@@ -166,7 +156,7 @@
                         class="required">*</span>:</label></td>
                 <td class="width31 paddedbottom10">
                     <input type="text" class="form-control" id="principal" name="principal" ng-model="formData.principal"
-                           number-format required ng-disabled="true" late-Validate/>&nbsp;{{loanaccountinfo.currency.displaySymbol}}
+                           number-format required late-Validate/>&nbsp;{{loanaccountinfo.currency.displaySymbol}}
                     <form-validate valattributeform="editloanaccountform" valattribute="principal"/>
                 </td>
                 <td class="width14"><label>{{ 'label.input.loanterm' | translate }}&nbsp;<span class="required">*</span>:</label>
@@ -175,7 +165,7 @@
                     <input id="loanTermFrequency" class="form-control" name="loanterm" type="text"
                            ng-model="formData.loanTermFrequency" required late-Validate/>
                     <select ng-disabled="response.uiDisplayConfigurations.loanAccount.isReadOnlyField.loanTermFrequencyType == true" id="loanTermFrequencyType" class="form-control" ng-model="formData.loanTermFrequencyType"
-                            ng-options="termFrequencyType.id as termFrequencyType.code | translate for termFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
+                            ng-options="termFrequencyType.id as termFrequencyType.value for termFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
                             value="{{termFrequencyType.id}}"/>
                     <form-validate valattributeform="editloanaccountform" valattribute="loanterm"/>
                 </td>
@@ -194,13 +184,13 @@
                            ng-model="formData.repaymentEvery" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.repaymentEvery" required late-Validate/>
                     <select id="repaymentFrequencyType" class="form-control" ng-model="formData.repaymentFrequencyType"
                             ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.repaymentEvery"
-                            ng-options="repaymentFrequencyType.id as repaymentFrequencyType.code | translate for repaymentFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
+                            ng-options="repaymentFrequencyType.id as repaymentFrequencyType.value for repaymentFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
                             value="{{repaymentFrequencyType.id}}"/>&nbsp;
-                    <select id="repaymentFrequencyNthDayType" class="form-control" ng-model="formData.repaymentFrequencyNthDayType" ng-options="repaymentFrequencyNthDayType.id as repaymentFrequencyNthDayType.code | translate for repaymentFrequencyNthDayType in loanaccountinfo.repaymentFrequencyNthDayTypeOptions" ng-show="formData.repaymentFrequencyType == 2" value="{{repaymentFrequencyNthDayType.id}}">
+                    <select id="repaymentFrequencyNthDayType" class="form-control" ng-model="formData.repaymentFrequencyNthDayType" ng-options="repaymentFrequencyNthDayType.id as repaymentFrequencyNthDayType.value for repaymentFrequencyNthDayType in loanaccountinfo.repaymentFrequencyNthDayTypeOptions" ng-show="formData.repaymentFrequencyType == 2" value="{{repaymentFrequencyNthDayType.id}}">
                     <option value="">{{'label.selecton' | translate}}</option>
                     </select>&nbsp;
                     <select id="repaymentFrequencyDayOfWeekType" class="form-control" ng-model="formData.repaymentFrequencyDayOfWeekType"
-                    ng-options="repaymentFrequencyDayOfWeekType.id as repaymentFrequencyDayOfWeekType.code | translate for  repaymentFrequencyDayOfWeekType in loanaccountinfo.repaymentFrequencyDaysOfWeekTypeOptions" ng-show="formData.repaymentFrequencyType == 2" value="{{repaymentFrequencyDayOfWeekType.id}}">
+                    ng-options="repaymentFrequencyDayOfWeekType.id as repaymentFrequencyDayOfWeekType.value for  repaymentFrequencyDayOfWeekType in loanaccountinfo.repaymentFrequencyDaysOfWeekTypeOptions" ng-show="formData.repaymentFrequencyType == 2" value="{{repaymentFrequencyDayOfWeekType.id}}">
                     <option value="">{{'label.selectday' | translate}}</option>
                     </select>&nbsp;
                     <form-validate valattributeform="editloanaccountform" valattribute="repaidevery"/>
@@ -231,7 +221,7 @@
                 <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestType == true"><label>{{ 'label.input.interestmethod' | translate }}</label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestType == true">
                      <select id="interestType" ng-model="formData.interestType" class="form-control width170px"
-                            ng-options="interestType.id as interestType.code | translate for interestType in loanaccountinfo.interestTypeOptions"
+                            ng-options="interestType.id as interestType.value for interestType in loanaccountinfo.interestTypeOptions"
                             value="{{interestType.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.interestType"/>
                 </td>
             </tr>
@@ -246,7 +236,7 @@
                 <td class="width36 paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestType == true">
                     <select id="interestType" ng-model="formData.interestType"
                             ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.interestType"
-                            ng-options="interestType.id as interestType.code | translate for interestType in loanaccountinfo.interestTypeOptions" class="form-control width170px"
+                            ng-options="interestType.id as interestType.value for interestType in loanaccountinfo.interestTypeOptions" class="form-control width170px"
                             value="{{interestType.id}}"/>
                     <label>{{ 'label.input.isfloatingrate' | translate}}</label>
                     <input id="isfloatingrate" class="input-mini-small" type="checkbox"
@@ -259,7 +249,7 @@
                 </td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.amortizationType == true">
                     <select id="amortizationType" ng-model="formData.amortizationType" class="form-control width170px"
-                            ng-options="amortizationType.id as amortizationType.code | translate for amortizationType in loanaccountinfo.amortizationTypeOptions"
+                            ng-options="amortizationType.id as amortizationType.value for amortizationType in loanaccountinfo.amortizationTypeOptions"
                             value="{{amortizationType.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.amortizationType"/>
                 </td>
                 <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestType == true"><label>{{ 'label.input.isequalamortization' | translate }}</label></td>
@@ -283,7 +273,7 @@
                         class="required">*</span></label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestCalculationPeriodType == true">
                     <select id="interestCalculationPeriodType" ng-model="formData.interestCalculationPeriodType"
-                            ng-options="interestCalculationPeriodType.id as interestCalculationPeriodType.code | translate for interestCalculationPeriodType in loanaccountinfo.interestCalculationPeriodTypeOptions" class="form-control width170px"
+                            ng-options="interestCalculationPeriodType.id as interestCalculationPeriodType.value for interestCalculationPeriodType in loanaccountinfo.interestCalculationPeriodTypeOptions" class="form-control width170px"
                             value="{{interestCalculationPeriodType.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.interestCalculationPeriodType"/>
                 </td>
                 <td colspan="2" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestCalculationPeriodType == true || formData.interestCalculationPeriodType == 0"><label>{{ 'label.input.allowpartialperiodinterestcalcualtion' | translate }}&nbsp;</label>
@@ -310,7 +300,7 @@
                         class="required">*</span></label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.transactionProcessingStrategyId == true">
                     <select id="transactionProcessingStrategyId" ng-model="formData.transactionProcessingStrategyId" class="form-control width170px"
-                            ng-options="transactionProcessingStrategy.id as transactionProcessingStrategy.code | translate for transactionProcessingStrategy in loanaccountinfo.transactionProcessingStrategyOptions"
+                            ng-options="transactionProcessingStrategy.id as transactionProcessingStrategy.name for transactionProcessingStrategy in loanaccountinfo.transactionProcessingStrategyOptions"
                             value="{{transactionProcessingStrategy.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.transactionProcessingStrategyId"/>
                 </td>
                 <td colspan=2 class="paddedbottom10">
@@ -363,7 +353,7 @@
                     <label>{{ 'label.input.daysinyears' | translate }}</label>
                 </td>
                 <td class="paddedbottom10">
-                    <label>{{ loanaccountinfo.daysInYearType.code | translate}}</label>
+                    <label>{{ loanaccountinfo.daysInYearType.value}}</label>
                 </td>
             </tr>
             <tr data-ng-show="loanaccountinfo.isInterestRecalculationEnabled">
@@ -539,7 +529,7 @@
                 <td>{{charge.name}},{{charge.currency.displaySymbol}}</td>
                 <td>{{charge.chargeCalculationType.value}}</td>
                 <td><input id="{{charges[$index].amount}}" class="form-control" number-format type="text" ng-model="charge.amountOrPercentage"
-                           placeholder="{{'label.input.amount' | translate}}" number-format ng-pattern="/^(?!,$)[\d,.]+$/"></td>
+                           placeholder="{{'label.input.amount' | translate}}"></td>
                 <td>{{charge.chargeTimeType.value}}</td>
                 <td>
                     <input id="charges[{{$index}}].duedate" type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
@@ -575,15 +565,15 @@
             </select>&nbsp;&nbsp;
             <div class="col-sm-2">
                 <input class="form-control" type="text" ng-model="collateralFormData.quantity" placeholder="{{'label.input.quantity' | translate}}"
-                        number-format ng-pattern="/^(?!,$)[\d,.]+$/" ng-change="updateValues()">
+                    number-format ng-change="updateValues()">
             </div>
             <div class="col-sm-2">
                 <input class="form-control" type="text" ng-model="collateralFormData.total"
-                       number-format ng-pattern="/^(?!,$)[\d,.]+$/"  readonly>
+                    number-format readonly>
             </div>
             <div class="col-sm-2">
                 <input class="form-control" type="text" ng-model="collateralFormData.totalCollateral"
-                       number-format ng-pattern="/^(?!,$)[\d,.]+$/"  readonly>
+                    number-format readonly>
             </div>
             <div class="col-sm-1">
                 <a class="btn btn-primary" ng-click="addCollateral()" class="col-sm-1">&nbsp;
@@ -678,1197 +668,7 @@
         </tfoot>
     </table>
 </div>
-<hr/>
-
-    <div ng-if="prequalificationType == 'GROUP'">
-        <h3>{{ 'label.heading.additionals' | translate}}</h3>
-        <hr/>
-        <fieldset>
-                <!--<h3>{{'label.heading.charges' | translate}}</h3>-->
-                <hr>
-                <div ng-show="loanaccountinfo" ng-hide="previewRepayment">
-                    <div class="solidborder" style="padding: 20px">
-                        <h3>{{'label.heading.general' | translate}}</h3>
-                        <hr/>
-
-                        <table ng-show="loanaccountinfo" ng-hide="previewRepayment" class=" width100">
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.numofloancycles' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.loanCycleCompleted" id="loanCycleCompleted" required
-                                            ng-options="cycle.id as cycle.description for cycle in loanCycleCompletedOptions"
-                                            value="{{cycle.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="loanCycles"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.earlyCancellationReason' | translate
-                                        }}</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.earlyCancellationReason" id="earlyCancellationReason"
-                                            ng-options="reason.id as reason.description for reason in cancellationReasonOptions"
-                                            value="{{reason.id}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="earlyCancellationReason"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.sourceOfFunds' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.sourceOfFunds" id="sourceOfFunds" required
-                                            ng-options="fund.id as fund.description for fund in sourceOfFundsOptions"
-                                            value="{{fund.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="sourceOfFunds"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.clientLoanRequestNumber' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="clientLoanRequestNumber"
-                                           name="clientLoanRequestNumber" disableddisabled
-                                           ng-model="formData.clientLoanRequestNumber"
-                                           required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="clientLoanRequestNumber"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.requreddate' | translate }}</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input id="dateRequested" sort type="text" name="dateRequested"
-                                           datepicker-pop="dd MMMM yyyy" ng-model="formData.dateRequested"
-                                           is-open="opened1" min="minDate" class="form-control" required/>
-
-                                    <form-validate valattributeform="editloanaccountform" valattribute="dateRequested"/>
-                                </td>
-                                <td class="width14">
-                                    <label>{{ 'label.input.groupPosition' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.position" id="position" required
-                                            ng-options="position.id as position.description for position in groupPositionOptions"
-                                            value="{{position.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="position"/>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.facilitator' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20" colspan="2">
-                                    <select id="facilitator" ng-model="formData.facilitator"
-                                            required
-                                            ng-options="responsibleUser.id as  responsibleUser.firstname + ' ' +
-                                                responsibleUser.lastname + ' (' + responsibleUser.username + ')'
-                                                 for responsibleUser in facilitatorOptions | orderBy:'username':reverse"
-                                            class="form-control width170px" value="{{responsibleUser.id}}">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="facilitator"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="solidborder" style="padding: 20px">
-                        <h3>{{'label.heading.basic' | translate}}</h3>
-                        <hr/>
-
-                        <table ng-show="loanaccountinfo" ng-hide="previewRepayment" class=" width100">
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.fullname' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="fullName" name="fullName"
-                                           ng-model="formData.fullName"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="fullName"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.dateofbirth' | translate
-                                        }}</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input id="dateOfBirth" sort type="text" name="dateOfBirth"
-                                           datepicker-pop="dd MMMM yyyy" ng-model="formData.dateOfBirth"
-                                           is-open="opened1" min="minDate" class="form-control"/>
-
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="dateOfBirth"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.maidenname' | translate }}&nbsp;
-                                        :</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="maidenName" name="maidenName"
-                                           ng-model="formData.maidenName"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="maidenName"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.maritalstatus' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.maritalStatus" id="maritalStatus"
-                                            ng-options="status.id as status.description for status in maritalStatusOptions"
-                                            value="{{status.id}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="maritalStatus"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.education' | translate }}</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <select ng-model="formData.educationLevel" id="educationLevel"
-                                            ng-options="level.id as level.description for level in educationLevelOptions"
-                                            value="{{level.id}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-
-                                    <form-validate valattributeform="editloanaccountform" valattribute="educationLevel"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.schoolingYears' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="schoolingYears"
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           name="schoolingYears"
-                                           ng-model="formData.schoolingYears"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="schoolingYears"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.nationality' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="nationality" name="nationality"
-                                           ng-model="formData.nationality"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="nationality"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.language' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="language" name="language"
-                                           ng-model="formData.language"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="language"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.noOfChildren' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="noOfChildren" name="noOfChildren"
-                                           ng-model="formData.noOfChildren"
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="noOfChildren"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.dpi' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="dpi" name="dpi"
-                                           ng-model="formData.dpi"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="dpi"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.nit' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="nit" name="nit"
-                                           ng-model="formData.nit"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="nit"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.jobtype' | translate }}&nbsp;&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.jobType" id="jobType" required
-                                            ng-options="jobtype.id as jobtype.description for jobtype in jobTypeOptions"
-                                            value="{{jobtype.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="jobType"/>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.occupancyClassification' | translate }}&nbsp; <span class="required">*</span></label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <select ng-model="formData.occupancyClassification" id="occupancyClassification" required
-                                            ng-options="classification.id as classification.name for classification in economicSectorOptions"
-                                            value="{{classification.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="occupancyClassification"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.actsOwnBehalf' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.actsOwnBehalf" id="actsOwnBehalf"
-                                            ng-options="yesno.name as yesno.description for yesno in yesnoOptions"
-                                            value="{{yesno.name}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="actsOwnBehalf"/>
-                                </td>
-
-                                <td class="width14" ng-if="formData.actsOwnBehalf ==='NO'">
-                                    <label class="ml-2">{{ 'label.input.onBehalfOf' | translate
-                                        }}&nbsp;&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20" ng-if="formData.actsOwnBehalf ==='NO'">
-                                    <input type="text" class="form-control" id="onBehalfOf" name="onBehalfOf"
-                                           ng-model="formData.onBehalfOf"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="onBehalfOf"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.politicallyExposed' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <select ng-model="formData.politicallyExposed" id="politicallyExposed"
-                                            ng-options="yesno.name as yesno.description for yesno in yesnoOptions"
-                                            value="{{yesno.name}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="politicallyExposed"/>
-                                </td>
-
-                                <td class="width14" ng-if="formData.politicallyExposed ==='YES'">
-                                    <label class="ml-2">{{ 'label.input.politicalPosition' | translate
-                                        }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20" ng-if="formData.politicallyExposed ==='YES'">
-
-                                    <input type="text" class="form-control" id="politicalPosition"
-                                           name="politicalPosition"
-                                           ng-model="formData.politicalPosition"
-                                           late-Validate/>
-
-                                    <form-validate valattributeform="editloanaccountform" valattribute="politicalPosition"/>
-                                </td>
-
-                                <td class="width14" ng-if="formData.politicallyExposed ==='YES'">
-                                    <label class="ml-2">{{ 'label.input.politicalOffice' | translate
-                                        }}&nbsp;&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20" ng-if="formData.politicallyExposed ==='YES'">
-                                    <input type="text" class="form-control" id="politicalOffice"
-                                           name="politicalOffice"
-                                           ng-model="formData.politicalOffice"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="politicalOffice"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="solidborder" style="padding: 20px">
-                        <h3>{{'label.heading.contact.information' | translate}}</h3>
-                        <hr/>
-
-                        <table ng-show="loanaccountinfo" ng-hide="previewRepayment" class=" width100">
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.client.housingtype' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.housingType" id="housingType" required
-                                            ng-options="housingType.id as housingType.description for housingType in housingTypeOptions"
-                                            value="{{status.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="housingType"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.rentFee' | translate
-                                        }}&nbsp;<span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="rentFee"
-                                           name="rentFee" number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.rentFee" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="rentFee"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.mortgageFee' | translate
-                                        }}&nbsp;<span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="mortgageFee"
-                                           name="mortgageFee" number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.mortgageFee" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="mortgageFee"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.address' | translate }}&nbsp;</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="address" name="address"
-                                           ng-model="formData.address"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="address"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.populatedPlace' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="populatedPlace"
-                                           name="populatedPlace"
-                                           ng-model="formData.populatedPlace"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="populatedPlace"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.referencePoint' | translate }}</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="referencePoint"
-                                           name="referencePoint"
-                                           ng-model="formData.referencePoint"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="referencePoint"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.mobilenumber' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                                           ng-model="formData.phoneNumber" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="phoneNumber"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.relativeNumber' | translate }}&nbsp;
-                                        <span class="required">*</span>: </label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="relativeNumber"
-                                           name="relativeNumber"
-                                           ng-model="formData.relativeNumber" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="relativeNumber"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.communityYears' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="yearsInCommunity"
-                                           name="yearsInCommunity"
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.yearsInCommunity" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="yearsInCommunity"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-
-                    <div class="solidborder" style="padding: 20px">
-                        <h3>{{'label.heading.financialData' | translate}}</h3>
-                        <hr/>
-
-                        <table ng-show="loanaccountinfo" ng-hide="previewRepayment" class=" width100">
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.monthlyIncome' | translate }}&nbsp;
-                                        <span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="monthlyIncome"
-                                           name="monthlyIncome"
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.monthlyIncome" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="monthlyIncome"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.otherIncome' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="-number" class="form-control" id="otherIncome" name="otherIncome"
-                                           ng-model="formData.otherIncome"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="otherIncome"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.familyExpenses' | translate }}&nbsp;
-                                        <span class="required">*</span></label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="familyExpenses"
-                                           name="familyExpenses"
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.familyExpenses" required
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="familyExpenses"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.currentLoans' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.currentLoans" id="currentLoans"
-                                            ng-options="yesno.name as yesno.description for yesno in yesnoOptions"
-
-                                            value="{{yesno.name}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="currentLoans"/>
-                                </td>
-
-                            </tr>
-
-                            <tr ng-if="formData.currentLoans ==='YES'">
-                                <td colspan="6">
-                                    <div class="alert alert-info">
-                                        <h4>{{'label.heading.currentLoanDetails' | translate}}</h4>
-                                        <hr/>
-                                        <div ng-if="currentLoans && currentLoans.length>0">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <th>No.</th>
-                                                <th>{{'label.input.institutionName' | translate}}</th>
-                                                <th>{{'label.heading.balance' | translate}}</th>
-                                                <th>{{'label.heading.charges' | translate}}</th>
-                                                <th>{{'label.input.totalLoanAmount' | translate}}</th>
-                                                <th>{{'label.input.adhoc.search.loanstatus' | translate}}</th>
-                                                <th>{{'label.input.actions' | translate}}</th>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-repeat="loanData in currentLoans">
-                                                    <td>{{countIndex($index)}}</td>
-                                                    <td>{{loanData.institutionName}}</td>
-                                                    <td>{{loanData.totalLoanBalance}}</td>
-                                                    <td>{{loanData.charges}}</td>
-                                                    <td>{{loanData.totalLoanAmount}}</td>
-                                                    <td>{{loanData.loanStatus}}</td>
-                                                    <td><i class="fa fa-times-circle-o" title="Remove"
-                                                           ng-click="removeLoan($index)"></i></td>
-                                                </tr>
-                                                </tbody>
-
-                                            </table>
-                                            <hr/>
-                                        </div>
-                                        <form name="currentLoans" class="form-horizontal">
-                                            <table>
-                                                <tr>
-                                                    <td class="width14">
-                                                        <label class="ml-2">{{ 'label.input.institutionName' | translate
-                                                            }}&nbsp;
-                                                            <span class="required">*</span></label>
-                                                    </td>
-                                                    <td class="width19 paddedbottom20">
-                                                        <input type="text" class="form-control" id="institutionName"
-                                                               name="institutionName"
-                                                               ng-model="currentLoanData.institutionName"
-                                                               late-Validate/>
-                                                        <form-validate valattributeform="currentLoans"
-                                                                       valattribute="institutionName"/>
-                                                    </td>
-                                                    <td class="width14">
-                                                        <label class="ml-2">{{ 'label.input.institutionType' | translate
-                                                            }}&nbsp;
-                                                            <span class="required">*</span></label>
-                                                    </td>
-                                                    <td class="width19 paddedbottom20">
-                                                        <select ng-model="currentLoanData.institutionType"
-                                                                id="institutionType"
-                                                                ng-options="type.id as type.description for type in institutionTypeOptions"
-                                                                value="{{type.id}}" class="form-control">
-                                                            <option value="">{{'label.selectone' | translate}}
-                                                            </option>
-                                                        </select>
-                                                        <form-validate valattributeform="currentLoans"
-                                                                       valattribute="institutionType"/>
-                                                    </td>
-                                                    <td class="width14">
-                                                        <label class="ml-2">{{ 'label.heading.balance' | translate
-                                                            }}&nbsp;
-                                                            <span class="required">*</span></label>
-                                                    </td>
-                                                    <td class="width19 paddedbottom20">
-                                                        <input type="text" class="form-control" number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                                               id="totalLoanBalance" name="totalLoanBalance"
-                                                               ng-model="currentLoanData.totalLoanBalance"
-                                                               late-Validate/>
-                                                        <form-validate valattributeform="currentLoans"
-                                                                       valattribute="totalLoanBalance"/>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="width14">
-                                                        <label class="ml-2">{{ 'label.heading.feevalue' | translate
-                                                            }}&nbsp;
-                                                            <span class="required">*</span></label>
-                                                    </td>
-                                                    <td class="width19 paddedbottom20">
-                                                        <input type="text" class="form-control" id="charges"
-                                                               name="charges" number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                                               ng-model="currentLoanData.charges"
-                                                               late-Validate/>
-                                                        <form-validate valattributeform="currentLoans"
-                                                                       valattribute="charges"/>
-                                                    </td>
-                                                    <td class="width14">
-                                                        <label class="ml-2">{{ 'label.input.loanAmountValue' | translate
-                                                            }}&nbsp;
-                                                            <span class="required">*</span></label>
-                                                    </td>
-                                                    <td class="width19 paddedbottom20">
-                                                        <input type="text" class="form-control"
-                                                               number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                                               id="totalLoanAmount" name="totalLoanAmount"
-                                                               ng-model="currentLoanData.totalLoanAmount"
-                                                               late-Validate/>
-                                                        <form-validate valattributeform="currentLoans"
-                                                                       valattribute="totalLoanAmount"/>
-                                                    </td>
-                                                    <td class="width14">
-                                                        <label class="ml-2">{{ 'label.input.adhoc.search.debtstatus' | translate
-                                                            }}&nbsp;
-                                                            <span class="required">*</span></label>
-                                                    </td>
-                                                    <td class="width19 paddedbottom20">
-                                                        <select ng-model="currentLoanData.loanStatus"
-                                                                id="loanStatus"
-                                                                ng-options="status.id as status.description for status in loanStatusOptions"
-                                                                value="{{type.id}}" class="form-control">
-                                                            <option value="">{{'label.selectone' | translate}}
-                                                            </option>
-                                                        </select>
-                                                        <form-validate valattributeform="currentLoans"
-                                                                       valattribute="loanStatus"/>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="6" class="text-center">
-                                                        <button ng-disabled="!currentLoanData.institutionName || !currentLoanData.institutionType
-                                                            || !currentLoanData.totalLoanAmount|| !currentLoanData.loanStatus"
-                                                                ng-click="addCurrentLoansDetails()"
-                                                                class="btn btn-primary"><i
-                                                                class="fa fa-plus-circle"></i> Add
-                                                        </button>
-                                                    </td>
-                                                </tr>
-
-                                            </table>
-                                        </form>
-                                        <table class="table">
-                                            <tr>
-                                                <td class="width14">
-                                                    <label class="ml-2">{{ 'label.input.totalBalances' | translate
-                                                        }}&nbsp;
-                                                        <span class="required">*</span></label>
-                                                </td>
-                                                <td class="width19 paddedbottom20">
-                                                    <input type="text" class="form-control"
-                                                           id="totalExternalLoanAmount"
-                                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                                           name="totalExternalLoanAmount" disabled
-                                                           ng-model="formData.totalExternalLoanAmount"
-                                                           late-Validate/>
-                                                    <form-validate valattributeform="editloanaccountform"
-                                                                   valattribute="totalExternalLoanAmount"/>
-                                                </td>
-                                                <td class="width14">
-                                                    <label class="ml-2">{{ 'label.input.totalInstallments' | translate }}&nbsp;
-                                                        <span class="required">*</span></label>
-                                                </td>
-                                                <td class="width19 paddedbottom20">
-                                                    <input type="text" class="form-control" id="totalInstallments"
-                                                           name="totalInstallments" disabled
-                                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                                           ng-model="formData.totalInstallments"
-                                                           late-Validate/>
-                                                    <form-validate valattributeform="editloanaccountform"
-                                                                   valattribute="totalInstallments"/>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.clienttype' | translate }}&nbsp; <span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.clientType" id="clientType" required
-                                            ng-options="clientType.id as clientType.description for clientType in clientTypeOptions"
-                                            value="{{clientType.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="clientType"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.houseHoldGoods' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="houseHoldGoods"
-                                           name="houseHoldGoods"
-                                           ng-model="formData.houseHoldGoods"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="houseHoldGoods"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.businessActivity' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="businessActivities"
-                                           name="businessActivities"
-                                           ng-model="formData.businessActivities"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="businessActivities"/>
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-                                <td class="width14">
-                                    <label>{{ 'label.input.businessLocation' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.businessLocation" id="businessLocation"
-                                            ng-options="location.id as location.description for location in businessLocationOptions"
-                                            value="{{location.id}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="businessLocation"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.businessExperience' | translate
-                                        }}&nbsp;<span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.businessExperience" id="businessExperience" required
-                                            ng-options="experience.id as experience.description for experience in businessExperienceOptions"
-                                            value="{{experience.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="businessExperience"/>
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.salesValue' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="salesValue"
-                                           name="salesValue" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.salesValue"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="salesValue"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.businessPurchases' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="businessPurchases"
-                                           name="businessPurchases" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.businessPurchases"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="businessPurchases"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.businessProfit' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="businessProfit"
-                                           name="businessProfit" disabled
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.businessProfit"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="businessProfit"/>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.clientProfit' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="clientProfit"
-                                           name="clientProfit" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.clientProfit"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="clientProfit"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.inventories' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="inventories"
-                                           name="inventories" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.inventories"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="inventories"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.visitBusiness' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.visitBusiness" id="visitBusiness" required
-                                            ng-options="yesno.id as yesno.description for yesno in yesnoOptions"
-                                            value="{{yesno.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="visitBusiness"/>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.familySupport' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.familySupport" id="familySupport" required
-                                            ng-options="yesno.id as yesno.description for yesno in yesnoOptions"
-                                            value="{{yesno.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="familySupport"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.businessEvolution' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.businessEvolution" id="businessEvolution" required
-                                            ng-options="evolution.id as evolution.description for evolution in businessEvolutionOptions"
-                                            value="{{evolution.id}}" class="form-control">
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="businessEvolution"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.numberOfApprovals' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="numberOfApprovals"
-                                           name="numberOfApprovals" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.numberOfApprovals"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="numberOfApprovals"/>
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.recommenderName' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="recommenderName"
-                                           name="recommenderName" required
-                                           ng-model="formData.recommenderName"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="recommenderName"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.monthlyPaymentCapacity' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="monthlyPaymentCapacity"
-                                           name="monthlyPaymentCapacity" required
-                                           ng-model="formData.monthlyPaymentCapacity"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="monthlyPaymentCapacity"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="solidborder" style="padding: 20px">
-                        <h3>{{'label.heading.creditRequest' | translate}}</h3>
-                        <hr/>
-
-                        <table ng-show="loanaccountinfo" ng-hide="previewRepayment" class=" width100">
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.loanPurpose' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <select ng-model="formData.loanPurpose" id="loanPurpose" required
-                                            ng-options="loanPurpose.id as loanPurpose.description for loanPurpose in loanPurposeOptions"
-                                            value="{{loanPurpose.id}}" class="form-control">
-                                        <option value="">{{'label.selectone' | translate}}</option>
-                                    </select>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="loanPurpose"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.currentCreditValue' | translate
-                                        }}&nbsp;<span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="currentCreditValue"
-                                           name="currentCreditValue" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.currentCreditValue"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="currentCreditValue"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.requestedValue' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="requestedValue"
-                                           name="requestedValue" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.requestedValue"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="requestedValue"/>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.groupAuthorizedValue' | translate
-                                        }}&nbsp;<span class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="groupAuthorizedValue"
-                                           name="groupAuthorizedValue" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.groupAuthorizedValue"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="groupAuthorizedValue"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.facilitatorProposedValue' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="facilitatorProposedValue"
-                                           name="facilitatorProposedValue" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.facilitatorProposedValue"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="facilitatorProposedValue"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.proposedFee' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="proposedFee"
-                                           name="proposedFee" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.proposedFee"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="proposedFee"/>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.agencyAuthorizedAmount' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-                                    <input type="text" class="form-control" id="agencyAuthorizedAmount"
-                                           name="agencyAuthorizedAmount" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.agencyAuthorizedAmount"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform"
-                                                   valattribute="agencyAuthorizedAmount"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.authorizedFee' | translate }}&nbsp;<span
-                                            class="required">*</span>:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="authorizedFee"
-                                           name="authorizedFee" required
-                                           number-format ng-pattern="/^(?!,$)[\d,.]+$/"
-                                           ng-model="formData.authorizedFee"
-                                           late-Validate/>
-                                    <form-validate valattributeform="editloanaccountform" valattribute="authorizedFee"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="solidborder" style="padding: 20px">
-                        <h3>{{'label.heading.analysis' | translate}}</h3>
-                        <hr/>
-
-                        <table ng-show="loanaccountinfo" ng-hide="previewRepayment" class=" width100">
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.totalIncome' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="totalIncome"
-                                           name="totalIncome" disabled
-                                           ng-model="formData.totalIncome"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.totalExpenditures' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="totalExpenditures"
-                                           name="totalExpenditures" disabled
-                                           ng-model="formData.totalExpenditures"/>
-                                </td>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.availableMonthly' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="availableMonthly"
-                                           name="availableMonthly" disabled
-                                           ng-model="formData.availableMonthly"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.paymentCapacity' | translate
-                                        }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="paymentCapacity"
-                                           name="paymentCapacity" disabled
-                                           ng-model="formData.paymentCapacity"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.facValue' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="facValue"
-                                           name="facValue" disabled
-                                           ng-model="formData.facValue"/>
-                                </td>
-
-                                <td class="width14">
-                                    <label class="ml-2">{{ 'label.input.debtLevel' | translate }}&nbsp;:</label>
-                                </td>
-                                <td class="width19 paddedbottom20">
-
-                                    <input type="text" class="form-control" id="debtLevel"
-                                           name="debtLevel" disabled
-                                           ng-model="formData.debtLevel"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <hr>
-                </div>
-            </fieldset>
-    </div>
-
-
-    <div ng-show="prequalificationType == 'INDIVIDUAL'">
-        <strong>{{ 'label.heading.additionals' | translate}}</strong>
-    </div>
-
-<div ng-show="prequalificationType == 'INDIVIDUAL'">
-    <span><a ng-click="showAdditionalInfo=!showAdditionalInfo"><i class="fa fa-circle-arrow-left">{{'label.button.show.loan.additionals' | translate}}</i></a><br><br></span>
-    <div ng-show="showAdditionalInfo">
-        <fieldset>
-            <api-validate></api-validate>
-            <br>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-horizontal">
-                        <div class="pull-left">
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <div class="input-group" style="width: 400px">
-                                        <input data-ng-model="searchText" type="text"
-                                               placeholder="{{'label.input.searchbycaseid' | translate}}"
-                                               class="form-control unstyled"/>
-                                        <span class="input-group-btn">
-                                                <button type="button" ng-click="searchByCaseId()"  class="btn btn-primary form-control" ng-disabled="!searchText">
-                                                    <span class="fa fa-search"></span>
-                                                </button>
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <table class="table-bordered table view-table table-striped">
-                <thead>
-                <tr class="graybg">
-                    <th>{{'label.heading.additional.property.name' | translate}}</th>
-                    <th>{{'label.heading.additional.property.value' | translate}}</th>
-                    <th>{{'label.heading.description' | translate}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="(propertyName, propertyValue) in formData.loanAdditionalData">
-                    <td class="paddedbottom10">{{propertyName}}</td>
-                    <td class="paddedbottom10">
-                        <div ng-if="isAdditionalDateProperty(propertyName)">
-                            <input id="{{propertyName}}" type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
-                                   ng-model="formData.loanAdditionalData[propertyName]" is-open="opened3" size="70" min="minDate"/>
-                        </div>
-                        <div ng-if="isDecimalProperty(propertyName)">
-                            <input id="{{propertyName}}" class="form-control" type="text" number-format ng-pattern="/^(?!,$)[\d,.]+$/" name="propertyName"
-                                   ng-model="formData.loanAdditionalData[propertyName]" is-open="opened3" size="70"/>
-                        </div>
-
-                        <div ng-if="!isAdditionalDateProperty(propertyName) && !isDecimalProperty(propertyName)">
-                            <input id="{{propertyName}}" class="form-control" type="text" name="propertyName"
-                                   ng-model="formData.loanAdditionalData[propertyName]" is-open="opened3" size="70"/>
-                        </div>
-                    </td>
-                    <td class="paddedbottom10">{{ 'label.description.additional.' + propertyName | translate}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-    </div>
-</div>
-    <api-validate></api-validate>
-
-
-    <div class="col-md-offset-6">
+<div class="col-md-offset-6">
     <button id="cancel" type="reset" class="btn btn-default" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
     <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_LOAN' ng-show="loanaccountinfo">{{'label.button.save' |
         translate}}

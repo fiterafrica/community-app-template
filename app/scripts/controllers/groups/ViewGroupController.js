@@ -2,13 +2,11 @@
     mifosX.controllers = _.extend(module, {
         ViewGroupController: function (scope, routeParams, route, location, resourceFactory, dateFilter, $uibModal) {
             scope.group = [];
-            scope.clientMembers = [];
             scope.template = [];
             scope.groupGLIMAccounts=[];
             scope.groupGSIMAccounts=[];
             scope.groupId=routeParams.id;
             scope.formData = {};
-            scope.showClosed = false;
             scope.choice = 0;
             scope.staffData = {};
             scope.openLoan = true;
@@ -33,22 +31,6 @@
             };
             resourceFactory.groupResource.get({groupId: routeParams.id, associations: 'all'}, function (data) {
                 scope.group = data;
-                let clientMembersList = data.clientMembers;
-                if (clientMembersList && clientMembersList.length>0){
-                    scope.clientMembers = clientMembersList.filter(function (client) {
-                        return client.status.value !== 'Closed';
-                    });
-                }
-
-                if(scope.group.prequalificationGroups && scope.group.prequalificationGroups.length > 0){
-                    for(var i = 0; i < scope.group.prequalificationGroups.length; i++){
-                        const [ year, month, day, hour, minute, second ] = scope.group.prequalificationGroups[i].createdAt;
-                        const createdDate = new Date(`${year}-${month}-${day} ${hour}:${minute}:${second}`);
-                        scope.group.prequalificationGroups[i].createdAt = dateFilter(createdDate, scope.df);
-                    }
-                }
-
-                scope.showNonPrequalificationActionBtn = false;
                 if(scope.group.clientMembers){
                     scope.isGroupMembersAvailable = (scope.group.clientMembers.length>0);
                 }
@@ -87,22 +69,6 @@
                     });
                 });
             };
-            scope.showClosedClients = function () {
-                console.log("going to filter closed "+ scope.showClosed)
-                scope.clientMembers = [];
-                scope.showClosed = !scope.showClosed;
-                if (scope.showClosed){
-                    scope.clientMembers = scope.group.clientMembers;
-                }else{
-                    let clientMembersList = scope.group.clientMembers;
-                    if (clientMembersList && clientMembersList.length>0){
-                        scope.clientMembers = clientMembersList.filter(function (client) {
-                            return client.status.value !== 'Closed';
-                        });
-                    }
-                }
-            };
-
             scope.deleteGroup = function () {
                 $uibModal.open({
                     templateUrl: 'deletegroup.html',
@@ -263,57 +229,6 @@
                     route.reload();
                 });
             };
-
-            scope.requestForUpdates = function () {
-                $uibModal.open({
-                    templateUrl: 'requestForUpdatesView.html',
-                    controller: RequestUpdatesCtrl
-                });
-
-            }
-
-            scope.sendToAgencyUnit = function () {
-                $uibModal.open({
-                    templateUrl: 'agencyConfirmation.html',
-                    controller: AgencyConfirmationCtrl
-                });
-
-            }
-
-
-            var RequestUpdatesCtrl = function ($scope, $uibModalInstance) {
-                $scope.updateData = {};
-
-                $scope.submit = function () {
-                    resourceFactory.prequalificationChecklistResource.requestUpdates({prequalificationId: scope.group.prequalificationId}, {comments:$scope.updateData.comments}, function (data) {
-                        $uibModalInstance.dismiss('cancel');
-                        route.reload();
-                    });
-                };
-
-                $scope.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                };
-            };
-
-            var AgencyConfirmationCtrl = function ($scope, $uibModalInstance) {
-                $scope.updateData = {};
-
-                $scope.sendGroup = function () {
-                    resourceFactory.prequalificationChecklistResource.processAnalysis(
-                        {prequalificationId: scope.group.prequalificationId, command: 'sendtoagency'},
-                        {action: 'sendtoagency'},
-                        function (data) {
-                            $uibModalInstance.dismiss('cancel');
-                            route.reload();
-                        });
-                };
-
-                $scope.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                };
-            };
-
 
         }
     });

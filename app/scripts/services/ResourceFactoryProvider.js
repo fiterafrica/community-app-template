@@ -10,7 +10,6 @@
             this.setTenantIdenetifier = function (tenant) {
                 tenantIdentifier = tenant;
             }
-
             this.$get = ['$resource', '$rootScope', function (resource, $rootScope) {
                 var defineResource = function (url, paramDefaults, actions) {
                     var tempUrl = baseUrl;
@@ -45,9 +44,6 @@
                     officeImportTemplateResource: defineResource(apiVer + "/offices/bulkimporttemplate", {}, {
                     		get: {method: 'GET', params: {}}
                     }),
-                    officeChildrenByUserResource: defineResource(apiVer + "/offices/user", {}, {
-                        get: {method: 'GET', params: {}, isArray: true}
-                    }),
                     importResource: defineResource(apiVer + "/imports", {}, {
                 			getImports: {method: 'GET', params: {}, isArray: true}
                     }),
@@ -58,60 +54,6 @@
                         getAllClientDocuments: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT'},
                         retrieveTransferDate: { method: 'GET', params:{}, isArray: true}
-                    }),
-
-                    blacklistResource: defineResource(apiVer + "/blacklist/:clientId/:blacklistId", {clientId: '@clientId', status: '@status'}, {
-                        getOne: {method: 'GET', params: {blacklistId: '@blacklistId'}},
-                        getAllBlacklistClients: {method: 'GET', params: {limit: 1000, status: '@status'}},
-                        save: { method: 'POST'},
-                        update: { method: 'PUT'}
-                    }),
-
-                    blacklistDocumentsResource: defineResource(apiVer + "/blacklist/:blacklistId/documents/:documentId", {blacklistId: '@blacklistId', documentId: '@documentId'}, {
-                        getAllDocuments: {method: 'GET', params: {}, isArray: true}
-                    }),
-
-                    entityDocumentsResource: defineResource(apiVer + "/:entity/:entityId/documents/:documentId", {entity: '@entity', entityId: '@entityId', documentId: '@documentId'}, {
-                        getAllDocuments: {method: 'GET', params: {}, isArray: true}
-                    }),
-                    prequalificationDocumentsResource: defineResource(apiVer + "/prequalification/:groupId/documents/:documentId", {groupId: '@groupId', documentId: '@documentId'}, {
-                        getAllDocuments: {method: 'GET', params: {}, isArray: true}
-                    }),
-
-                    blacklistTemplateResource: defineResource(apiVer + "/blacklist/template/:clientId", {clientId: '@clientId'}, {
-                        get: {method: 'GET', params: {}},
-                    }),
-
-                    prequalificationTemplateResource: defineResource(apiVer + "/prequalification/template", {}, {
-                        get: {method: 'GET', params: {}},
-                    }),
-                    prequalificationChecklistResource: defineResource(apiVer + "/prequalification/checklist/:prequalificationId", {prequalificationId:'@prequalificationId'}, {
-                        get: {method: 'GET', params: {}, isArray:true},
-                        validate: {method: 'POST', params: {command: 'validateprequalification'}},
-                        requestUpdates: {method: 'POST', params: {command: 'requestUpdates'}},
-                        sendToAnalysis: {method: 'POST', params: {command: 'sendToAnalysis'}},
-                        sendToAgency: {method: 'POST', params: {command: 'sendtoagency'}},
-                        bureauValidation: {method: 'POST', params: {command: 'bureauValidation'}},
-                        processAnalysis: {method: 'POST', params: {command: '@command'}},
-                    }),
-                     prequalificationValidationResource: defineResource(apiVer + "/prequalification/checklist", {prequalificationId:'@prequalificationId'}, {
-                        get: {method: 'GET', params: {prequalificationId:'@prequalificationId',clientId:'@clientId'}}
-                    }),
-                    prequalificationResource: defineResource(apiVer + "/prequalification/:anotherResource/:groupId/:memberId", {groupId: '@groupId',anotherResource: '@anotherResource',memberId: '@memberId'}, {
-                        get: {method: 'GET', params: {}},
-                        prequalifyExistingGroup: {method: 'POST', params: {anotherResource: '@anotherResource'}},
-                        getAllGroups: {method: 'GET', params: {limit: 1000}},
-                        save: {method: 'POST', params: {}},
-                        update: {method: 'PUT', params: {}},
-                        updateMember: {method: 'PUT', params: {}},
-                    }),
-                    individualPrequalificationResource: defineResource(apiVer + "/individual/prequalification/:clientId", {clientId: '@clientId'}, {
-                        get: {method: 'GET', params: {}},
-                        save: {method: 'POST', params: {}},
-                        update: {method: 'PUT', params: {}},
-                    }),
-                    individualPrequalificationResource: defineResource(apiVer + "/individual/prequalification/loanAdditionalData", {clientId: '@clientId'}, {
-                        loanAdditionalData: {method: 'GET', params: {}},
                     }),
                     clientChargesResource: defineResource(apiVer + "/clients/:clientId/charges/:resourceType", {clientId: '@clientId', resourceType: '@resourceType'}, {
                         getCharges: {method: 'GET'},
@@ -195,15 +137,7 @@
                     }),
                     runReportsResource: defineResource(apiVer + "/runreports/:reportSource", {reportSource: '@reportSource'}, {
                         get: {method: 'GET', params: {}, isArray: true},
-                        getReport: {method: 'GET', params: {}},
-                        downloadReport: {
-                                            method: 'GET',
-                                            params: {},
-                                            interceptor: { response: function(response) {
-                                                    return response;
-                                                }
-                                            }
-                                        }
+                        getReport: {method: 'GET', params: {}}
                     }),
                     reportsResource: defineResource(apiVer + "/reports/:id/:resourceType", {id: '@id', resourceType: '@resourceType'}, {
                         get: {method: 'GET', params: {id: '@id'}},
@@ -282,13 +216,8 @@
                         getAllNotes: {method: 'GET', params: {}, isArray: true},
                         put: {method: 'PUT', params: {}}
                     }),
-
                     loanChargeTemplateResource: defineResource(apiVer + "/loans/:loanId/charges/template", {loanId: '@loanId'}, {
                         get: {method: 'GET', params: {}}
-                    }),
-
-                    loanAgeLimitResource: defineResource(apiVer + "/loans/validateAgeLimits/:clientId/:productId", {clientId: '@clientId',productId: '@productId'}, {
-                        validateAge: {method: 'GET', params: {}}
                     }),
                     loanChargesResource: defineResource(apiVer + "/loans/:loanId/charges/:chargeId", {loanId: '@loanId', chargeId: '@chargeId'}, {
                     }),
@@ -398,10 +327,6 @@
                         update: { method: 'PUT', params: {} }
                     }),
                     codeValueResource: defineResource(apiVer + "/codes/:codeId/codevalues/:codevalueId", {codeId: '@codeId', codevalueId: '@codevalueId'}, {
-                        getAllCodeValues: {method: 'GET', params: {}, isArray: true},
-                        update: { method: 'PUT', params: {} }
-                    }),
-                    codeValueNameResource: defineResource(apiVer + "/codes/codevalues/:codeName", {codeName: '@codeName'}, {
                         getAllCodeValues: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT', params: {} }
                     }),
@@ -532,7 +457,6 @@
                     centerResource: defineResource(apiVer + "/centers/:centerId/:anotherresource", {centerId: '@centerId', anotherresource: '@anotherresource'}, {
                         get: {method: 'GET', params: {}},
                         getAllCenters: {method: 'GET', params: {}, isArray: true},
-                        transferGroup: {method: 'POST', params: {}},
                         getAllMeetingFallCenters: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT'}
                     }),
@@ -558,7 +482,7 @@
                         get: {method: 'GET', params: {}},
                         update: {method: 'PUT', params: {}}
                     }),
-                    configurationResourceByName: defineResource(apiVer + "/configurations/name/:configName", {configName: '@configName'}, {
+                    configurationResourceByName: defineResource(apiVer + "/configurations/", {configName: '@configName'}, {
                         get: {method: 'GET', params: {configName:'configName'}}
                     }),
                     cacheResource: defineResource(apiVer + "/caches", {}, {
@@ -582,14 +506,6 @@
                      template: {method: 'GET',params:{}},
                      preview:{method:'GET',params:{command:'previewLoanReschedule'}},
                      put: {method: 'POST', params: {command:'reschedule'}},
-                     reject:{method:'POST',params:{command:'reject'}},
-                     approve:{method:'POST',params:{command:'approve'}}
-                     }),
-
-                    restructurecreditsResource: defineResource(apiVer + "/restructurecredits/:clientId/:anotherresource",{clientId:'@clientId', anotherresource: '@anotherresource'},{
-                     get: {method: 'GET',params:{}},
-                     save: {method: 'POST',params:{anotherresource: '@anotherresource'}},
-                     template: {method: 'GET',params:{anotherresource:'template'}},
                      reject:{method:'POST',params:{command:'reject'}},
                      approve:{method:'POST',params:{command:'approve'}}
                      }),
@@ -936,120 +852,6 @@
                         deleteCause: {method: 'DELETE', params: {}}                        
                     }),
                     causesTemplateResource: defineResource(apiVer + "/codecauses/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    agencyTemplateResource: defineResource(apiVer + "/agencies/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    agencyResource: defineResource(apiVer + "/agencies/:agencyId", {agencyId: "@agencyId"}, {
-                        get: {method: 'GET', params: {}, isArray: false},
-                        getAllAgenciesForCurrentUser: {method: 'GET', params: {}, isArray: true},
-                        save: {method: 'POST', params: {}},
-                        update: { method: 'PUT'},
-                        delete: {method: 'DELETE', params: {}}
-                    }),
-                    supervisionTemplateResource: defineResource(apiVer + "/supervisions/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    supervisionResource: defineResource(apiVer + "/supervisions/:supervisionId", {supervisionId: "@supervisionId"}, {
-                        get: {method: 'GET', params: {}, isArray: false},
-                        getAllSupervisionsForCurrentUser: {method: 'GET', params: {}, isArray: true},
-                        save: {method: 'POST', params: {}},
-                        update: { method: 'PUT'},
-                        delete: {method: 'DELETE', params: {}}
-                    }),
-                    portfolioTemplateResource: defineResource(apiVer + "/portfolios/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    portfolioResource: defineResource(apiVer + "/portfolios/:portfolioId", {portfolioId: "@portfolioId"}, {
-                        get: {method: 'GET', params: {}, isArray: false},
-                        getAllPortfoliosForCurrentUser: {method: 'GET', params: {}, isArray: true},
-                        save: {method: 'POST', params: {}},
-                        update: { method: 'PUT'},
-                        delete: {method: 'DELETE', params: {}}
-                    }),
-                    portfolioCenterTemplateResource: defineResource(apiVer + "/portfolios/:portfolioId/centers/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    portfolioPlanningResource: defineResource(apiVer + "/portfolios/:portfolioId/planning", {portfolioId: "@portfolioId"}, {
-                        get: {method: 'GET', params: {portfolioId: "@portfolioId"}, isArray: false}
-                    }),
-                    portfolioCenterByCurrentUserResource: defineResource(apiVer + "/portfolios/:portfolioId/centers", {}, {
-                        get: {method: 'GET', params: {}, isArray: true}
-                    }),
-                    portfolioCenterResource: defineResource(apiVer + "/portfolios/:portfolioId/centers/:portfolioCenterId", {portfolioId: "@portfolioId", portfolioCenterId: "@portfolioCenterId"}, {
-                        get: {method: 'GET', params: {}, isArray: false},
-                        update: { method: 'PUT'}
-                    }),
-                    portfolioAllCentersAvailabilityResource: defineResource(apiVer + "/portfolios/:portfolioId/centers/availability", {portfolioId: "@portfolioId"}, {
-                        get: {method: 'GET', params: {}, isArray: true},
-                    }),
-                    centerGroupTemplateResource: defineResource(apiVer + "/centers/:portfolioCenterId/groups/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    centerGroupResource: defineResource(apiVer + "/centers/:portfolioCenterId/groups/:centerGroupId", {portfolioCenterId: "@portfolioCenterId", centerGroupId: "@centerGroupId"}, {
-                        get: {method: 'GET', params: {}, isArray: false},
-                        save: {method: 'POST', params: {}},
-                        update: { method: 'PUT'}
-                    }),
-                    transferCenterGroupResource: defineResource(apiVer + "/centers/:portfolioCenterId/groups/:centerGroupId/transfer", {portfolioCenterId: "@portfolioCenterId", centerGroupId: "@centerGroupId"}, {
-                        transfer: { method: 'PUT'}
-                    }),
-                    transferAgencyResource: defineResource(apiVer + "/agencies/:agencyId/transfer", {agencyId: "@agencyId"}, {
-                        transfer: { method: 'PUT'}
-                    }),
-                    loanTrxnsSimulatePaymentResource: defineResource(apiVer + "/loans/:loanId/transactions/simulation", {loanId: '@loanId'}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    bankResource: defineResource(apiVer + "/banks/:bankId", {bankId: '@bankId'}, {
-                        get: {method: 'GET', params: {}},
-                        getAllBanks: {method: 'GET', params: {}},
-                        save: { method: 'POST'},
-                        update: { method: 'PUT'},
-                        delete: { method: 'DELETE'}
-                    }),
-                    bankAccountResource: defineResource(apiVer + "/bankaccounts/:bankAccountId", {bankAccountId: '@bankAccountId'}, {
-                        get: {method: 'GET', params: {}},
-                        getAllBankAccounts: {method: 'GET', params: {}},
-                        save: { method: 'POST'},
-                        update: { method: 'PUT'},
-                        delete: { method: 'DELETE'},
-                        template: {method: 'GET',params:{}},
-                    }),
-                    bankAccountTemplateResource: defineResource(apiVer + "/bankaccounts/template", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    chequeBatchTemplateResource: defineResource(apiVer + "/bankcheques/template", {bankAccId: "@bankAccId"}, {
-                        get: {method: 'GET', params: {bankAccId: "@bankAccId"}, isArray: false}
-                    }),
-                    chequeGuaranteeResource: defineResource(apiVer + "/bankcheques/guarantees", {caseId: "@caseId"}, {
-                        getAllGuarantees: {method: 'GET', params: {caseId: "@caseId"}, isArray: true}
-                    }),
-                   chequeBatchResource: defineResource(apiVer + "/bankcheques/:batchId", {chequeId: "@chequeId", batchId: "@batchId", commandParam: "@commandParam"}, {
-                        get: {method: 'GET', params: {}},
-                        save: { method: 'POST', params: {}},
-                        delete: {method: 'DELETE'},
-                        update: {method: 'PUT'},
-                        createBatch:  { method: 'POST', params: {commandParam: 'createbatch'}},
-                        reassign: {method: 'POST', params: {commandParam: 'reassigncheque', chequeId: "@chequeId"}},
-                        voidCheque: {method: 'POST', params: {commandParam: 'voidcheque', chequeId: "@chequeId"}},
-                        approveIssuance: {method: 'POST', params: {commandParam: '@commandParam', chequeId: "@chequeId" }},
-                        authorizeIssuance: {method: 'POST', params: {commandParam: '@commandParam', chequeId: "@chequeId" }},
-                        authorizeVoidance: {method: 'POST', params: {commandParam: 'authorizevoidance', chequeId: "@chequeId"}},
-                        payGuarantees: {method: 'POST', params: {commandParam: '@commandParam', chequeId: "@chequeId"}},
-                        printCheques: {method: 'POST', params: {commandParam: '@commandParam'}},
-                    }),
-                   searchChequeResource: defineResource(apiVer + "/bankcheques/search", {}, {
-                        get: {method: 'GET', params: {}}
-                    }),
-                    committeeResource: defineResource(apiVer + "/committees/:committeeId", {committeeId: "@committeeId"}, {
-                        get: {method: 'GET', params: {}, isArray: false},
-                        getAllCommitteesForCurrentUser: {method: 'GET', params: {}},
-                        save: { method: 'POST', params: {}},
-                        update: { method: 'PUT', params: {}},
-                        delete: {method: 'DELETE', params: {}}
-                    }),
-                    committeeTemplateResource: defineResource(apiVer + "/committees/template", {}, {
                         get: {method: 'GET', params: {}}
                     }),
                 };

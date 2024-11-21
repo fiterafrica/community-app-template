@@ -26,14 +26,14 @@
             scope.getResultsPage = function (pageNumber) {
                 if(scope.searchText){
                     var startPosition = (pageNumber - 1) * scope.centersPerPage;
-                    $scope.centers = $scope.actualCenters.slice(startPosition, startPosition + scope.centersPerPage);
+                    scope.centers = scope.actualCenters.slice(startPosition, startPosition + scope.centersPerPage);
                     return;
                 }
-                resourceFactory.centerResource.get({
+                var items = resourceFactory.centerResource.get({
                     offset: ((pageNumber - 1) * scope.centersPerPage),
                     limit: scope.centersPerPage,
                     paged: 'true',
-                    orderBy: '',
+                    orderBy: 'name',
                     sortOrder: 'ASC'
                 }, function (data) {
                     scope.centers = data.pageItems;
@@ -45,7 +45,7 @@
                     offset: 0,
                     limit: scope.centersPerPage,
                     paged: 'true',
-                    orderBy: '',
+                    orderBy: 'name',
                     sortOrder: 'ASC'
                 }, function (data) {
                     scope.totalCenters = data.totalFilteredRecords;

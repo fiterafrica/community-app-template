@@ -100,12 +100,8 @@
                     chargeAppliesTo: data.chargeAppliesTo.id,
                     chargeTimeType: data.chargeTimeType.id,
                     chargeCalculationType: data.chargeCalculationType.id,
-                    amount: data.amount,
-                    adminFeeRanges: data.chargeRanges,
-                    chargeDisbursementType: data.chargeDisbursementType.id,
-                    chargeInstallmentFeeType: data.chargeInstallmentFeeType.id,
+                    amount: data.amount
                 };
-
                 if(data.incomeOrLiabilityAccount){
                     scope.formData.incomeAccountId = data.incomeOrLiabilityAccount.id;   
                 }
@@ -123,11 +119,6 @@
                     scope.formData.feeFrequency = data.feeFrequency.id;
                     scope.formData.feeInterval = data.feeInterval;
                 }
-
-                if(!data.chargeRanges){
-                    scope.formData.adminFeeRanges = [];
-                }
-                // scope.chargeType = data.adminFeeRanges && data.adminFeeRanges.length ? 'administrativeFee' : 'normal';
 
                 //when chargeAppliesTo is savings, below logic is
                 //to display 'Due date' field, if chargeTimeType is
@@ -159,15 +150,14 @@
             //to display 'Due date' field, if chargeTimeType is
             // 'annual fee' or 'monthly fee'
             scope.chargeTimeChange = function (chargeTimeType) {
-                if ((chargeTimeType === 12) && (scope.template.chargeAppliesTo.value === "Loan"))
-                {
-                    scope.showFrequencyOptions = false;
-                }
-                else
-                {
-                    scope.showFrequencyOptions = true;
-                }
-
+		if ((chargeTimeType === 12) && (scope.template.chargeAppliesTo.value === "Loan"))
+		{
+			scope.showFrequencyOptions = false;
+		}
+		else
+		{
+			scope.showFrequencyOptions = true;
+		}
                 if (scope.formData.chargeAppliesTo === 2) {
                     for (var i in scope.template.chargeTimeTypeOptions) {
                         if (chargeTimeType === scope.template.chargeTimeTypeOptions[i].id) {
@@ -228,30 +218,6 @@
                 }
             };
 
-            scope.addAdminFeeRange = function() {
-                if (this.adminFeeMin && this.adminFeeRate && parseFloat(this.adminFeeMin) > 0 && parseFloat(this.adminFeeRate) > 0 &&
-                     (!this.adminFeeMax || (this.adminFeeMax && parseFloat(this.adminFeeMax) >= parseFloat(this.adminFeeMin)))
-                )
-                {
-                    this.formData.adminFeeRanges.push({
-                        adminFeeMin: this.adminFeeMin,
-                        adminFeeMax: this.adminFeeMax,
-                        adminFeeRate: this.adminFeeRate
-                    });
-                    this.adminFeeMin = this.adminFeeMax = this.adminFeeRate = undefined;
-                }
-            };
-
-            scope.deleteAdminFeeRange= function(index) {
-                this.formData.adminFeeRanges.splice(index, 1);
-            };
-
-            scope.changeChargeType = function() {
-                if (this.chargeType == 'normal' && !this.formData.adminFeeRanges) {
-                    this.formData.adminFeeRanges = [];
-                }
-            };
-
             scope.submit = function () {
                 if (scope.formData.chargeAppliesTo === 2) {
                     if (scope.showdatefield === true) {
@@ -264,12 +230,6 @@
                     scope.formData.feeInterval = null;
                 }
                 this.formData.locale = scope.optlang.code;
-
-                if (this.formData.adminFeeRanges) {
-                    this.formData.adminFeeRanges.map(function (x) {
-                        x.locale = scope.optlang.code; });
-                }
-
                 this.formData.active = this.formData.active || false;
                 this.formData.enableFreeWithdrawalCharge = this.formData.enableFreeWithdrawalCharge || false;
                 this.formData.enablePaymentType = this.formData.enablePaymentType || false;

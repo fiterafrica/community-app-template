@@ -21,17 +21,10 @@
                             num = num.replace(decimalSep, DECIMAL_SEP);
                         }
                         var fractionLength = (num.split(DECIMAL_SEP)[1] || []).length;
-                        if(!fractionLength || fractionLength === 0){
-                            fractionLength = 2;
-                        }
-                        var initialnumber = $filter('number')(num, fractionLength);
 
+                        var initialnumber = $filter('number')(num, fractionLength);
                         if (stringValue != undefined && stringValue.indexOf(DECIMAL_SEP) > 0 &&  decimalSep!= DECIMAL_SEP) {
-                            if ($locale.id == 'es') {
-                                num = value.toLocaleString('en');
-                            } else {
-                                num = num.replace(DECIMAL_SEP, decimalSep);
-                            }
+                            num = num.replace(DECIMAL_SEP, decimalSep);
                             var modelGetter = $parse(attrs['ngModel']);
                             // This returns a function that lets us set the value of the ng-model binding expression:
                             var modelSetter = modelGetter.assign;
