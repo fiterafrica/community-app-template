@@ -609,15 +609,15 @@
                                                 </span>
                                                 </td>
                                                 <td class="pointer" ng-if="savingaccount.status.submittedAndPendingApproval">
-                                                    <a uib-tooltip="{{'label.button.approve' | translate}}" has-permission='APPROVE_SAVINGSACCOUNT' ng-href="#/savingaccount/{{savingaccount.id}}/approve" class="btn btn-xs btn-primary ng-binding">
+                                                    <a uib-tooltip="{{'label.button.approve' | translate}}" has-permission='APPROVE_FIXEDDEPOSITACCOUNT' ng-href="#/fixeddepositaccount/{{savingaccount.id}}/approve" class="btn btn-xs btn-primary ng-binding">
                                                         <i class="fa fa-check "></i>
                                                     </a>
                                                 </td>
                                                 <td class="pointer" ng-if="!savingaccount.status.submittedAndPendingApproval && !savingaccount.status.active">
-                                                    <a uib-tooltip="{{'label.button.undoapproval' | translate}}" has-permission='APPROVALUNDO_SAVINGSACCOUNT' ng-href="#/savingaccount/{{savingaccount.id}}/undoapproval" class="btn btn-xs btn-primary ng-binding">
+                                                    <a uib-tooltip="{{'label.button.undoapproval' | translate}}" has-permission='APPROVALUNDO_FIXEDDEPOSITACCOUNT' ng-href="#/fixeddepositaccount/{{savingaccount.id}}/undoapproval" class="btn btn-xs btn-primary ng-binding">
                                                         <i class="fa fa-undo "></i>
                                                     </a>
-                                                    <a uib-tooltip="{{'label.button.activate' | translate}}" has-permission='ACTIVATE_SAVINGSACCOUNT' ng-href="#/savingaccount/{{savingaccount.id}}/activate" class="btn btn-xs btn-primary ng-binding">
+                                                    <a uib-tooltip="{{'label.button.activate' | translate}}" has-permission='ACTIVATE_FIXEDDEPOSITACCOUNT' ng-href="#/fixeddepositaccount/{{savingaccount.id}}/activate" class="btn btn-xs btn-primary ng-binding">
                                                         <i class="fa fa-check-circle "></i>
                                                     </a>
                                                 </td>
@@ -688,15 +688,15 @@
 											</span>
 											</td>
 											<td class="pointer" ng-if="savingaccount.status.submittedAndPendingApproval">
-												<a uib-tooltip="{{'label.button.approve' | translate}}" has-permission='APPROVE_SAVINGSACCOUNT' ng-href="#/savingaccount/{{savingaccount.id}}/approve" class="btn btn-xs btn-primary ng-binding">
+												<a uib-tooltip="{{'label.button.approve' | translate}}" has-permission='APPROVE_RECURRINGDEPOSITACCOUNT' ng-href="#/recurringdepositaccount/{{savingaccount.id}}/approve" class="btn btn-xs btn-primary ng-binding">
 													<i class="fa fa-check "></i>
 												</a>
 											</td>
 											<td class="pointer" ng-if="!savingaccount.status.submittedAndPendingApproval && !savingaccount.status.active">
-												<a uib-tooltip="{{'label.button.undoapproval' | translate}}" has-permission='APPROVALUNDO_SAVINGSACCOUNT' ng-href="#/savingaccount/{{savingaccount.id}}/undoapproval" class="btn btn-xs btn-primary ng-binding">
+												<a uib-tooltip="{{'label.button.undoapproval' | translate}}" has-permission='APPROVALUNDO_RECURRINGDEPOSITACCOUNT' ng-href="#/recurringdepositaccount/{{savingaccount.id}}/undoapproval" class="btn btn-xs btn-primary ng-binding">
 													<i class="fa fa-undo "></i>
 												</a>
-												<a uib-tooltip="{{'label.button.activate' | translate}}" has-permission='ACTIVATE_SAVINGSACCOUNT' ng-href="#/savingaccount/{{savingaccount.id}}/activate" class="btn btn-xs btn-primary ng-binding">
+												<a uib-tooltip="{{'label.button.activate' | translate}}" has-permission='ACTIVATE_RECURRINGDEPOSITACCOUNT' ng-href="#/recurringdepositaccount/{{savingaccount.id}}/activate" class="btn btn-xs btn-primary ng-binding">
 													<i class="fa fa-check-circle "></i>
 												</a>
 											</td>
